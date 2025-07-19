@@ -1,0 +1,8 @@
+Surse utilizate
+Acestea sunt sursele publice pe care le-am folosit pentru realizarea conținutului de pe site-ul InfoWorld:
+
+https://www.informatica-bac.ro
+https://manuale.edu.ro
+https://www.infoarena.ro
+https://www.pbinfo.ro
+Informațiile au fost analizate, structurate și reformulate pentru uz educațional.
