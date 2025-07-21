@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Teste Grilă - InfoWorld</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            background: linear-gradient(120deg, #232526 0%, #414345 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            position: relative;
+            color: #222; 
+            font-family: 'Inter', 'Merriweather', sans-serif; 
+            margin: 0; 
+            line-height: 1.6;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                repeating-linear-gradient(60deg, rgba(25,118,210,0.06) 0 4px, transparent 4px 40px),
+                repeating-linear-gradient(-60deg, rgba(255,0,255,0.04) 0 2px, transparent 2px 40px),
+                radial-gradient(circle at 30% 70%, rgba(0,255,255,0.10) 0, transparent 60%),
+                radial-gradient(circle at 70% 30%, rgba(255,255,0,0.10) 0, transparent 60%),
+                repeating-conic-gradient(rgba(0,255,255,0.04) 0 10deg, transparent 10deg 20deg);
+            animation: bgMoveQuiz 14s linear infinite alternate, bgLinesQuiz 20s linear infinite alternate;
+        }
+        @keyframes bgMoveQuiz {
+            0% { background-position: 0% 0%, 100% 100%, 50% 100%; }
+            100% { background-position: 100% 100%, 0% 0%, 50% 0%; }
+        }
+        @keyframes bgLinesQuiz {
+            0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+            100% { background-position: 150px 300px, 300px 150px, 0 0, 300px 0, 0 300px; }
+        }
+        .home-button { 
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: inline-block;
+            padding: 6px 18px;
+            background: #111;
+            color: #00bcd4;
+            border-radius: 5px;
+            border: 2px solid #00bcd4;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.08em;
+            font-weight: 600;
+            box-shadow: none;
+            opacity: 0.92;
+            transition: background 0.2s, color 0.2s;
+        }
+        .home-button:hover { 
+            background: #00bcd4; 
+            color: #fff; 
+        }
+        
+        .nav-buttons-group {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+            align-items: center;
+        }
+        
+        .back-arrow {
+            background: transparent;
+            color: #1976d2;
+            border: 2px solid #1976d2;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 0 8px #1976d2;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .back-arrow:hover {
+            background: rgba(25, 118, 210, 0.1);
+            box-shadow: 0 0 15px #1976d2;
+            transform: scale(1.1);
+        }
+        .quiz-container {
+            max-width: 900px;
+            margin: 80px auto 30px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            animation: fadeInMain 0.7s cubic-bezier(.23,1.02,.47,.98) forwards;
+            animation-delay: 0.1s;
+        }
+        @keyframes fadeInMain {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .quiz-header h1 {
+            color: #1976d2;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+        }
+        .quiz-header h1::before {
+            content: '🧠';
+            display: inline-block;
+            margin-right: 15px;
+            animation: brainBounce 2s ease-in-out infinite;
+        }
+        @keyframes brainBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(5deg); }
+            50% { transform: translateY(-10px) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(-5deg); }
+        }
+        .quiz-header p {
+            color: #666;
+            font-size: 1.1em;
+            font-family: 'Inter', sans-serif;
+        }
+        .test-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .test-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #1976d2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(25, 118, 210, 0.3);
+            border-color: #1565c0;
+        }
+        .test-card h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            font-family: 'Merriweather', serif;
+            font-weight: 600;
+        }
+        .test-card p {
+            color: #666;
+            font-size: 0.9em;
+            font-family: 'Inter', sans-serif;
+        }
+        .test-card::before {
+            content: '📝';
+            display: block;
+            font-size: 2em;
+            margin-bottom: 10px;
+            animation: testCardIcon 3s ease-in-out infinite;
+        }
+        @keyframes testCardIcon {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+        .cooldown-info {
+            background: linear-gradient(45deg, #ff9800, #ff5722);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-top: 10px;
+            text-align: center;
+            animation: cooldownPulse 2s ease-in-out infinite;
+        }
+        @keyframes cooldownPulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        .quiz-content {
+            display: none;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .quiz-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 10px;
+            border-left: 4px solid #1976d2;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInQuestion 0.6s cubic-bezier(.23,1.02,.47,.98) forwards;
+        }
+        .question:nth-child(1) { animation-delay: 0.2s; }
+        .question:nth-child(2) { animation-delay: 0.35s; }
+        .question:nth-child(3) { animation-delay: 0.5s; }
+        .question:nth-child(4) { animation-delay: 0.65s; }
+        .question:nth-child(5) { animation-delay: 0.8s; }
+        @keyframes fadeInQuestion {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .question h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-family: 'Merriweather', serif;
+            font-weight: 600;
+        }
+        .question h3::before {
+            content: '❓';
+            display: inline-block;
+            margin-right: 10px;
+            animation: questionPulse 2s ease-in-out infinite;
+        }
+        @keyframes questionPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+        .question p {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            line-height: 1.5;
+            font-family: 'Inter', sans-serif;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1em;
+            font-family: 'Inter', sans-serif;
+        }
+        .option:hover {
+            border-color: #1976d2;
+            background: rgba(25, 118, 210, 0.05);
+            transform: translateX(5px);
+        }
+        .option.selected {
+            border-color: #1976d2;
+            background: rgba(25, 118, 210, 0.1);
+        }
+        .option.correct {
+            border-color: #4caf50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        .option.incorrect {
+            border-color: #f44336;
+            background: rgba(244, 67, 54, 0.1);
+        }
+        .option input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: #1976d2;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1565c0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(25, 118, 210, 0.3);
+        }
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+        .btn-secondary:hover {
+            background: #e0e0e0;
+            border-color: #ccc;
+        }
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #45a049;
+        }
+        .score-display {
+            text-align: center;
+            font-size: 1.2em;
+            color: #1976d2;
+            font-weight: 600;
+            font-family: 'Merriweather', serif;
+        }
+        .result-message {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+        .result-perfect {
+            background: rgba(76, 175, 80, 0.1);
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+        }
+        .result-perfect::before {
+            content: '🎉';
+            display: block;
+            font-size: 2em;
+            margin-bottom: 10px;
+            animation: celebration 1s ease-in-out infinite;
+        }
+        @keyframes celebration {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-10deg); }
+            50% { transform: scale(1.3) rotate(0deg); }
+            75% { transform: scale(1.2) rotate(10deg); }
+        }
+        .result-good {
+            background: rgba(255, 193, 7, 0.1);
+            color: #f57c00;
+            border: 2px solid #ff9800;
+        }
+        .result-good::before {
+            content: '👍';
+            display: block;
+            font-size: 2em;
+            margin-bottom: 10px;
+            animation: thumbsUp 2s ease-in-out infinite;
+        }
+        @keyframes thumbsUp {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+        }
+        .result-bad {
+            background: rgba(244, 67, 54, 0.1);
+            color: #c62828;
+            border: 2px solid #f44336;
+        }
+        .result-bad::before {
+            content: '📚';
+            display: block;
+            font-size: 2em;
+            margin-bottom: 10px;
+            animation: bookShake 1.5s ease-in-out infinite;
+        }
+        @keyframes bookShake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-3px) rotate(-2deg); }
+            75% { transform: translateX(3px) rotate(2deg); }
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            animation: confetti-fall 3s linear forwards;
+            z-index: 1000;
+        }
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .back-btn {
+            margin-bottom: 20px;
+        }
+        .back-btn::before {
+            content: '←';
+            margin-right: 8px;
+            animation: arrowMove 2s ease-in-out infinite;
+        }
+        @keyframes arrowMove {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-3px); }
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fireworkExplosion {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes particleExplosion {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x, 100px), var(--y, 100px)) scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons-group">
+      <a href="javascript:history.back()" class="back-arrow">←</a>
+      <a href="index.html" class="home-button">⌂</a>
+    </div>
+    
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h1>Teste Grilă</h1>
+            <p>Testează-ți cunoștințele cu aceste teste interactive!</p>
+        </div>
+
+        <div class="test-selection" id="test-selection">
+            <!-- Testele vor fi generate dinamic -->
+        </div>
+
+        <div class="quiz-content" id="quiz-content">
+            <button class="btn btn-secondary back-btn" onclick="showTestSelection()">← Înapoi la teste</button>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div id="questions-container"></div>
+            <div class="quiz-controls">
+                <div class="score-display" id="score-display"></div>
+                <button class="btn btn-primary" id="submit-btn" onclick="submitQuiz()" style="display: none;">Verifică răspunsurile</button>
+                <button class="btn btn-success" id="next-btn" onclick="nextTest()" style="display: none;">Următorul test</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Baza de date cu toate testele
+        const tests = {
+            'liceu-9-1': {
+                title: 'Clasa a IX-a - Tipuri de date și variabile',
+                description: 'Testează cunoștințele despre tipurile de date în C++',
+                questions: [
+                    {
+                        question: 'Ce tip de date se folosește în C++ pentru a stoca un număr întreg?',
+                        options: ['float', 'char', 'int', 'double'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Ce instrucțiune este corectă pentru a declara o variabilă `nota` de tip real?',
+                        options: ['real nota;', 'double nota;', 'integer nota;', 'float int nota;'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce se întâmplă dacă folosești o variabilă neinițializată?',
+                        options: ['Programul rulează corect', 'Este eroare de compilare', 'Poate produce rezultate imprevizibile', 'Este o variabilă globală automat'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Care dintre următoarele NU este un tip primitiv în C++?',
+                        options: ['int', 'float', 'char', 'string'],
+                        correct: 3
+                    },
+                    {
+                        question: 'Ce valoare are o variabilă `int x;` neinițializată?',
+                        options: ['0', '-1', 'O valoare aleatoare', 'Eroare de compilare'],
+                        correct: 2
+                    }
+                ]
+            },
+            'liceu-9-2': {
+                title: 'Clasa a IX-a - Structuri de control',
+                description: 'Testează cunoștințele despre if, for, while',
+                questions: [
+                    {
+                        question: 'Ce instrucțiune controlează executarea condiționată?',
+                        options: ['while', 'if', 'for', 'switch'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce face `while(true)`?',
+                        options: ['Rulează o dată', 'Nu rulează niciodată', 'Rulează la infinit', 'Rulează doar dacă condiția e falsă'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Ce afișează acest cod?\nint x = 0;\nfor(int i = 0; i < 5; i++) x++;\ncout << x;',
+                        options: ['0', '5', '4', '1'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce instrucțiune întrerupe un `while`?',
+                        options: ['skip', 'break', 'exit', 'continue'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Care e diferența dintre `for` și `while`?',
+                        options: ['for e doar pentru vectori', 'while e pentru condiții simple', 'for are inițializare, condiție și increment', 'while nu poate fi infinit'],
+                        correct: 2
+                    }
+                ]
+            },
+            'liceu-10-1': {
+                title: 'Clasa a X-a - Funcții și parametri',
+                description: 'Testează cunoștințele despre funcții',
+                questions: [
+                    {
+                        question: 'Ce este o funcție?',
+                        options: ['O variabilă', 'O structură', 'Un bloc de cod reutilizabil', 'O clasă'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Cum se transmite un parametru prin valoare?',
+                        options: ['Se modifică în funcție', 'Se modifică global', 'Nu afectează originalul', 'Nu funcționează'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Ce face `return` într-o funcție?',
+                        options: ['Termină funcția și dă o valoare înapoi', 'Declară variabile', 'Face pauză', 'Repetă funcția'],
+                        correct: 0
+                    },
+                    {
+                        question: 'Poți avea două funcții cu același nume?',
+                        options: ['Nu', 'Da, dacă au parametri diferiți', 'Da, oricum', 'Doar în C'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce este o funcție void?',
+                        options: ['O funcție care nu returnează nimic', 'O funcție care returnează 0', 'O funcție care rulează la infinit', 'O funcție care nu există'],
+                        correct: 0
+                    }
+                ]
+            },
+            'liceu-10-2': {
+                title: 'Clasa a X-a - Vectori și matrice',
+                description: 'Testează cunoștințele despre vectori',
+                questions: [
+                    {
+                        question: 'Cum declari un vector de 10 întregi?',
+                        options: ['int v();', 'int v[10];', 'vector<int> v[10];', 'int v = [10];'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Cum accesezi al 3-lea element din vector `v`?',
+                        options: ['v(2)', 'v[3]', 'v[2]', 'v{2}'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Ce este o matrice?',
+                        options: ['Vector unidimensional', 'Vector de caractere', 'Vector de vectori', 'Structură'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Ce face v.push_back(x)?',
+                        options: ['Șterge elementul x', 'Adaugă x la sfârșitul vectorului', 'Caută elementul x', 'Sortează vectorul'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Cum afli dimensiunea unui vector v?',
+                        options: ['v.size()', 'v.length()', 'v.count()', 'v.dim()'],
+                        correct: 0
+                    }
+                ]
+            },
+            'avansati-9-1': {
+                title: 'Clasa a IX-a Avansat - Recursivitate',
+                description: 'Testează cunoștințele despre recursivitate',
+                questions: [
+                    {
+                        question: 'Ce face recursivitatea?',
+                        options: ['Rulează codul de la început', 'O funcție se apelează singură', 'Întrerupe execuția', 'Generează cod aleator'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce este cazul de bază?',
+                        options: ['Ultimul apel recursiv', 'Partea finală a codului', 'Condiția care oprește recursivitatea', 'O buclă'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Ce returnează factorial(0)?',
+                        options: ['0', 'Eroare', '1', 'Infinit'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Cum se definește fibonacci(n) recursiv?',
+                        options: ['n * fibonacci(n)', 'fibonacci(n-1) + fibonacci(n-2)', 'n + n', 'n / 2'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce se întâmplă dacă nu avem caz de bază?',
+                        options: ['Programul se oprește normal', 'Se compilează, dar nu rulează', 'Se intră într-o buclă infinită', 'Nu se întâmplă nimic'],
+                        correct: 2
+                    }
+                ]
+            },
+            'avansati-10-1': {
+                title: 'Clasa a X-a Avansat - Backtracking',
+                description: 'Testează cunoștințele despre backtracking',
+                questions: [
+                    {
+                        question: 'Ce face tehnica backtracking?',
+                        options: ['Sortează o listă', 'Găsește toate soluțiile posibile', 'Alege soluția optimă direct', 'Rezolvă ecuații'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce înseamnă "backtrack"?',
+                        options: ['Avansare în recursivitate', 'Revenire la o alegere anterioară', 'Greșeală de calcul', 'Finalul execuției'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Când se folosește backtracking?',
+                        options: ['La citirea fișierelor', 'La sortare rapidă', 'La generarea permutărilor', 'La interfață grafică'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Ce înseamnă "divide et impera"?',
+                        options: ['Un mod de sortare rapidă', 'O strategie de împărțire și rezolvare', 'O funcție recursivă', 'O tehnică de criptare'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce algoritmi folosesc această tehnică?',
+                        options: ['BFS și DFS', 'Quicksort și Mergesort', 'Backtracking și brute-force', 'SHA și MD5'],
+                        correct: 1
+                    }
+                ]
+            },
+            'avansati-11-1': {
+                title: 'Clasa a XI-a Avansat - OOP',
+                description: 'Testează cunoștințele despre programarea orientată pe obiecte',
+                questions: [
+                    {
+                        question: 'Ce este o clasă în OOP?',
+                        options: ['Un modul extern', 'Un șablon pentru obiecte', 'Un vector', 'O funcție recursivă'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce face constructorul?',
+                        options: ['Distruge obiectul', 'Rulează recursiv funcțiile', 'Inițializează un obiect', 'Creează o clasă'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Ce este moștenirea în OOP?',
+                        options: ['Copierea datelor între clase', 'O clasă care extinde alta', 'O buclă între clase', 'Conectarea în rețea'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce tipuri de moștenire există?',
+                        options: ['Public și privat', 'Recursivă și iterativă', 'Internă și externă', 'Parțială și totală'],
+                        correct: 0
+                    },
+                    {
+                        question: 'Ce permite polimorfismul?',
+                        options: ['Crearea unei clase noi', 'O metodă să aibă comportamente diferite', 'O funcție să fie recursivă', 'Inițializarea automată'],
+                        correct: 1
+                    }
+                ]
+            },
+            'avansati-12-1': {
+                title: 'Clasa a XII-a Avansat - Algoritmi avansați',
+                description: 'Testează cunoștințele despre algoritmi avansați',
+                questions: [
+                    {
+                        question: 'Ce face algoritmul Kruskal?',
+                        options: ['Sortează nodurile', 'Găsește arborele de cost minim', 'Caută cel mai lung drum', 'Numără muchiile'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce face Bellman-Ford?',
+                        options: ['Găsește drumul cel mai scurt cu costuri negative', 'Detectează componente conexe', 'Caută drumuri paralele', 'Inversează graful'],
+                        correct: 0
+                    },
+                    {
+                        question: 'Ce rezolvă LCS?',
+                        options: ['Numărul de soluții', 'Cea mai lungă subsecvență comună', 'Cel mai lung cuvânt', 'Matricea diagonală'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce rezolvă TSP?',
+                        options: ['Drumuri minime între noduri', 'Vizitarea tuturor nodurilor cu cost minim', 'Subgrafuri complete', 'Găsirea unui ciclu'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce este memoizarea?',
+                        options: ['O listă sortată', 'Păstrarea rezultatelor', 'Un arbore binar', 'Cod paralel'],
+                        correct: 1
+                    }
+                ]
+            },
+            'bonus-70': {
+                title: '✅ Quiz – Informatică Liceu (clasele IX–XI)',
+                description: 'Quiz bonus pentru 70 de puncte - Testează cunoștințele generale de informatică',
+                questions: [
+                    {
+                        question: 'Ce tip de date este potrivit pentru a stoca o singură literă?',
+                        options: ['int', 'float', 'char', 'string'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Ce va afișa codul: cout << 2 + 3 * 4; ?',
+                        options: ['20', '14', '24', '18'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce instrucțiune repetitivă este potrivită dacă nu știi dinainte câte repetări vor fi?',
+                        options: ['for', 'while', 'switch', 'break'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce face return într-o funcție?',
+                        options: ['oprește compilarea', 'afișează un mesaj', 'întoarce o valoare', 'șterge o variabilă'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Cum se accesează al treilea element dintr-un vector v în C++?',
+                        options: ['v(3)', 'v[2]', 'v[3]', 'v{2}'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce structură se folosește pentru a stoca date pe mai multe linii și coloane?',
+                        options: ['vector', 'matrice', 'clasă', 'funcție'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce fel de sortare compară elementele vecine și le schimbă dacă sunt în ordine greșită?',
+                        options: ['Bubble Sort', 'Binary Sort', 'Insertion Sort', 'Merge Sort'],
+                        correct: 0
+                    },
+                    {
+                        question: 'Care este complexitatea căutării binare în cel mai rău caz?',
+                        options: ['O(n)', 'O(log n)', 'O(n²)', 'O(1)'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Ce cuvânt cheie se folosește pentru a crea un tip nou de date în C++?',
+                        options: ['for', 'while', 'struct', 'void'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Ce este incapsularea în programarea orientată pe obiecte?',
+                        options: ['sortarea datelor', 'ascunderea detaliilor interne și protejarea datelor', 'copierea funcțiilor', 'folosirea vectorilor în clase'],
+                        correct: 1
+                    }
+                ]
+            }
+        };
+
+        let currentTest = null;
+        let currentAnswers = [];
+        let currentQuestionIndex = 0;
+        
+        // Sistem de cooldown pentru quiz-uri
+        function getQuizCooldown(testId) {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) return null;
+            
+            const userProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+            const userProfile = userProfiles[currentUser];
+            if (!userProfile || !userProfile.quizCooldowns) return null;
+            
+            return userProfile.quizCooldowns[testId] || null;
+        }
+        
+        function setQuizCooldown(testId) {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) return;
+            
+            const userProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+            if (!userProfiles[currentUser]) {
+                userProfiles[currentUser] = {};
+            }
+            if (!userProfiles[currentUser].quizCooldowns) {
+                userProfiles[currentUser].quizCooldowns = {};
+            }
+            
+            userProfiles[currentUser].quizCooldowns[testId] = Date.now();
+            localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
+        }
+        
+        function canRetakeQuiz(testId) {
+            const cooldown = getQuizCooldown(testId);
+            if (!cooldown) return true;
+            const now = Date.now();
+            const timeDiff = now - cooldown;
+            const minDiff = timeDiff / (1000 * 60);
+            return minDiff >= 30;
+        }
+        
+        function getRemainingCooldown(testId) {
+            const cooldown = getQuizCooldown(testId);
+            if (!cooldown) return 0;
+            const now = Date.now();
+            const timeDiff = now - cooldown;
+            const minDiff = timeDiff / (1000 * 60);
+            if (minDiff >= 30) return 0;
+            const remainingMin = 30 - minDiff;
+            return Math.ceil(remainingMin);
+        }
+
+        // Inițializează pagina
+        function initQuiz() {
+            generateTestCards();
+            showTestSelection();
+        }
+
+        // Generează cardurile pentru teste
+        function generateTestCards() {
+            const container = document.getElementById('test-selection');
+            container.innerHTML = '';
+
+            Object.keys(tests).forEach(testId => {
+                const test = tests[testId];
+                const card = document.createElement('div');
+                card.className = 'test-card';
+                
+                let pointsText;
+                if (testId === 'bonus-70') {
+                    pointsText = `${test.questions.length} întrebări • 70 puncte maxime`;
+                } else {
+                    pointsText = `${test.questions.length} întrebări • 50 puncte maxime`;
+                }
+                
+                // Verifică cooldown-ul
+                const canRetake = canRetakeQuiz(testId);
+                const remainingMinutes = getRemainingCooldown(testId);
+                
+                let cooldownText = '';
+                if (!canRetake && remainingMinutes > 0) {
+                    cooldownText = `<div class="cooldown-info" id="cooldown-${testId}">⏰ Poți reface acest quiz în <span class="cooldown-minutes">${remainingMinutes}</span> minute.</div>`;
+                    card.style.opacity = '0.6';
+                    card.style.cursor = 'not-allowed';
+                } else {
+                    card.onclick = () => startTest(testId);
+                }
+                
+                card.innerHTML = `
+                    <h3>${test.title}</h3>
+                    <p>${test.description}</p>
+                    <p><strong>${pointsText}</strong></p>
+                    ${cooldownText}
+                `;
+                
+                container.appendChild(card);
+                // Timer live pentru cooldown
+                if (!canRetake && remainingMinutes > 0) {
+                    let interval = setInterval(() => {
+                        const minLeft = getRemainingCooldown(testId);
+                        const el = document.querySelector(`#cooldown-${testId} .cooldown-minutes`);
+                        if (el) el.textContent = minLeft;
+                        if (minLeft <= 0) {
+                            clearInterval(interval);
+                            card.style.opacity = '1';
+                            card.style.cursor = 'pointer';
+                            card.classList.add('quiz-available-glow');
+                            setTimeout(()=>card.classList.remove('quiz-available-glow'), 2000);
+                            card.onclick = () => startTest(testId);
+                            document.querySelector(`#cooldown-${testId}`).textContent = 'Quiz-ul este disponibil!';
+                        }
+                    }, 1000*5); // update la 5 secunde
+                }
+            });
+        }
+
+        // Afișează selecția testelor
+        function showTestSelection() {
+            document.getElementById('test-selection').style.display = 'grid';
+            document.getElementById('quiz-content').classList.remove('active');
+            currentTest = null;
+        }
+
+        // Începe un test
+        function startTest(testId) {
+            currentTest = testId;
+            currentAnswers = new Array(tests[testId].questions.length).fill(-1);
+            currentQuestionIndex = 0;
+            skipUsedThisQuiz = false;
+            
+            document.getElementById('test-selection').style.display = 'none';
+            document.getElementById('quiz-content').classList.add('active');
+            
+            displayQuestions();
+            updateProgress();
+        }
+
+        // Afișează întrebările
+        function displayQuestions() {
+            const container = document.getElementById('questions-container');
+            const test = tests[currentTest];
+            const userProfile = getUserProfile();
+            let canSkip = false;
+            if (userProfile && userProfile.hasSkip) {
+                const now = Date.now();
+                const lastUsed = userProfile.skipLastUsed || 0;
+                canSkip = !userProfile.skipUsed && (now - lastUsed > 7*24*60*60*1000 || lastUsed === 0);
+            }
+            
+            container.innerHTML = '';
+            
+            test.questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                let optionsHtml = '';
+                q.options.forEach((option, optIndex) => {
+                    const isSelected = currentAnswers[index] === optIndex;
+                    optionsHtml += `
+                        <div class="option ${isSelected ? 'selected' : ''}" onclick="selectAnswer(${index}, ${optIndex})">
+                            <input type="radio" name="q${index}" value="${optIndex}" ${isSelected ? 'checked' : ''}>
+                            <span>${String.fromCharCode(97 + optIndex)}) ${option}</span>
+                        </div>
+                    `;
+                });
+                
+                let skipBtn = '';
+                if (canSkip && !skipUsedThisQuiz && currentAnswers[index] === -1) {
+                    skipBtn = `<button class="btn btn-secondary skip-btn" onclick="skipQuestion(${index})">Skip</button>`;
+                }
+                
+                questionDiv.innerHTML = `
+                    <h3>Întrebarea ${index + 1}</h3>
+                    <p>${q.question}</p>
+                    <div class="options">
+                        ${optionsHtml}
+                    </div>
+                    ${skipBtn}
+                `;
+                
+                container.appendChild(questionDiv);
+            });
+            
+            document.getElementById('submit-btn').style.display = 'inline-block';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('score-display').textContent = '';
+        }
+
+        // Selectează un răspuns
+        function selectAnswer(questionIndex, answerIndex) {
+            currentAnswers[questionIndex] = answerIndex;
+            
+            // Actualizează vizual selecția
+            const questionDiv = document.querySelectorAll('.question')[questionIndex];
+            const options = questionDiv.querySelectorAll('.option');
+            
+            options.forEach((option, index) => {
+                option.classList.toggle('selected', index === answerIndex);
+                option.querySelector('input').checked = index === answerIndex;
+            });
+            
+            updateProgress();
+        }
+
+        // Actualizează bara de progres
+        function updateProgress() {
+            const answered = currentAnswers.filter(answer => answer !== -1).length;
+            const total = currentAnswers.length;
+            const percentage = (answered / total) * 100;
+            
+            document.getElementById('progress-fill').style.width = percentage + '%';
+        }
+
+        // Trimite testul pentru verificare
+        function submitQuiz() {
+            const test = tests[currentTest];
+            let correctAnswers = 0;
+            
+            // Verifică răspunsurile
+            test.questions.forEach((q, index) => {
+                const userAnswer = currentAnswers[index];
+                const correctAnswer = q.correct;
+                
+                const questionDiv = document.querySelectorAll('.question')[index];
+                const options = questionDiv.querySelectorAll('.option');
+                
+                if (userAnswer === correctAnswer) {
+                    correctAnswers++;
+                    options[userAnswer].classList.add('correct');
+                } else {
+                    if (userAnswer !== -1) {
+                        options[userAnswer].classList.add('incorrect');
+                    }
+                    options[correctAnswer].classList.add('correct');
+                }
+            });
+            
+            // Calculează scorul
+            let score, maxScore;
+            if (currentTest === 'bonus-70') {
+                // Quiz bonus pentru 70 de puncte
+                score = correctAnswers * 7;
+                maxScore = test.questions.length * 7;
+            } else {
+                // Quiz-uri normale pentru 50 de puncte
+                score = correctAnswers * 10;
+                maxScore = test.questions.length * 10;
+            }
+            
+            // Salvează punctele în profil
+            savePointsToProfile(score);
+            
+            // Setează cooldown-ul pentru acest quiz
+            setQuizCooldown(currentTest);
+            
+            // Afișează rezultatul
+            const scoreDisplay = document.getElementById('score-display');
+            scoreDisplay.innerHTML = `Scor: ${score}/${maxScore} puncte`;
+            
+            // Afișează mesajul de rezultat
+            const resultMessage = document.createElement('div');
+            resultMessage.className = 'result-message';
+            
+            if (score === maxScore) {
+                resultMessage.className += ' result-perfect';
+                resultMessage.textContent = '🎉 Perfect! Ai răspuns corect la toate întrebările!';
+                createConfetti();
+            } else if (score >= maxScore * 0.6) {
+                resultMessage.className += ' result-good';
+                resultMessage.textContent = '👍 Bună treabă! Ai răspuns corect la majoritatea întrebărilor!';
+            } else {
+                resultMessage.className += ' result-bad';
+                resultMessage.textContent = '📚 Mai ai de învățat! Revizuiește materialul și încearcă din nou!';
+            }
+            
+            document.getElementById('questions-container').insertBefore(resultMessage, document.getElementById('questions-container').firstChild);
+            
+            // Ascunde butonul de submit și arată butonul pentru următorul test
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+
+        // Salvează punctele în profilul utilizatorului
+        function savePointsToProfile(points) {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) return;
+            
+            // Obține punctele actuale
+            const userProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+            const currentPoints = userProfiles[currentUser]?.points || 0;
+            
+            // Adaugă punctele noi
+            const newPoints = currentPoints + points;
+            
+            // Actualizează profilul
+            if (!userProfiles[currentUser]) {
+                userProfiles[currentUser] = {};
+            }
+            userProfiles[currentUser].points = newPoints;
+            
+            // Salvează rezultatul quiz-ului
+            if (!userProfiles[currentUser].quizResults) {
+                userProfiles[currentUser].quizResults = [];
+            }
+            
+            const test = tests[currentTest];
+            let maxScore;
+            if (currentTest === 'bonus-70') {
+                maxScore = test.questions.length * 7;
+            } else {
+                maxScore = test.questions.length * 10;
+            }
+            
+            const quizResult = {
+                testName: test.title,
+                score: points,
+                maxScore: maxScore,
+                date: new Date().toLocaleDateString('ro-RO')
+            };
+            
+            userProfiles[currentUser].quizResults.push(quizResult);
+            
+            // Salvează în localStorage
+            localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
+            
+            console.log(`Puncte adăugate: ${points}. Total puncte: ${newPoints}`);
+        }
+
+        // Următorul test
+        function nextTest() {
+            showTestSelection();
+        }
+
+        // Creează efectul de confetti
+        function createConfetti() {
+            // Confetti de bază
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ff9ff3', '#54a0ff', '#feca57', '#ff3838', '#00d2d3'][Math.floor(Math.random() * 10)];
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confetti.style.width = (Math.random() * 8 + 4) + 'px';
+                    confetti.style.height = (Math.random() * 8 + 4) + 'px';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 4000);
+                }, i * 50);
+            }
+            
+            // Efecte de artificii
+            setTimeout(() => {
+                createFireworks();
+            }, 500);
+        }
+        
+        // Creează efecte de artificii
+        function createFireworks() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.style.position = 'fixed';
+                    firework.style.left = (Math.random() * 80 + 10) + 'vw';
+                    firework.style.top = (Math.random() * 60 + 20) + 'vh';
+                    firework.style.width = '4px';
+                    firework.style.height = '4px';
+                    firework.style.borderRadius = '50%';
+                    firework.style.backgroundColor = ['#ffd700', '#ff6b6b', '#4ecdc4', '#ff9ff3'][Math.floor(Math.random() * 4)];
+                    firework.style.zIndex = '9999';
+                    firework.style.animation = 'fireworkExplosion 2s ease-out forwards';
+                    document.body.appendChild(firework);
+                    
+                    // Creează particule pentru fiecare artificie
+                    for (let j = 0; j < 20; j++) {
+                        setTimeout(() => {
+                            const particle = document.createElement('div');
+                            particle.style.position = 'fixed';
+                            particle.style.left = firework.style.left;
+                            particle.style.top = firework.style.top;
+                            particle.style.width = '2px';
+                            particle.style.height = '2px';
+                            particle.style.borderRadius = '50%';
+                            particle.style.backgroundColor = firework.style.backgroundColor;
+                            particle.style.zIndex = '9998';
+                            particle.style.animation = `particleExplosion 1.5s ease-out forwards`;
+                            particle.style.transform = `translate(${(Math.random() - 0.5) * 200}px, ${(Math.random() - 0.5) * 200}px)`;
+                            document.body.appendChild(particle);
+                            
+                            setTimeout(() => {
+                                particle.remove();
+                            }, 1500);
+                        }, j * 50);
+                    }
+                    
+                    setTimeout(() => {
+                        firework.remove();
+                    }, 2000);
+                }, i * 300);
+            }
+        }
+
+        // Funcție pentru skip
+        function getUserProfile() {
+            const user = localStorage.getItem('currentUser');
+            if (!user) return null;
+            const profiles = JSON.parse(localStorage.getItem('userProfiles')||'{}');
+            return profiles[user] || null;
+        }
+        function setUserProfile(profile) {
+            const user = localStorage.getItem('currentUser');
+            if (!user) return;
+            const profiles = JSON.parse(localStorage.getItem('userProfiles')||'{}');
+            profiles[user] = profile;
+            localStorage.setItem('userProfiles', JSON.stringify(profiles));
+        }
+        let skipUsedThisQuiz = false;
+        // Funcție skipQuestion
+        function skipQuestion(index) {
+            const test = tests[currentTest];
+            const userProfile = getUserProfile();
+            if (!userProfile || !userProfile.hasSkip) return;
+            // Marchează răspunsul ca fiind corect
+            currentAnswers[index] = test.questions[index].correct;
+            skipUsedThisQuiz = true;
+            userProfile.skipUsed = true;
+            userProfile.skipLastUsed = Date.now();
+            setUserProfile(userProfile);
+            displayQuestions();
+            updateProgress();
+        }
+
+        // Inițializează când se încarcă pagina
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>

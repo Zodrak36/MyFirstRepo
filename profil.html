@@ -1,0 +1,2347 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profil - InfoWorld</title>
+  <link rel="icon" type="image/webp" href="logo.webp">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* --- MODERN PROFILE LAYOUT UPGRADE --- */
+    body {
+      background: linear-gradient(120deg, #1a2330 0%, #38f9d7 100%) !important;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 60px auto 60px auto;
+      background: rgba(0, 0, 0, 0.55) !important;
+      border-radius: 32px;
+      box-shadow: 0 12px 48px 0 rgba(0,255,255,0.10), 0 2px 0 #43e97b;
+      padding: 48px 48px 32px 48px;
+      border: 2.5px solid #00fff7;
+      position: relative;
+      overflow: visible;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: row;
+      gap: 48px;
+      flex-wrap: wrap;
+      z-index: 2;
+    }
+    @media (max-width: 1200px) {
+      .container { flex-direction: column; gap: 32px; padding: 32px 10px; }
+    }
+    .profile-main-col {
+      flex: 2 1 420px;
+      min-width: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .profile-side-col {
+      flex: 1 1 320px;
+      min-width: 260px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      align-items: stretch;
+    }
+    .profile-section {
+      margin-bottom: 0;
+      background: rgba(0, 0, 0, 0.18);
+      border-radius: 18px;
+      padding: 32px 28px 24px 28px;
+      border: 1.5px solid #00fff7;
+      box-shadow: 0 4px 24px #00fff733;
+      position: relative;
+      overflow: visible;
+      min-width: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .profile-section .section-title {
+      font-size: 1.3em;
+      margin-bottom: 18px;
+      color: #00fff7;
+      border-bottom: 2px solid #43e97b;
+      padding-bottom: 6px;
+      text-align: left;
+      letter-spacing: 1px;
+      background: none;
+      box-shadow: none;
+    }
+    .profile-section ul, .profile-section .points-section, .profile-section .frames-container, .profile-section .badges-row {
+      margin-top: 18px;
+    }
+    .profile-section .profile-row {
+      margin-bottom: 18px;
+      gap: 18px;
+      font-size: 1.08em;
+    }
+    .profile-section .profile-label {
+      min-width: 120px;
+      color: #43e97b;
+      font-weight: 600;
+      font-size: 1.08em;
+    }
+    .profile-section .profile-value {
+      color: #fff;
+      font-size: 1.08em;
+    }
+    .profile-section .masked {
+      color: #00fff7;
+    }
+    .profile-section .change-btn, .profile-section .eye-btn {
+      margin-left: 10px;
+    }
+    .profile-section .points-section {
+      gap: 24px;
+    }
+    .profile-section .points-value {
+      font-size: 2.3em;
+      color: #ffd700;
+      font-weight: bold;
+      margin-right: 10px;
+      font-family: 'Playfair Display', Georgia, serif;
+      text-shadow: 0 0 10px #ffd70099;
+    }
+    .profile-section .frames-container {
+      gap: 24px;
+    }
+    .profile-section .frame-item {
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(0,255,255,0.07);
+      border: 1.5px solid #43e97b;
+      margin-bottom: 0;
+    }
+    .profile-section .frame-preview {
+      width: 90px;
+      height: 90px;
+      font-size: 2.3em;
+    }
+    .profile-section .frame-info h4 {
+      color: #43e97b;
+      font-size: 1.1em;
+    }
+    .profile-section .frame-info p {
+      color: #fff;
+      font-size: 0.98em;
+    }
+    .profile-section .badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: flex-start;
+    }
+    .profile-section .badge {
+      width: 70px;
+      height: 70px;
+      margin: 0 10px 10px 0;
+    }
+    .profile-section .badge-label {
+      font-size: 0.95em;
+    }
+    .level-section {
+      margin-bottom: 0;
+      padding: 32px 0 18px 0;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      background: rgba(0,255,255,0.07);
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #00fff733;
+      border: 1.5px solid #43e97b;
+    }
+    .level-section .level-badge.starlight {
+      padding: 18px 36px;
+      font-size: 1.2em;
+    }
+    .level-section .level-name.starlight-text {
+      font-size: 2.1rem;
+    }
+    @media (max-width: 900px) {
+      .container { flex-direction: column; gap: 24px; padding: 18px 2vw; }
+      .profile-main-col, .profile-side-col { min-width: 0; }
+    }
+    @media (max-width: 600px) {
+      .container { padding: 4vw 2vw; }
+      .profile-section { padding: 18px 6px 12px 6px; }
+    }
+    html, body {
+      min-height: 100vh;
+      height: 100%;
+    }
+    body::before, body::after {
+      display: none !important;
+    }
+    body:not(.basic-mode) {
+      /* background: linear-gradient(135deg, #1a2330 0%, #0a3c2f 100%); */
+      /* background-size: 200% 200%; */
+      /* animation: animated3dBg 12s ease-in-out infinite alternate; */
+    }
+    @keyframes animated3dBg {
+      0% {
+        background-position: 0% 50%;
+        filter: brightness(1) saturate(1);
+      }
+      50% {
+        background-position: 100% 50%;
+        filter: brightness(1.15) saturate(1.2);
+      }
+      100% {
+        background-position: 0% 50%;
+        filter: brightness(1) saturate(1);
+      }
+    }
+    body.basic-mode {
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+      color: #fff !important;
+    }
+    body {
+      color: #4CAF50;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      cursor: default;
+      position: relative;
+      overflow-x: hidden;
+      perspective: 1200px;
+      transform-style: preserve-3d;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Modul basic - fundal static */
+    body.basic-mode {
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+      perspective: none;
+      transform-style: flat;
+      color: #fff !important;
+    }
+    
+    /* Background animat cu simboluri */
+    body::before {
+      /* Eliminat complet pentru a nu suprascrie gradientul principal */
+      /* content: ''; */
+      /* ...restul codului eliminat... */
+    }
+    
+    /* Modul basic - background static */
+    body.basic-mode::before {
+      /* Eliminat complet */
+    }
+    
+    body::after {
+      /* Eliminat complet pentru a nu suprascrie gradientul principal */
+    }
+    
+    body.basic-mode::after {
+      /* Eliminat complet */
+    }
+    
+    @keyframes backgroundShift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-10px, -5px) scale(1.02); }
+      66% { transform: translate(5px, 10px) scale(0.98); }
+    }
+    
+    @keyframes bgMoveProfil {
+      0% { background-position: 0% 0%, 100% 100%, 50% 100%, 0 0, 100% 100%; }
+      100% { background-position: 100% 100%, 0% 0%, 50% 0%, 100% 0, 0 100%; }
+    }
+    
+    @keyframes bgLinesProfil {
+      0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: 200px 400px, 400px 200px, 0 0, 400px 0, 0 400px; }
+    }
+    
+    .container {
+      max-width: 540px;
+      margin: 40px auto 0 auto;
+      background: transparent !important;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0, 255, 0, 0.15);
+      padding: 32px 32px 24px 32px;
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      min-height: 100vh;
+    }
+    
+    /* Modul basic - container static */
+    body.basic-mode .container {
+      transform-style: flat;
+      perspective: none;
+      backdrop-filter: none;
+      background: rgba(44, 62, 80, 0.8);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(52, 73, 94, 0.6);
+      color: #fff !important;
+      backdrop-filter: blur(10px);
+    }
+    
+    .container:hover {
+      transform: translateY(-2px) translateZ(10px) rotateX(2deg);
+      box-shadow: 0 12px 40px rgba(0, 255, 0, 0.25), 0 0 20px rgba(0, 255, 255, 0.2);
+      border-color: rgba(0, 255, 0, 0.5);
+    }
+    
+    /* Modul basic - hover static */
+    body.basic-mode .container:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+      border-color: rgba(52, 73, 94, 0.8);
+      background: rgba(44, 62, 80, 0.9);
+    }
+    
+    .container::before {
+      /* Eliminat complet orice efect de glow sau gradient pe container */
+    }
+    
+    /* Modul basic - container glow static */
+    body.basic-mode .container::before {
+      /* Eliminat complet */
+    }
+    
+    @keyframes containerGlow {
+      0%, 100% { opacity: 0.3; transform: translateZ(-1px) translateX(-100%); }
+      50% { opacity: 0.8; transform: translateZ(-1px) translateX(100%); }
+    }
+    
+    /* Elemente 3D flotante optimizate */
+    .floating-3d-element {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.4;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Modul basic - elemente 3D statice */
+    body.basic-mode .floating-3d-element {
+      opacity: 0.1;
+      animation: none !important;
+      transform: none !important;
+    }
+    
+    .floating-3d-element:nth-child(1) { 
+      top: 15%; left: 8%; 
+      animation: float3d1 8s ease-in-out infinite;
+      font-size: 2em;
+      color: rgba(0, 255, 255, 0.6);
+    }
+    .floating-3d-element:nth-child(2) { 
+      top: 25%; right: 12%; 
+      animation: float3d2 10s ease-in-out infinite;
+      font-size: 1.8em;
+      color: rgba(255, 255, 0, 0.5);
+    }
+    .floating-3d-element:nth-child(3) { 
+      bottom: 35%; left: 18%; 
+      animation: float3d3 12s ease-in-out infinite;
+      font-size: 1.5em;
+      color: rgba(255, 0, 255, 0.4);
+    }
+    .floating-3d-element:nth-child(4) { 
+      bottom: 20%; right: 8%; 
+      animation: float3d4 9s ease-in-out infinite;
+      font-size: 1.6em;
+      color: rgba(0, 255, 0, 0.5);
+    }
+    .floating-3d-element:nth-child(5) { 
+      top: 60%; left: 5%; 
+      animation: float3d5 11s ease-in-out infinite;
+      font-size: 1.3em;
+      color: rgba(255, 128, 0, 0.4);
+    }
+    .floating-3d-element:nth-child(6) { 
+      top: 45%; right: 5%; 
+      animation: float3d6 7s ease-in-out infinite;
+      font-size: 1.4em;
+      color: rgba(128, 0, 255, 0.4);
+    }
+    
+    @keyframes float3d1 {
+      0%, 100% { transform: translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg); opacity: 0.4; }
+      25% { transform: translateY(-15px) translateZ(10px) rotateX(15deg) rotateY(45deg); opacity: 0.7; }
+      50% { transform: translateY(-25px) translateZ(20px) rotateX(30deg) rotateY(90deg); opacity: 0.8; }
+      75% { transform: translateY(-15px) translateZ(10px) rotateX(15deg) rotateY(135deg); opacity: 0.7; }
+    }
+    
+    @keyframes float3d2 {
+      0%, 100% { transform: translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) scale(1); opacity: 0.4; }
+      33% { transform: translateY(-20px) translateZ(15px) rotateX(-20deg) rotateY(-60deg) scale(1.1); opacity: 0.6; }
+      66% { transform: translateY(-30px) translateZ(25px) rotateX(-40deg) rotateY(-120deg) scale(1.2); opacity: 0.8; }
+    }
+    
+    @keyframes float3d3 {
+      0%, 100% { transform: translateY(0px) translateZ(0px) rotateX(0deg) rotateZ(0deg); opacity: 0.4; }
+      50% { transform: translateY(-18px) translateZ(12px) rotateX(25deg) rotateZ(180deg); opacity: 0.7; }
+    }
+    
+    @keyframes float3d4 {
+      0%, 100% { transform: translateY(0px) translateZ(0px) rotateY(0deg) scale(1); opacity: 0.4; }
+      25% { transform: translateY(-12px) translateZ(8px) rotateY(90deg) scale(1.05); opacity: 0.6; }
+      50% { transform: translateY(-22px) translateZ(16px) rotateY(180deg) scale(1.1); opacity: 0.8; }
+      75% { transform: translateY(-12px) translateZ(8px) rotateY(270deg) scale(1.05); opacity: 0.6; }
+    }
+    
+    @keyframes float3d5 {
+      0%, 100% { transform: translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg); opacity: 0.4; }
+      33% { transform: translateY(-16px) translateZ(10px) rotateX(30deg) rotateY(45deg) rotateZ(90deg); opacity: 0.6; }
+      66% { transform: translateY(-28px) translateZ(18px) rotateX(60deg) rotateY(90deg) rotateZ(180deg); opacity: 0.8; }
+    }
+    
+    @keyframes float3d6 {
+      0%, 100% { transform: translateY(0px) translateZ(0px) rotateX(0deg) scale(1); opacity: 0.4; }
+      50% { transform: translateY(-14px) translateZ(9px) rotateX(-30deg) scale(1.08); opacity: 0.7; }
+    }
+    
+    /* Particule 3D animate */
+    .particle-3d {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: radial-gradient(circle, rgba(0, 255, 255, 0.8) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      animation: particleFloat 6s linear infinite;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Modul basic - particule statice */
+    body.basic-mode .particle-3d {
+      opacity: 0.05;
+      animation: none !important;
+      transform: none !important;
+    }
+    
+    .particle-3d:nth-child(7) { top: 10%; left: 20%; animation-delay: 0s; }
+    .particle-3d:nth-child(8) { top: 30%; left: 80%; animation-delay: 1s; }
+    .particle-3d:nth-child(9) { top: 70%; left: 15%; animation-delay: 2s; }
+    .particle-3d:nth-child(10) { top: 80%; left: 85%; animation-delay: 3s; }
+    .particle-3d:nth-child(11) { top: 50%; left: 10%; animation-delay: 4s; }
+    .particle-3d:nth-child(12) { top: 20%; left: 70%; animation-delay: 5s; }
+    
+    @keyframes particleFloat {
+      0% { 
+        transform: translateY(0px) translateZ(0px) scale(0.5); 
+        opacity: 0; 
+      }
+      20% { 
+        transform: translateY(-20px) translateZ(10px) scale(1); 
+        opacity: 0.8; 
+      }
+      80% { 
+        transform: translateY(-60px) translateZ(20px) scale(1.2); 
+        opacity: 0.6; 
+      }
+      100% { 
+        transform: translateY(-100px) translateZ(30px) scale(0.3); 
+        opacity: 0; 
+      }
+    }
+    
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.2em;
+      color: #4CAF50;
+      margin-bottom: 18px;
+      text-align: center;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    body.basic-mode h1 {
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1:hover {
+      transform: scale(1.02);
+      text-shadow: 0 0 15px rgba(76, 175, 80, 0.8);
+    }
+    
+    h1::after {
+      content: '→';
+      position: absolute;
+      right: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #00ffff;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    h1:hover::after {
+      opacity: 1;
+      right: -40px;
+    }
+    
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      color: #4CAF50;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      border-bottom: 1px solid rgba(76, 175, 80, 0.3);
+      padding-bottom: 2px;
+      text-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    body.basic-mode .section-title {
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      border-bottom-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .section-title::before {
+      content: '±';
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #00ffff;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .section-title:hover::before {
+      opacity: 1;
+      left: -25px;
+    }
+    
+    .section-title:hover {
+      border-bottom-color: rgba(76, 175, 80, 0.6);
+      text-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+    }
+    
+    .profile-section {
+      margin-bottom: 28px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(76, 175, 80, 0.2);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      perspective: 800px;
+    }
+    
+    /* Modul basic - secțiuni statice */
+    body.basic-mode .profile-section {
+      transform-style: flat;
+      perspective: none;
+      background: rgba(44, 62, 80, 0.6);
+      border: 1px solid rgba(52, 73, 94, 0.4);
+    }
+    
+    .profile-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(76, 175, 80, 0.1), transparent);
+      transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateZ(-1px);
+    }
+    
+    /* Modul basic - efect glow static */
+    body.basic-mode .profile-section::before {
+      background: linear-gradient(90deg, transparent, rgba(76, 175, 80, 0.05), transparent);
+    }
+    
+    .profile-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.05) 0%, transparent 70%);
+      transform: translateZ(-2px);
+      animation: sectionPulse 3s ease-in-out infinite;
+      pointer-events: none;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Modul basic - pulse static */
+    body.basic-mode .profile-section::after {
+      background: radial-gradient(circle at 50% 50%, rgba(76, 175, 80, 0.02) 0%, transparent 70%);
+      animation: none;
+    }
+    
+    .profile-section:hover::before {
+      left: 100%;
+    }
+    
+    .profile-section:hover {
+      border-color: rgba(76, 175, 80, 0.4);
+      box-shadow: 0 0 15px rgba(76, 175, 80, 0.2), 0 0 10px rgba(0, 255, 255, 0.1);
+      transform: translateX(5px) translateZ(5px) rotateY(2deg);
+    }
+    
+    /* Modul basic - hover static */
+    body.basic-mode .profile-section:hover {
+      border-color: rgba(52, 73, 94, 0.8);
+      box-shadow: 0 0 15px rgba(44, 62, 80, 0.4);
+      transform: translateX(2px);
+      background: rgba(44, 62, 80, 0.8);
+    }
+    
+    @keyframes sectionPulse {
+      0%, 100% { opacity: 0.3; transform: translateZ(-2px) scale(1); }
+      50% { opacity: 0.6; transform: translateZ(-2px) scale(1.02); }
+    }
+    
+    .profile-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .profile-row:hover {
+      transform: translateX(3px);
+    }
+    
+    .profile-row::after {
+      content: '→';
+      position: absolute;
+      right: -15px;
+      color: rgba(0, 255, 255, 0.5);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .profile-row:hover::after {
+      opacity: 1;
+      right: -20px;
+    }
+    
+    .profile-label {
+      min-width: 110px;
+      color: #4CAF50;
+      font-weight: bold;
+      font-family: 'Playfair Display', Georgia, serif;
+      text-shadow: 0 0 3px rgba(76, 175, 80, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    body.basic-mode .profile-label {
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    .profile-row:hover .profile-label {
+      color: #00ffff;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+    
+    .profile-value {
+      font-family: 'Georgia', serif;
+      color: #fff;
+      font-size: 1.08em;
+      transition: all 0.3s ease;
+    }
+
+    body.basic-mode .profile-value {
+      color: #111;
+    }
+
+    body.basic-mode .masked {
+      color: #111;
+    }
+
+    body.basic-mode .points-value {
+      color: #111;
+    }
+
+    body.basic-mode .quiz-list li {
+      color: #111;
+    }
+
+    body.basic-mode .advantage-list li {
+      color: #111;
+    }
+    
+    .profile-row:hover .profile-value {
+      color: #ffdd00;
+      text-shadow: 0 0 3px rgba(255, 221, 0, 0.3);
+    }
+    
+    .masked {
+      letter-spacing: 0.18em;
+      color: #00ffff;
+      transition: all 0.3s ease;
+    }
+    
+    .profile-row:hover .masked {
+      color: #ffdd00;
+    }
+    
+    .eye-btn {
+      background: none;
+      border: none;
+      font-size: 1.2em;
+      cursor: pointer;
+      color: #4CAF50;
+      margin-left: 6px;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      transform-style: preserve-3d;
+      perspective: 300px;
+    }
+    
+    .eye-btn::before {
+      content: '👁';
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transform: scale(0.5) translateZ(-5px);
+      transition: all 0.3s ease;
+    }
+    
+    .eye-btn:hover::before {
+      opacity: 1;
+      transform: scale(1) translateZ(5px);
+    }
+    
+    .eye-btn:hover {
+      color: #00ffff;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+      transform: scale(1.1) translateZ(3px) rotateY(10deg);
+    }
+    
+    .eye-btn:active {
+      transform: scale(0.95) translateZ(1px) rotateY(5deg);
+    }
+    
+    .change-btn {
+      background: linear-gradient(90deg, #4CAF50 0%, #00ffff 100%);
+      color: #111;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 16px;
+      font-family: 'Georgia', serif;
+      font-size: 1em;
+      cursor: pointer;
+      margin-left: 8px;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: bold;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      perspective: 500px;
+    }
+    
+    .change-btn::before {
+      content: '⚡';
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .change-btn:hover::before {
+      opacity: 1;
+      left: 5px;
+    }
+    
+    .change-btn:hover {
+      background: linear-gradient(90deg, #00ffff 0%, #4CAF50 100%);
+      box-shadow: 0 0 15px rgba(76, 175, 80, 0.4), 0 0 10px rgba(0, 255, 255, 0.3);
+      transform: scale(1.05) translateX(5px) translateZ(5px) rotateY(5deg);
+    }
+    
+    .change-btn:active {
+      transform: scale(0.98) translateX(2px) translateZ(2px) rotateY(2deg);
+    }
+    
+    .input-cnp {
+      width: 70px;
+      padding: 4px 8px;
+      border-radius: 5px;
+      border: 1px solid #4CAF50;
+      background: #222;
+      color: #4CAF50;
+      font-size: 1em;
+      margin-left: 8px;
+      font-family: 'Georgia', serif;
+      cursor: text;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .input-cnp:focus {
+      outline: none;
+      border-color: #00ffff;
+      box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+    
+    .input-cnp.error {
+      border-color: #ff3300;
+      background: #330000;
+      color: #ff3300;
+      box-shadow: 0 0 8px rgba(255, 51, 0, 0.3);
+      animation: shake 0.5s ease-in-out;
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    
+    .hidden { display: none; }
+    
+    .success-msg { 
+      color: #4CAF50; 
+      margin-left: 10px; 
+      font-family: 'Georgia', serif; 
+      text-shadow: 0 0 3px rgba(76, 175, 80, 0.3);
+      animation: successPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes successPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .error-msg { 
+      color: #ff3300; 
+      margin-left: 10px; 
+      font-family: 'Georgia', serif; 
+      text-shadow: 0 0 3px rgba(255, 51, 0, 0.3);
+      animation: errorShake 0.5s ease-in-out;
+    }
+    
+    @keyframes errorShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      75% { transform: translateX(3px); }
+    }
+    
+    .points-section {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 12px;
+      transition: all 0.3s ease;
+    }
+    
+    .points-section:hover {
+      transform: scale(1.02);
+    }
+    
+    .points-value {
+      font-size: 2.2em;
+      color: #ffdd00;
+      font-weight: bold;
+      margin-right: 10px;
+      font-family: 'Playfair Display', Georgia, serif;
+      text-shadow: 0 0 10px rgba(255, 221, 0, 0.5);
+      animation: pointsGlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes pointsGlow {
+      0%, 100% { text-shadow: 0 0 10px rgba(255, 221, 0, 0.5); }
+      50% { text-shadow: 0 0 20px rgba(255, 221, 0, 0.8); }
+    }
+    
+    .points-advantage {
+      margin-top: 10px;
+      color: #4CAF50;
+      font-size: 1.1em;
+      font-family: 'Georgia', serif;
+      text-shadow: 0 0 3px rgba(76, 175, 80, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .advantage-list {
+      margin-top: 10px;
+      color: #fff;
+      font-size: 1em;
+      padding-left: 20px;
+      font-family: 'Georgia', serif;
+    }
+    
+    .advantage-list li {
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .advantage-list li::before {
+      content: '→';
+      position: absolute;
+      left: -15px;
+      color: rgba(76, 175, 80, 0.5);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .advantage-list li:hover::before {
+      opacity: 1;
+      left: -20px;
+    }
+    
+    .advantage-list li:hover {
+      color: #00ffff;
+      transform: translateX(5px);
+    }
+    
+    .quiz-list {
+      margin-top: 10px;
+      color: #fff;
+      font-size: 1em;
+      padding-left: 20px;
+      font-family: 'Georgia', serif;
+    }
+    
+    .quiz-list li {
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .quiz-list li::before {
+      content: '✓';
+      position: absolute;
+      left: -15px;
+      color: rgba(76, 175, 80, 0.5);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-list li:hover::before {
+      opacity: 1;
+      left: -20px;
+    }
+    
+    .quiz-list li:hover {
+      color: #ffdd00;
+      transform: translateX(5px);
+    }
+    
+    .frames-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    
+    .frame-item {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      border: 1px solid rgba(76, 175, 80, 0.2);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .frame-item:hover {
+      border-color: rgba(76, 175, 80, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+    }
+    
+    .frame-preview {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 10px auto;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .beginner-frame {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: 3px solid #4CAF50;
+    }
+    
+    .special-frame {
+      background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
+      background-size: 400% 400%;
+      border: 3px solid #ffdd00;
+      animation: specialGlow 2s ease-in-out infinite alternate, 
+                gradientShift 3s ease-in-out infinite,
+                rotateFrame 8s linear infinite;
+      position: relative;
+    }
+    
+    .special-frame::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
+      background-size: 400% 400%;
+      border-radius: 50%;
+      z-index: -1;
+      animation: gradientShift 2s ease-in-out infinite reverse;
+      filter: blur(8px);
+    }
+    
+    .special-frame::after {
+      content: '✨';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 1.5em;
+      animation: sparkle 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes specialGlow {
+      from { 
+        box-shadow: 0 0 15px rgba(255, 221, 0, 0.6),
+                   0 0 30px rgba(255, 107, 107, 0.4),
+                   0 0 45px rgba(72, 219, 251, 0.3);
+      }
+      to { 
+        box-shadow: 0 0 25px rgba(255, 221, 0, 0.8),
+                   0 0 50px rgba(255, 107, 107, 0.6),
+                   0 0 75px rgba(72, 219, 251, 0.5);
+      }
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    @keyframes rotateFrame {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+    }
+    
+    .frame-info h4 {
+      color: #4CAF50;
+      margin: 0 0 5px 0;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.1em;
+    }
+    
+    .frame-info p {
+      color: #fff;
+      margin: 0 0 10px 0;
+      font-size: 0.9em;
+    }
+    
+    .frame-item.selected {
+      border-color: #00ffff;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    }
+    
+    .frame-item.selected .frame-preview {
+      border-color: #00ffff;
+    }
+    
+    .badge {
+      width: 64px;
+      height: 64px;
+      position: relative;
+      display: inline-block;
+      margin: 8px 12px 16px 12px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .badge:hover {
+      transform: scale(1.12) rotate(-4deg);
+      z-index: 2;
+    }
+    .badge-star, .badge-medal, .badge-puzzle, .badge-pdf, .badge-calendar {
+      filter: drop-shadow(0 0 12px #fff176cc) drop-shadow(0 0 24px #ffd70044);
+      transition: filter 0.3s, transform 0.3s;
+    }
+    .badge-star {
+      fill: url(#star-gradient);
+      stroke: #ffb300;
+      stroke-width: 2.5;
+      animation: badgePulse 2.5s infinite alternate;
+    }
+    .badge-medal {
+      fill: url(#medal-gradient);
+      stroke: #ffd700;
+      stroke-width: 2.5;
+    }
+    .badge-puzzle {
+      fill: url(#puzzle-gradient);
+      stroke: #8e24aa;
+      stroke-width: 2.5;
+    }
+    .badge-puzzle-dot {
+      fill: #fff;
+      opacity: 0.8;
+    }
+    .badge-pdf {
+      fill: url(#pdf-gradient);
+      stroke: #607d8b;
+      stroke-width: 2.5;
+    }
+    .badge-calendar {
+      fill: url(#calendar-gradient);
+      stroke: #2196f3;
+      stroke-width: 2.5;
+    }
+    .badge-label {
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 0.85em;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 2px 8px #000a;
+      pointer-events: none;
+    }
+    @keyframes badgePulse {
+      0% { filter: drop-shadow(0 0 12px #fff176cc) drop-shadow(0 0 24px #ffd70044); }
+      100% { filter: drop-shadow(0 0 32px #fff176) drop-shadow(0 0 48px #ffd700); }
+    }
+    
+    /* Buton toggle pentru modul animat/basic */
+    .mode-toggle-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-family: 'Georgia', serif;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      transition: background 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(76, 175, 80, 0.3);
+    }
+    
+    .mode-toggle-btn:hover {
+      background: linear-gradient(135deg, #45a049, #4CAF50);
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    }
+    
+    .mode-toggle-btn:active {
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+    }
+    /* Toate butoanele statice, fără efect de mișcare după cursor */
+    button, .mode-toggle-btn {
+      transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+    }
+    button:hover, .mode-toggle-btn:hover {
+      transform: none !important;
+    }
+    
+    /* Modul basic - buton static */
+    body.basic-mode .mode-toggle-btn {
+      background: linear-gradient(135deg, #34495e, #2c3e50);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(52, 73, 94, 0.6);
+    }
+    
+    body.basic-mode .mode-toggle-btn:hover {
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      transform: translateY(-1px) scale(1.02);
+    }
+    
+    /* Tranziții pentru toate elementele animate */
+    .floating-symbol,
+    .corner-glow,
+    h1,
+    .section-title,
+    .profile-row,
+    .change-btn,
+    .eye-btn,
+    .input-cnp,
+    .success-msg,
+    .error-msg,
+    .points-value,
+    .badge,
+    .frame-item,
+    .frame-preview,
+    .frame-info h4,
+    .frame-info p {
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Modul basic - elemente cu animații reduse */
+    body.basic-mode .floating-symbol {
+      opacity: 0.15;
+      animation: floatBasic 6s ease-in-out infinite;
+    }
+    
+    body.basic-mode .corner-glow {
+      opacity: 0.1;
+      animation: glowBasic 4s ease-in-out infinite;
+    }
+    
+    body.basic-mode h1 {
+      text-shadow: 0 0 3px rgba(76, 175, 80, 0.2);
+      animation: titlePulse 3s ease-in-out infinite;
+    }
+    
+    body.basic-mode h1:hover {
+      transform: scale(1.01);
+      text-shadow: 0 0 5px rgba(76, 175, 80, 0.4);
+    }
+    
+    body.basic-mode .section-title {
+      text-shadow: 0 0 2px rgba(76, 175, 80, 0.15);
+    }
+    
+    body.basic-mode .section-title:hover {
+      text-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
+      transform: translateX(2px);
+    }
+    
+    body.basic-mode .profile-row:hover {
+      transform: translateX(1px);
+      background: rgba(76, 175, 80, 0.03);
+    }
+    
+    body.basic-mode .change-btn:hover {
+      transform: scale(1.02);
+      background: #45a049;
+    }
+    
+    body.basic-mode .eye-btn:hover {
+      transform: scale(1.05);
+      color: #00ffff;
+    }
+    
+    body.basic-mode .badge:hover {
+      transform: scale(1.05);
+    }
+    
+    body.basic-mode .frame-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.15);
+    }
+    
+    /* Reducerea efectelor 3D în modul basic */
+    body.basic-mode .change-btn::before {
+      opacity: 0;
+      left: -20px;
+    }
+    
+    body.basic-mode .eye-btn::before {
+      opacity: 0;
+      transform: scale(0.5) translateZ(0);
+    }
+    
+    body.basic-mode .eye-btn:hover::before {
+      opacity: 0;
+    }
+    
+    /* Animații pentru modul basic */
+    @keyframes floatBasic {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+    
+    @keyframes glowBasic {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 0.2; }
+    }
+    
+    @keyframes titlePulse {
+      0%, 100% { text-shadow: 0 0 3px rgba(76, 175, 80, 0.2); }
+      50% { text-shadow: 0 0 5px rgba(76, 175, 80, 0.3); }
+    }
+    
+    @media (max-width: 600px) {
+      .container { padding: 10px; }
+      .profile-row { flex-direction: column; align-items: flex-start; gap: 2px; }
+      .profile-label { min-width: 90px; }
+      .mode-toggle-btn {
+        top: 10px;
+        left: 10px;
+        padding: 10px 16px;
+        font-size: 0.9em;
+      }
+    }
+
+    /* Butoane de navigare */
+    .nav-button {
+      transition: all 0.3s ease;
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Modul calm - butoane cu culori mai închise */
+    body.basic-mode .home-button {
+      background: rgba(44, 62, 80, 0.9) !important;
+      color: #ecf0f1 !important;
+      border-color: #34495e !important;
+    }
+
+    body.basic-mode .nav-button {
+      background: rgba(44, 62, 80, 0.9) !important;
+      color: #ecf0f1 !important;
+      border-color: #34495e !important;
+    }
+
+    body.basic-mode .home-button:hover,
+    body.basic-mode .nav-button:hover {
+      background: rgba(52, 73, 94, 1) !important;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    body.basic-mode .change-btn {
+      background: linear-gradient(90deg, #34495e 0%, #2c3e50 100%) !important;
+      color: #ecf0f1 !important;
+    }
+
+    body.basic-mode .eye-btn {
+      color: #ecf0f1 !important;
+    }
+
+    body.basic-mode .input-cnp {
+      background: #34495e !important;
+      color: #ecf0f1 !important;
+      border-color: #2c3e50 !important;
+    }
+
+    .badge-tips-academic {
+      background: linear-gradient(135deg, #00c3ff 0%, #3ad29f 100%);
+      box-shadow: 0 0 24px #00c3ff88, 0 0 40px #3ad29f55;
+      border: 3px solid #fff176;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      display: inline-block;
+      position: relative;
+      margin: 8px 12px 16px 12px;
+      animation: badgeAcademicPulse 2s infinite alternate;
+    }
+    .badge-tips-academic .badge-tips-icon {
+      color: #fff176;
+      font-size: 2.2em;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-shadow: 0 0 16px #00c3ff, 0 0 24px #3ad29f;
+    }
+    .badge-tips-academic .badge-tips-label {
+      display: block;
+      position: static;
+      margin-top: 18px;
+      text-align: center;
+      font-size: 1em;
+      font-weight: bold;
+      color: #00c3ff;
+      text-shadow: 0 2px 8px #3ad29f99;
+      pointer-events: none;
+    }
+    @keyframes badgeAcademicPulse {
+      0% { box-shadow: 0 0 24px #00c3ff88, 0 0 40px #3ad29f55; }
+      100% { box-shadow: 0 0 40px #3ad29f, 0 0 60px #00c3ff; }
+    }
+
+    body.basic-mode #set-username {
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      -webkit-text-fill-color: #3498db !important;
+      color: #3498db !important;
+      font-weight: bold !important;
+      text-shadow: none !important;
+      animation: none !important;
+    }
+    body.basic-mode .beginner-frame {
+      border: 4px solid #3498db !important;
+      box-shadow: none !important;
+    }
+    body.basic-mode .profile-label {
+      color: #3498db !important;
+      font-weight: bold !important;
+      text-shadow: none !important;
+    }
+    body.basic-mode .mode-toggle-btn {
+      background: linear-gradient(135deg, #34495e, #2c3e50);
+      color: #ecf0f1;
+      border: none;
+      border-radius: 25px;
+      font-family: 'Georgia', serif;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(44, 62, 80, 0.5);
+      transition: background 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(52, 73, 94, 0.6);
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+    }
+    .home-button {
+      font-size: 2em !important;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid #00ffcc !important;
+      border-radius: 16px !important;
+      background: rgba(10, 30, 40, 0.85) !important;
+      box-shadow: 0 0 18px #00fff7, 0 0 32px #00ffcc99;
+      color: #00fff7 !important;
+      padding: 10px 22px !important;
+      transition: box-shadow 0.2s, background 0.2s, border 0.2s;
+    }
+    .home-button:hover {
+      box-shadow: 0 0 32px #00fff7, 0 0 48px #00ffcc;
+      background: rgba(0, 255, 247, 0.15) !important;
+      border-color: #fff !important;
+      color: #fff !important;
+    }
+
+    /* Badge digital profesional */
+    .digital-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #e0f7fa 60%, #b2dfdb 100%);
+      border: 2.5px solid #1976d2;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #1976d244, 0 1.5px 0 #43e97b;
+      padding: 24px 32px 18px 32px;
+      margin: 32px auto 0 auto;
+      max-width: 320px;
+      min-width: 180px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      color: #1976d2;
+      font-size: 1.18rem;
+      letter-spacing: 0.5px;
+      position: relative;
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+    .digital-badge .badge-icon {
+      font-size: 3.2rem;
+      margin-bottom: 10px;
+      color: #43e97b;
+      filter: drop-shadow(0 2px 8px #43e97b44);
+    }
+    .digital-badge .badge-label {
+      font-size: 1.08rem;
+      color: #1976d2;
+      font-weight: 800;
+      margin-top: 2px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 0 #fff, 0 2px 8px #43e97b22;
+    }
+    .digital-badge:hover {
+      box-shadow: 0 8px 32px #1976d288, 0 2px 0 #43e97b;
+      border-color: #43e97b;
+    }
+    /* Fundal profil basic: gradient verde inchis - cyan inchis */
+    body.basic-mode .profile-bg {
+      background: linear-gradient(120deg, #197a5e 0%, #1976d2 100%);
+      color: #fff;
+    }
+    
+    /* --- NIVELE CU EFECTE CROMATICE ȘI STELATE --- */
+    .level-section {
+      margin-bottom: 38px;
+      padding: 32px 0 18px 0;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .level-badge.starlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      background: linear-gradient(90deg, #6dd5ed, #f7971e, #f953c6, #43e97b, #38f9d7, #ffd700, #6dd5ed);
+      background-size: 400% 400%;
+      animation: gradientMove 6s ease-in-out infinite;
+      box-shadow: 0 0 24px #fff176cc, 0 0 48px #ffd70044;
+      border-radius: 50px;
+      padding: 18px 36px;
+      position: relative;
+      overflow: visible;
+    }
+    @keyframes gradientMove {
+      0%,100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .level-name.starlight-text {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #111;
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      -webkit-text-fill-color: #111 !important;
+      text-shadow: none !important;
+      position: relative;
+    }
+    .level-badge.starlight svg {
+      width: 48px; height: 48px;
+      filter: drop-shadow(0 0 16px #fff176cc);
+      animation: starPulse 2s infinite alternate;
+    }
+    @keyframes starPulse {
+      0% { filter: drop-shadow(0 0 8px #fff176cc); }
+      100% { filter: drop-shadow(0 0 32px #ffd700); }
+    }
+    .level-progress-bar {
+      margin: 18px auto 8px auto;
+      height: 18px;
+      background: #eee;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      max-width: 340px;
+      box-shadow: 0 2px 12px #ffd70033;
+    }
+    .level-progress {
+      height: 100%;
+      background: linear-gradient(90deg, #ffd700, #43e97b, #38f9d7, #f7971e, #f953c6);
+      background-size: 300% 300%;
+      animation: gradientMove 6s ease-in-out infinite;
+      border-radius: 12px 0 0 12px;
+      transition: width 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .level-shine {
+      position: absolute;
+      top: 0; left: 0; height: 100%; width: 100%;
+      background: linear-gradient(120deg, transparent 60%, #fff8 80%, transparent 100%);
+      animation: shineMove 2.5s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes shineMove {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+    .level-progress-info {
+      font-size: 1.1em;
+      color: #ffd700;
+      margin-top: 6px;
+      text-shadow: 0 2px 8px #fff17699;
+      font-family: 'Kalam', cursive;
+    }
+
+    .nav-buttons-group {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 12px;
+      z-index: 1000;
+      align-items: center;
+    }
+    .back-arrow {
+      background: transparent;
+      color: #1976d2;
+      border: 2px solid #1976d2;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 0 8px #1976d2;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .back-arrow:hover {
+      background: rgba(25, 118, 210, 0.1);
+      box-shadow: 0 0 15px #1976d2;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Elemente 3D flotante optimizate -->
+  <div class="floating-3d-element">🔮</div>
+  <div class="floating-3d-element">⚡</div>
+  <div class="floating-3d-element">💎</div>
+  <div class="floating-3d-element">🌟</div>
+  <div class="floating-3d-element">🎯</div>
+  <div class="floating-3d-element">🚀</div>
+  
+  <!-- Particule 3D animate -->
+  <div class="particle-3d"></div>
+  <div class="particle-3d"></div>
+  <div class="particle-3d"></div>
+  <div class="particle-3d"></div>
+  <div class="particle-3d"></div>
+  <div class="particle-3d"></div>
+  <button class="mode-toggle-btn" onclick="toggleMode()" id="mode-toggle">🎨 Modul 3D</button>
+  <div class="nav-buttons-group">
+    <!-- <a href="javascript:history.back()" class="back-arrow">←</a> -->
+    <a href="index.html" class="home-button">⌂</a>
+  </div>
+  <div class="container">
+    <div class="profile-main-col">
+      <h1 style="margin-bottom:32px;">Profilul meu</h1>
+      <div class="profile-section"> <!-- Setări cont -->
+        <div class="section-title">Setări cont</div>
+        <div class="profile-row"><span class="profile-label">Username:</span><span class="profile-value" id="set-username" style="font-weight:bold;color:#00ffff;"></span></div>
+        <div class="profile-row"><span class="profile-label">Email:</span><span class="profile-value masked" id="set-email"></span></div>
+        <div class="profile-row"><span class="profile-label">Parolă:</span><span class="profile-value masked" id="set-password">********</span>
+          <button class="eye-btn" onclick="togglePassword()" title="Afișează parola">👁️</button>
+          <input class="input-cnp hidden" id="cnp-check-eye" maxlength="4" placeholder="CNP" oninput="checkCnpForPassword()" />
+        </div>
+        <div class="profile-row"><span class="profile-label">Schimbă parola:</span>
+          <button class="change-btn" onclick="showChangePassword()">Schimbă</button>
+          <input class="input-cnp hidden" id="cnp-check-change" maxlength="4" placeholder="CNP" oninput="checkCnpForChange()" />
+          <input class="input-cnp hidden" id="new-password" type="password" placeholder="Noua parolă" />
+          <button class="change-btn hidden" id="save-new-pass" onclick="saveNewPassword()">Salvează</button>
+          <span class="success-msg hidden" id="pass-success">Parolă schimbată!</span>
+          <span class="error-msg hidden" id="pass-error">CNP greșit!</span>
+        </div>
+        <div class="profile-row"><span class="profile-label">Telefon:</span><span class="profile-value" id="set-tel"></span></div>
+        <div class="profile-row"><span class="profile-label">Data nașterii:</span><span class="profile-value" id="set-datanasterii"></span></div>
+      </div>
+      <div class="profile-section"> <!-- Rezultate quiz-uri -->
+        <div class="section-title">Rezultate quiz-uri</div>
+        <ul class="quiz-list" id="quiz-list">
+          <li>Nu ai completat încă niciun quiz.</li>
+        </ul>
+      </div>
+      <div class="profile-section"> <!-- Rame de profil -->
+        <div class="section-title">Rame de profil</div>
+        <div class="frames-container" id="frames-container">
+          <div class="frame-item">
+            <div class="frame-preview beginner-frame">
+              <div class="frame-image">👤</div>
+            </div>
+            <div class="frame-info">
+              <h4>Rama de începător</h4>
+              <p>Rama ta de bază</p>
+              <button class="change-btn" onclick="selectFrame('beginner')">Selectează</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="profile-side-col">
+      <div class="profile-section"> <!-- Puncte -->
+        <div class="section-title">Punctele mele</div>
+        <div class="points-section">
+          <span class="points-value" id="points-value">0</span>
+          <button class="change-btn" onclick="showAdvantages()">Avantaje</button>
+        </div>
+        <div class="points-advantage hidden" id="points-advantage"></div>
+        <ul class="advantage-list hidden" id="advantage-list">
+          <li>100 puncte: Ramă de profil specială</li>
+          <li>600 puncte: Mini puzzle educațional gratuit</li>
+          <li>1000 puncte: Acces la quiz-uri exclusive</li>
+          <li>1500 puncte: Badge de excelență</li>
+          <li>2000 puncte: Sesiune 1:1 cu un mentor</li>
+          <li>+ Surprize educaționale la fiecare prag!</li>
+        </ul>
+      </div>
+      <div class="profile-section"> <!-- Badgeturi -->
+        <div class="section-title">Badgeturi</div>
+        <div id="badge-container" class="badges-row"></div>
+      </div>
+      <div class="level-section" id="level-section">
+        <!-- Secțiunea de nivel va fi completată dinamic cu JS -->
+      </div>
+    </div>
+  </div>
+  <script>
+    let users = JSON.parse(localStorage.getItem('users') || '{}');
+    let userProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+    let currentEmail = localStorage.getItem('currentUser');
+    let user = users[currentEmail];
+    let userProfile = userProfiles[currentEmail] || {};
+    
+    if (!user) {
+      document.body.innerHTML = '<div style="color:#ff3300;text-align:center;margin-top:80px;font-size:2em;">Nu ești autentificat! <br><a href="index.html" style="color:#00ffff;">Înapoi la Home</a></div>';
+    } else {
+      document.getElementById('set-username').textContent = user.username + (userProfile.hasIcon ? ' ★' : '');
+      document.getElementById('set-tel').textContent = user.tel;
+      document.getElementById('set-datanasterii').textContent = user.datanasterii;
+      // Email mask: primele 2 și ultimele 3 litere vizibile
+      let email = currentEmail;
+      let masked = email.length > 5 ? email.slice(0,2) + '*'.repeat(email.length-5) + email.slice(-3) : email;
+      document.getElementById('set-email').textContent = masked;
+      // Puncte - afișează punctele reale din profil
+      let points = userProfile.points || 0;
+      document.getElementById('points-value').textContent = points;
+      // Toți utilizatorii pornesc cu 0 puncte și colectează din quiz-uri sau alte acțiuni reale
+      if (typeof userProfile.points !== 'number') {
+        userProfile.points = 0;
+        userProfiles[currentEmail] = userProfile;
+        localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
+      }
+    }
+    
+    // Avantaje cu buton de redeem pentru fiecare prag atins, nu doar la primul
+    function showAdvantages() {
+      const pointsAdvantage = document.getElementById('points-advantage');
+      const advantageList = document.getElementById('advantage-list');
+      
+      // Verifică dacă avantajele sunt deja afișate
+      if (!pointsAdvantage.classList.contains('hidden')) {
+        // Dacă sunt afișate, le ascunde
+        pointsAdvantage.classList.add('hidden');
+        advantageList.classList.add('hidden');
+        return;
+      }
+      
+      // Dacă sunt ascunse, le afișează
+      pointsAdvantage.classList.remove('hidden');
+      advantageList.classList.remove('hidden');
+      
+      let p = userProfile.points || 0;
+      let advantageListData = [
+        { points: 100, key: 'frame', label: 'Ramă de profil colorată', action: 'reedemFrame' },
+        { points: 300, key: 'icon', label: 'Iconiță lângă nume', action: 'reedemIcon' },
+        { points: 600, key: 'quizbonus', label: 'Quiz bonus (grilă)', action: 'reedemQuizBonus' },
+        { points: 800, key: 'skip', label: 'Skip la un exercițiu greu (1/săptămână)', action: 'reedemSkip' },
+        { points: 1000, key: 'badge', label: 'Badge digital simplu', action: 'reedemBadge' },
+        { points: 1500, key: 'puzzle', label: 'Mini puzzle text', action: 'reedemPuzzle' },
+        { points: 1800, key: 'powerup', label: 'Power-up de învățare (indiciu+explicație quiz)', action: 'reedemPowerup' },
+        { points: 2000, key: 'pdf', label: 'Acces la materiale PDF', action: 'reedemPDF' }
+      ];
+      let html = '';
+      advantageListData.forEach(adv => {
+        let obtained = userProfile.redeemedAdvantages && userProfile.redeemedAdvantages.includes(adv.key);
+        let canRedeem = p >= adv.points && !obtained;
+        html += `<li>${adv.points} puncte: ${adv.label}`;
+        if (obtained) {
+          html += ' <span style="color:#4CAF50;font-weight:bold;">(Obținut)</span>';
+        } else if (canRedeem) {
+          html += ` <button class="change-btn" onclick="reedemAdvantage('${adv.key}')" style="margin-left: 10px;">Reedem</button>`;
+        }
+        html += '</li>';
+      });
+      advantageList.innerHTML = html;
+      pointsAdvantage.innerHTML = `<b>Puncte disponibile:</b> ${p}`;
+    }
+
+    // BADGETURI SVG/CSS - asigură persistența la reload
+    function renderBadges() {
+      const badgeContainer = document.getElementById('badge-container');
+      badgeContainer.innerHTML = '';
+      const badges = [
+        { key: 'quizPerfect', label: 'Quiz Perfect', svg: `<svg width="48" height="48" viewBox="0 0 64 64"><polygon class="badge-star" points="32,6 39,24 58,24 42,36 48,54 32,43 16,54 22,36 6,24 25,24"/></svg>` },
+        { key: 'badge', label: 'Badge Digital', svg: `<svg width="48" height="48" viewBox="0 0 64 64"><circle class="badge-medal" cx="32" cy="32" r="22"/><rect class="badge-ribbon" x="24" y="44" width="16" height="12" rx="4"/></svg>` },
+        { key: 'puzzle', label: 'Puzzle', svg: `<svg width="48" height="48" viewBox="0 0 64 64"><rect class="badge-puzzle" x="12" y="12" width="40" height="40" rx="8"/><circle class="badge-puzzle-dot" cx="32" cy="32" r="7"/></svg>` },
+        { key: 'pdf', label: 'PDF', svg: `<svg width="48" height="48" viewBox="0 0 64 64"><rect class="badge-pdf" x="16" y="8" width="32" height="48" rx="6"/><rect class="badge-pdf-corner" x="36" y="8" width="12" height="12" rx="3"/></svg>` },
+        { key: 'challenge', label: 'Provocare', svg: `<svg width="48" height="48" viewBox="0 0 64 64"><rect class="badge-calendar" x="12" y="16" width="40" height="32" rx="6"/><rect class="badge-calendar-top" x="12" y="10" width="40" height="10" rx="3"/></svg>` }
+      ];
+      // BADGE pentru sfaturi aplicate
+      if (userProfile.hasTipsBadge) {
+        badgeContainer.innerHTML += `<div class="badge" title="Luptător Academic"><svg width="48" height="48" viewBox="0 0 64 64"><circle cx="32" cy="32" r="22" fill="#218c3a" stroke="#fff176" stroke-width="4"/><path d="M32 18 L44 24 V34 C44 40 32 46 32 46 C32 46 20 40 20 34 V24 Z" fill="#3ad29f" stroke="#1976d2" stroke-width="2"/></svg><span class="badge-label">Luptător Academic</span></div>`;
+      }
+      badges.forEach(badge => {
+        if (userProfile[`has${badge.key.charAt(0).toUpperCase() + badge.key.slice(1)}`] || (badge.key === 'quizPerfect' && userProfile.quizPerfect)) {
+          badgeContainer.innerHTML += `<div class="badge" title="${badge.label}">${badge.svg}<span class="badge-label">${badge.label}</span></div>`;
+        }
+      });
+      if (!document.getElementById('badge-defs')) {
+        badgeContainer.innerHTML += `
+          <svg width="0" height="0" style="position:absolute;" id="badge-defs">
+            <defs>
+              <linearGradient id="star-gradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ffd700"/>
+                <stop offset="100%" stop-color="#ff9800"/>
+              </linearGradient>
+              <linearGradient id="medal-gradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fffde4"/>
+                <stop offset="100%" stop-color="#ffd700"/>
+              </linearGradient>
+              <linearGradient id="puzzle-gradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ce93d8"/>
+                <stop offset="100%" stop-color="#8e24aa"/>
+              </linearGradient>
+              <linearGradient id="pdf-gradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#b0bec5"/>
+                <stop offset="100%" stop-color="#607d8b"/>
+              </linearGradient>
+              <linearGradient id="calendar-gradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#90caf9"/>
+                <stop offset="100%" stop-color="#1976d2"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        `;
+      }
+    }
+    // Apelează renderBadges la fiecare reload dacă există user
+    if (user) { renderBadges(); }
+
+    // Modific animația de cadou să arate și punctele cheltuite
+    function showGiftAnimation(svg, label, points) {
+      let overlay = document.createElement('div');
+      overlay.id = 'gift-overlay';
+      overlay.style.position = 'fixed';
+      overlay.style.top = 0;
+      overlay.style.left = 0;
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.background = 'rgba(0,0,0,0.45)';
+      overlay.style.zIndex = 99999;
+      overlay.style.display = 'flex';
+      overlay.style.alignItems = 'center';
+      overlay.style.justifyContent = 'center';
+      overlay.innerHTML = `
+        <div class="gift-box-anim">
+          <div class="gift-lid"></div>
+          <div class="gift-box"></div>
+          <div class="gift-content" style="opacity:0;">
+            <div style='font-size:1.2em;color:#ffd700;font-weight:bold;margin-bottom:6px;'>-${points} puncte</div>
+            ${svg}
+            <div class="gift-label">${label}</div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      const style = document.createElement('style');
+      style.innerHTML = `
+        .gift-box-anim { position: relative; width: 120px; height: 120px; }
+        .gift-box { width: 120px; height: 80px; background: linear-gradient(135deg,#ffd700,#ff6b6b); border-radius: 0 0 18px 18px; position: absolute; bottom: 0; left: 0; box-shadow: 0 8px 32px #0005; z-index: 2; }
+        .gift-lid { width: 120px; height: 40px; background: linear-gradient(90deg,#ff6b6b,#ffd700); border-radius: 18px 18px 0 0; position: absolute; top: 0; left: 0; z-index: 3; transition: transform 0.7s cubic-bezier(.4,2,.2,1); }
+        .gift-content { position: absolute; left: 50%; top: 50%; transform: translate(-50%, 20px) scale(0.5); transition: opacity 0.5s, transform 0.7s cubic-bezier(.4,2,.2,1); z-index: 4; }
+        .gift-label { text-align: center; color: #fff; font-weight: bold; font-size: 1.1em; margin-top: 8px; text-shadow: 0 2px 8px #000a; }
+        #gift-overlay { animation: fadeInGift 0.3s; }
+        @keyframes fadeInGift { from { opacity: 0; } to { opacity: 1; } }
+      `;
+      document.head.appendChild(style);
+      setTimeout(()=>{
+        overlay.querySelector('.gift-lid').style.transform = 'translateY(-60px) rotate(-18deg)';
+        setTimeout(()=>{
+          let content = overlay.querySelector('.gift-content');
+          content.style.opacity = 1;
+          content.style.transform = 'translate(-50%, -60px) scale(1.2)';
+          content.querySelector('svg').style.filter = 'drop-shadow(0 0 24px #fff176)';
+          setTimeout(()=>{
+            overlay.style.opacity = 0;
+            setTimeout(()=>{
+              overlay.remove();
+              style.remove();
+            }, 400);
+          }, 1800);
+        }, 800);
+      }, 400);
+    }
+    // Modific reedemAdvantage să trimită și punctele cheltuite la animație
+    function reedemAdvantage(key) {
+      if (!userProfile.redeemedAdvantages) userProfile.redeemedAdvantages = [];
+      if (userProfile.redeemedAdvantages.includes(key)) return;
+      userProfile.redeemedAdvantages.push(key);
+      let advantageList = [
+        { points: 100, key: 'frame', svg: `<svg width='48' height='48' viewBox='0 0 64 64'><circle cx='32' cy='32' r='22' fill='#4CAF50' stroke='#fff' stroke-width='4'/></svg>`, label: 'Ramă de profil' },
+        { points: 300, key: 'icon', svg: `<svg width='48' height='48' viewBox='0 0 64 64'><circle cx='32' cy='32' r='18' fill='#2196f3'/><text x='32' y='40' text-anchor='middle' font-size='24' fill='#fff'>★</text></svg>`, label: 'Iconiță' },
+        { points: 600, key: 'quizbonus', svg: `<svg width='48' height='48' viewBox='0 0 64 64'><rect x='12' y='16' width='40' height='32' rx='6' fill='#ff9800'/></svg>`, label: 'Quiz Bonus' },
+        { points: 800, key: 'skip', svg: `<svg width='48' height='48' viewBox='0 0 64 64'><polygon points='16,32 48,16 48,48' fill='#f44336'/></svg>`, label: 'Skip' },
+        { points: 1000, key: 'badge', svg: `<svg width='48' height='48' viewBox='0 0 64 64'><polygon points='32,6 39,24 58,24 42,36 48,54 32,43 16,54 22,36 6,24 25,24' fill='#ffd700'/></svg>`, label: 'Badge' },
+        { points: 1500, key: 'puzzle', svg: `<svg width='48' height='48' viewBox='0 0 64 64'><rect x='12' y='12' width='40' height='40' rx='8' fill='#9c27b0'/></svg>`, label: 'Puzzle' },
+        { points: 1800, key: 'powerup', svg: `<svg width='48' height='48' viewBox='0 0 64 64'><rect x='16' y='8' width='32' height='48' rx='6' fill='#00bcd4'/></svg>`, label: 'Power-up' },
+        { points: 2000, key: 'pdf', svg: `<svg width='48' height='48' viewBox='0 0 64 64'><rect x='16' y='8' width='32' height='48' rx='6' fill='#607d8b'/></svg>`, label: 'PDF' }
+      ];
+      let advantage = advantageList.find(a => a.key === key);
+      if (advantage && userProfile.points >= advantage.points) {
+        userProfile.points -= advantage.points;
+      }
+      // Acțiuni specifice pentru fiecare avantaj
+      if (key === 'frame') {
+        if (!userProfile.frames) userProfile.frames = [];
+        userProfile.frames.push('special');
+      }
+      if (key === 'icon') {
+        userProfile.hasIcon = true;
+      }
+      if (key === 'quizbonus') {
+        userProfile.hasQuizBonus = true;
+      }
+      if (key === 'skip') {
+        userProfile.hasSkip = true;
+        userProfile.skipUsed = false;
+        userProfile.skipLastUsed = 0;
+      }
+      if (key === 'badge') {
+        userProfile.hasBadge = true;
+      }
+      if (key === 'puzzle') {
+        userProfile.hasPuzzle = true;
+      }
+      if (key === 'powerup') {
+        userProfile.hasPowerup = true;
+        userProfile.powerupUsed = false;
+        userProfile.powerupLastUsed = 0;
+      }
+      if (key === 'pdf') {
+        userProfile.hasPDF = true;
+      }
+      userProfiles[currentEmail] = userProfile;
+      localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
+      document.getElementById('points-value').textContent = userProfile.points;
+      showAdvantages();
+      renderBadges && renderBadges();
+      // Animație cadou la reedem cu puncte cheltuite
+      if (advantage) showGiftAnimation(advantage.svg, advantage.label, advantage.points);
+      alert('🎉 Felicitări! Ai obținut un nou avantaj!');
+    }
+    
+    // Parola: mascarea și afișarea doar cu CNP
+    let passwordVisible = false;
+    let changePasswordVisible = false;
+    
+    function togglePassword() {
+      // Reset input și mesaje
+      document.getElementById('cnp-check-eye').value = '';
+      document.getElementById('cnp-check-eye').classList.remove('error');
+      document.getElementById('pass-error').classList.add('hidden');
+      
+      if (!passwordVisible) {
+        document.getElementById('cnp-check-eye').classList.remove('hidden');
+        document.getElementById('cnp-check-eye').focus();
+      } else {
+        document.getElementById('set-password').textContent = '********';
+        passwordVisible = false;
+        document.getElementById('cnp-check-eye').classList.add('hidden');
+      }
+    }
+    function checkCnpForPassword() {
+      let val = document.getElementById('cnp-check-eye').value;
+      if (val === user.cnp) {
+        document.getElementById('set-password').textContent = user.password;
+        passwordVisible = true;
+        document.getElementById('cnp-check-eye').classList.add('hidden');
+        document.getElementById('cnp-check-eye').classList.remove('error');
+        document.getElementById('pass-error').classList.add('hidden');
+      } else if (val.length === 4) {
+        document.getElementById('cnp-check-eye').classList.add('error');
+        document.getElementById('pass-error').textContent = 'CNP greșit!';
+        document.getElementById('pass-error').classList.remove('hidden');
+      } else {
+        document.getElementById('cnp-check-eye').classList.remove('error');
+        document.getElementById('pass-error').classList.add('hidden');
+      }
+    }
+    // Schimbare parolă cu CNP
+    function showChangePassword() {
+      // Reset inputuri și mesaje
+      document.getElementById('cnp-check-change').value = '';
+      document.getElementById('new-password').value = '';
+      document.getElementById('cnp-check-change').classList.remove('error');
+      document.getElementById('pass-error').classList.add('hidden');
+      document.getElementById('pass-success').classList.add('hidden');
+      
+      if (!changePasswordVisible) {
+        document.getElementById('cnp-check-change').classList.remove('hidden');
+        document.getElementById('cnp-check-change').focus();
+        changePasswordVisible = true;
+      } else {
+        document.getElementById('cnp-check-change').classList.add('hidden');
+        document.getElementById('new-password').classList.add('hidden');
+        document.getElementById('save-new-pass').classList.add('hidden');
+        changePasswordVisible = false;
+      }
+    }
+    function checkCnpForChange() {
+      let val = document.getElementById('cnp-check-change').value;
+      if (val === user.cnp) {
+        document.getElementById('new-password').classList.remove('hidden');
+        document.getElementById('save-new-pass').classList.remove('hidden');
+        document.getElementById('cnp-check-change').classList.remove('error');
+        document.getElementById('pass-error').classList.add('hidden');
+      } else if (val.length === 4) {
+        document.getElementById('new-password').classList.add('hidden');
+        document.getElementById('save-new-pass').classList.add('hidden');
+        document.getElementById('cnp-check-change').classList.add('error');
+        document.getElementById('pass-error').textContent = 'CNP greșit!';
+        document.getElementById('pass-error').classList.remove('hidden');
+      } else {
+        document.getElementById('new-password').classList.add('hidden');
+        document.getElementById('save-new-pass').classList.add('hidden');
+        document.getElementById('cnp-check-change').classList.remove('error');
+        document.getElementById('pass-error').classList.add('hidden');
+      }
+    }
+    function saveNewPassword() {
+      let newPass = document.getElementById('new-password').value;
+      if (newPass.length < 4) {
+        document.getElementById('pass-error').textContent = 'Parola trebuie să aibă minim 4 caractere!';
+        document.getElementById('pass-error').classList.remove('hidden');
+        return;
+      }
+      users[currentEmail].password = newPass;
+      localStorage.setItem('users', JSON.stringify(users));
+      document.getElementById('set-password').textContent = '********';
+      document.getElementById('new-password').classList.add('hidden');
+      document.getElementById('save-new-pass').classList.add('hidden');
+      document.getElementById('cnp-check-change').classList.add('hidden');
+      document.getElementById('pass-success').classList.remove('hidden');
+      changePasswordVisible = false;
+      setTimeout(()=>{
+        document.getElementById('pass-success').classList.add('hidden');
+      }, 2000);
+    }
+    
+    // Afișează ramele de profil
+    function displayFrames() {
+      const framesContainer = document.getElementById('frames-container');
+      const currentFrame = userProfile.selectedFrame || 'beginner';
+      
+      // Șterge ramele existente
+      framesContainer.innerHTML = '';
+      
+      // Rama de începător (mereu disponibilă)
+      const beginnerFrame = document.createElement('div');
+      beginnerFrame.className = `frame-item ${currentFrame === 'beginner' ? 'selected' : ''}`;
+      beginnerFrame.innerHTML = `
+        <div class="frame-preview beginner-frame">
+          <div class="frame-image">👤</div>
+        </div>
+        <div class="frame-info">
+          <h4>Rama de începător</h4>
+          <p>Rama ta de bază</p>
+          <button class="change-btn" onclick="selectFrame('beginner')">${currentFrame === 'beginner' ? 'Selectată' : 'Selectează'}</button>
+        </div>
+      `;
+      framesContainer.appendChild(beginnerFrame);
+      
+      // Rama specială (dacă este redemătată)
+      if (userProfile.frames && userProfile.frames.includes('special')) {
+        const specialFrame = document.createElement('div');
+        specialFrame.className = `frame-item ${currentFrame === 'special' ? 'selected' : ''}`;
+        specialFrame.innerHTML = `
+          <div class="frame-preview special-frame">
+            <div class="frame-image">⭐</div>
+          </div>
+          <div class="frame-info">
+            <h4>Rama Specială</h4>
+            <p>Rama exclusivă redemătată</p>
+            <button class="change-btn" onclick="selectFrame('special')">${currentFrame === 'special' ? 'Selectată' : 'Selectează'}</button>
+          </div>
+        `;
+        framesContainer.appendChild(specialFrame);
+      }
+    }
+    
+    // Selectează o ramă
+    function selectFrame(frameType) {
+      userProfile.selectedFrame = frameType;
+      userProfiles[currentEmail] = userProfile;
+      localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
+      
+      displayFrames();
+      
+      const frameNames = {
+        'beginner': 'Rama de începător',
+        'special': 'Rama Specială'
+      };
+      
+      alert(`✅ Ai selectat ${frameNames[frameType]} ca rama ta de profil!`);
+    }
+    
+    // Inițializează afișarea ramelelor
+    if (user) {
+      displayFrames();
+    }
+
+    // Puzzle drag & drop cu clase C++ (o dată pe săptămână)
+    function openPuzzleModal() {
+      if (!userProfile.hasPuzzle) return;
+      const now = Date.now();
+      const lastSolved = userProfile.puzzleLastSolved || 0;
+      if (now - lastSolved < 7*24*60*60*1000) {
+        alert('Poți rezolva un nou puzzle peste o săptămână de la ultima rezolvare!');
+        return;
+      }
+      if (document.getElementById('puzzle-modal')) return;
+      const modal = document.createElement('div');
+      modal.id = 'puzzle-modal';
+      modal.innerHTML = `
+        <div class="puzzle-overlay"></div>
+        <div class="puzzle-modal-content">
+          <h2>Puzzle: Asociază clasele C++ cu descrierea lor</h2>
+          <div class="puzzle-board">
+            <div class="puzzle-classes">
+              <div class="puzzle-draggable" draggable="true" data-class="Animal">Animal</div>
+              <div class="puzzle-draggable" draggable="true" data-class="Student">Student</div>
+              <div class="puzzle-draggable" draggable="true" data-class="Masina">Masina</div>
+            </div>
+            <div class="puzzle-targets">
+              <div class="puzzle-target" data-class="Student">Are nume, vârstă, note și metode ca afisare() sau medie().</div>
+              <div class="puzzle-target" data-class="Animal">Are metode ca vorbeste(), respira(), și poate fi moștenită de Caine sau Pisica.</div>
+              <div class="puzzle-target" data-class="Masina">Are atribute ca marca, an, și metode ca porneste(), opreste().</div>
+            </div>
+          </div>
+          <div class="puzzle-feedback" id="puzzle-feedback"></div>
+          <button class="puzzle-close-btn" onclick="closePuzzleModal()">Închide</button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      setTimeout(()=>{ modal.classList.add('active'); }, 10);
+      // Drag & drop logic
+      let dragged = null;
+      document.querySelectorAll('.puzzle-draggable').forEach(el => {
+        el.addEventListener('dragstart', e => { dragged = el; el.classList.add('dragging'); });
+        el.addEventListener('dragend', e => { dragged = null; el.classList.remove('dragging'); });
+      });
+      document.querySelectorAll('.puzzle-target').forEach(target => {
+        target.addEventListener('dragover', e => { e.preventDefault(); target.classList.add('over'); });
+        target.addEventListener('dragleave', e => { target.classList.remove('over'); });
+        target.addEventListener('drop', e => {
+          e.preventDefault();
+          target.classList.remove('over');
+          if (dragged && dragged.dataset.class === target.dataset.class && !target.querySelector('.puzzle-draggable')) {
+            target.appendChild(dragged);
+            checkPuzzleSolved();
+          } else {
+            document.getElementById('puzzle-feedback').textContent = 'Nu e corect! Încearcă din nou.';
+            document.getElementById('puzzle-feedback').style.color = '#f44336';
+          }
+        });
+      });
+    }
+    function checkPuzzleSolved() {
+      let solved = true;
+      document.querySelectorAll('.puzzle-target').forEach(target => {
+        const drag = target.querySelector('.puzzle-draggable');
+        if (!drag || drag.dataset.class !== target.dataset.class) solved = false;
+      });
+      if (solved) {
+        document.getElementById('puzzle-feedback').textContent = 'Bravo! Ai rezolvat puzzle-ul!';
+        document.getElementById('puzzle-feedback').style.color = '#4CAF50';
+        confettiPuzzle();
+        // Salvează data ultimei rezolvări
+        userProfile.puzzleLastSolved = Date.now();
+        userProfiles[currentEmail] = userProfile;
+        localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
+        // Dezactivează badge-ul până peste 7 zile
+        setTimeout(()=>{ closePuzzleModal(); }, 1800);
+      }
+    }
+    function closePuzzleModal() {
+      const modal = document.getElementById('puzzle-modal');
+      if (modal) modal.remove();
+    }
+    function confettiPuzzle() {
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.backgroundColor = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'][Math.floor(Math.random() * 5)];
+          confetti.style.top = '40vh';
+          confetti.style.position = 'fixed';
+          confetti.style.width = (Math.random() * 8 + 4) + 'px';
+          confetti.style.height = (Math.random() * 8 + 4) + 'px';
+          confetti.style.zIndex = 99999;
+          confetti.style.borderRadius = '50%';
+          confetti.style.opacity = 0.8;
+          confetti.style.animation = 'confetti-fall 2.2s linear forwards';
+          document.body.appendChild(confetti);
+          setTimeout(() => { confetti.remove(); }, 2200);
+        }, i * 60);
+      }
+    }
+    // CSS pentru modal puzzle
+    const stylePuzzle = document.createElement('style');
+    stylePuzzle.innerHTML = `
+      #puzzle-modal { position: fixed; top:0; left:0; width:100vw; height:100vh; z-index:10000; display:flex; align-items:center; justify-content:center; }
+      .puzzle-overlay { position:absolute;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);z-index:1; }
+      .puzzle-modal-content { position:relative;z-index:2;background:rgba(255,255,255,0.95);border-radius:18px;box-shadow:0 8px 32px #0003;padding:36px 32px 24px 32px;max-width:480px;width:100%;text-align:center;animation:fadeInBox 0.5s; }
+      .puzzle-board { display:flex;gap:32px;justify-content:center;margin:32px 0; }
+      .puzzle-classes, .puzzle-targets { display:flex;flex-direction:column;gap:18px; }
+      .puzzle-draggable { background:#1976d2;color:#fff;padding:10px 18px;border-radius:8px;cursor:grab;font-weight:600;box-shadow:0 2px 8px #1976d244;transition:background 0.2s;user-select:none; }
+      .puzzle-draggable.dragging { background:#00bcd4;opacity:0.7; }
+      .puzzle-target { background:rgba(30,144,255,0.08);border:2px dashed #1976d2;border-radius:8px;min-height:48px;display:flex;align-items:center;justify-content:center;padding:10px 12px;transition:border 0.2s; }
+      .puzzle-target.over { border-color:#00bcd4;background:rgba(0,188,212,0.08); }
+      .puzzle-feedback { margin:18px 0 0 0;font-size:1.1em;min-height:24px; }
+      .puzzle-close-btn { margin-top:18px;padding:8px 22px;border-radius:8px;background:#1976d2;color:#fff;font-weight:600;border:none;cursor:pointer;transition:background 0.2s; }
+      .puzzle-close-btn:hover { background:#00bcd4; }
+      @keyframes fadeInBox { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+      @keyframes confetti-fall { to { transform: translateY(60vh) rotate(360deg); opacity: 0; } }
+    `;
+    document.head.appendChild(stylePuzzle);
+    // Badge puzzle clickabil doar dacă nu a fost rezolvat în ultimele 7 zile
+    setTimeout(()=>{
+      document.querySelectorAll('.badge').forEach(badge => {
+        if (badge.title && badge.title.toLowerCase().includes('puzzle')) {
+          const now = Date.now();
+          const lastSolved = userProfile.puzzleLastSolved || 0;
+          const canSolve = !lastSolved || (now - lastSolved > 7*24*60*60*1000);
+          badge.style.cursor = (userProfile.hasPuzzle && canSolve) ? 'pointer' : 'not-allowed';
+          badge.onclick = (userProfile.hasPuzzle && canSolve) ? openPuzzleModal : null;
+        }
+      });
+    }, 300);
+    
+    // Funcție pentru toggle între modul animat și basic
+    function toggleMode() {
+      const body = document.body;
+      const toggleBtn = document.getElementById('mode-toggle');
+      const isBasicMode = body.classList.contains('basic-mode');
+      
+      if (isBasicMode) {
+        // Schimbă în modul animat
+        body.classList.remove('basic-mode');
+        toggleBtn.textContent = '🎨 Modul 3D';
+        toggleBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+        toggleBtn.style.boxShadow = '0 4px 15px rgba(76, 175, 80, 0.3)';
+        toggleBtn.style.border = '2px solid rgba(76, 175, 80, 0.3)';
+      } else {
+        // Schimbă în modul basic
+        body.classList.add('basic-mode');
+        toggleBtn.textContent = '⚡ Modul Basic';
+        toggleBtn.style.background = 'linear-gradient(135deg, #666, #555)';
+        toggleBtn.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.3)';
+        toggleBtn.style.border = '2px solid rgba(255, 255, 255, 0.2)';
+      }
+      
+      // Salvează preferința în localStorage
+      localStorage.setItem('profileMode', isBasicMode ? 'animated' : 'basic');
+    }
+    
+    // Încarcă preferința salvată la încărcarea paginii
+    window.addEventListener('load', function() {
+      const savedMode = localStorage.getItem('profileMode');
+      if (savedMode === 'basic') {
+        toggleMode(); // Aplică modul basic
+      }
+    });
+    
+    // --- NIVELE ---
+    const LEVELS = [
+      { name: "Începător", required: 1, color: "#43e97b", svg: `<svg viewBox='0 0 64 64'><circle cx='32' cy='32' r='22' fill='#43e97b' stroke='#fff176' stroke-width='4'/><polygon points='32,12 36,28 52,28 38,38 42,54 32,45 22,54 26,38 12,28 28,28' fill='#fff176'/></svg>` },
+      { name: "Explorator", required: 3, color: "#38f9d7", svg: `<svg viewBox='0 0 64 64'><circle cx='32' cy='32' r='22' fill='#38f9d7' stroke='#ffd700' stroke-width='4'/><polygon points='32,10 40,28 58,28 44,40 48,58 32,48 16,58 20,40 6,28 24,28' fill='#ffd700'/></svg>` },
+      { name: "Avansat", required: 7, color: "#f7971e", svg: `<svg viewBox='0 0 64 64'><circle cx='32' cy='32' r='22' fill='#f7971e' stroke='#fff' stroke-width='4'/><polygon points='32,8 38,26 56,26 40,36 44,56 32,46 20,56 24,36 8,26 26,26' fill='#fff'/></svg>` },
+      { name: "Expert", required: 15, color: "#f953c6", svg: `<svg viewBox='0 0 64 64'><circle cx='32' cy='32' r='22' fill='#f953c6' stroke='#fff176' stroke-width='4'/><polygon points='32,14 36,32 54,32 38,44 42,60 32,50 22,60 26,44 10,32 28,32' fill='#fff176'/></svg>` },
+      { name: "Maestru", required: 30, color: "#ffd700", svg: `<svg viewBox='0 0 64 64'><circle cx='32' cy='32' r='22' fill='#ffd700' stroke='#43e97b' stroke-width='4'/><polygon points='32,6 40,24 60,24 44,36 48,58 32,46 16,58 20,36 4,24 24,24' fill='#43e97b'/></svg>` }
+    ];
+    function getLevel(quizCount) {
+      let level = 0;
+      for (let i = 0; i < LEVELS.length; i++) {
+        if (quizCount >= LEVELS[i].required) level = i;
+      }
+      return level;
+    }
+    function renderLevelSection() {
+      let users = JSON.parse(localStorage.getItem('users') || '{}');
+      let userProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+      let currentEmail = localStorage.getItem('currentUser');
+      let userProfile = userProfiles[currentEmail] || {};
+      let quizuri = userProfile.quizResults || [];
+      let quizCount = quizuri.length;
+      let levelIdx = getLevel(quizCount);
+      let level = LEVELS[levelIdx];
+      let nextLevel = LEVELS[levelIdx+1];
+      let progress = nextLevel ? Math.min(1, (quizCount - level.required + 1) / (nextLevel.required - level.required)) : 1;
+      let progressText = nextLevel ? `${quizCount - level.required + 1}/${nextLevel.required - level.required} quiz-uri pentru nivelul următor` : 'Maxim atins!';
+      document.getElementById('level-section').innerHTML = `
+        <div class="level-badge starlight">
+          ${level.svg}
+          <span class="level-name starlight-text">Nivel ${levelIdx+1}: ${level.name}</span>
+        </div>
+        <div class="level-progress-bar">
+          <div class="level-progress" style="width:${progress*100}%"></div>
+          <div class="level-shine"></div>
+        </div>
+        <div class="level-progress-info">${progressText}</div>
+      `;
+    }
+    renderLevelSection();
+    // Poți apela renderLevelSection() și după completarea unui quiz pentru update live
+
+    // --- TIMER QUIZ PE PROFIL ---
+    function getQuizCooldown(testName) {
+      if (!userProfile || !userProfile.quizCooldowns) return null;
+      return userProfile.quizCooldowns[testName] || null;
+    }
+    function getRemainingCooldown(testName) {
+      const cooldown = getQuizCooldown(testName);
+      if (!cooldown) return 0;
+      const now = Date.now();
+      const timeDiff = now - cooldown;
+      const minDiff = timeDiff / (1000 * 60);
+      if (minDiff >= 30) return 0;
+      const remainingMin = 30 - minDiff;
+      return Math.ceil(remainingMin);
+    }
+    function updateQuizTimersOnProfile() {
+      document.querySelectorAll('.quiz-list li').forEach(li => {
+        const text = li.textContent;
+        const match = text.match(/^(.*?) - Scor:/);
+        if (!match) return;
+        const testName = match[1].trim();
+        const minLeft = getRemainingCooldown(testName);
+        if (minLeft > 0) {
+          if (!li.querySelector('.cooldown-info')) {
+            const span = document.createElement('span');
+            span.className = 'cooldown-info';
+            span.style.marginLeft = '12px';
+            span.style.background = 'linear-gradient(45deg,#ff9800,#ff5722)';
+            span.style.color = 'white';
+            span.style.padding = '3px 10px';
+            span.style.borderRadius = '8px';
+            span.style.fontSize = '0.95em';
+            span.style.fontWeight = '600';
+            span.innerHTML = `⏰ <span class="cooldown-minutes">${minLeft}</span> min.`;
+            li.appendChild(span);
+          } else {
+            li.querySelector('.cooldown-minutes').textContent = minLeft;
+          }
+          li.style.opacity = '0.6';
+        } else {
+          if (li.querySelector('.cooldown-info')) {
+            li.querySelector('.cooldown-info').textContent = 'Quiz-ul e disponibil!';
+            li.classList.add('quiz-available-glow');
+            setTimeout(()=>li.classList.remove('quiz-available-glow'), 2000);
+          }
+          li.style.opacity = '1';
+        }
+      });
+    }
+    setInterval(updateQuizTimersOnProfile, 5000);
+    setTimeout(updateQuizTimersOnProfile, 500);
+    // Efect vizual verde la deblocare
+    const styleQuizProfile = document.createElement('style');
+    styleQuizProfile.innerHTML = `.quiz-available-glow { box-shadow: 0 0 24px 6px #43e97b, 0 0 48px 12px #ffd70099 !important; border-color: #43e97b !important; transition: box-shadow 0.5s, border-color 0.5s; }`;
+    document.head.appendChild(styleQuizProfile);
+  </script>
+</body>
+</html> 

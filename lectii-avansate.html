@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lecții AVANSAȚI - InfoWorld</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    body { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-attachment: fixed;
+      position: relative;
+      color: #222; 
+      font-family: 'Playfair Display', serif; 
+      margin:0; 
+      line-height: 1.6;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: -1;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        repeating-linear-gradient(100deg, rgba(156,39,176,0.06) 0 4px, transparent 4px 40px),
+        repeating-linear-gradient(-80deg, rgba(255,215,0,0.04) 0 2px, transparent 2px 40px),
+        radial-gradient(circle at 20% 80%, rgba(156,39,176,0.13) 0, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(255,215,0,0.10) 0, transparent 60%),
+        radial-gradient(circle at 50% 50%, rgba(255,0,255,0.10) 0, transparent 60%);
+      animation: bgMoveAvansati 16s linear infinite alternate, bgLinesAvansati 22s linear infinite alternate;
+    }
+    @keyframes bgMoveAvansati {
+      0% { background-position: 0% 0%, 100% 100%, 50% 100%, 0 0, 100% 100%; }
+      100% { background-position: 100% 100%, 0% 0%, 50% 0%, 100% 0, 0 100%; }
+    }
+    @keyframes bgLinesAvansati {
+      0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: 250px 500px, 500px 250px, 0 0, 500px 0, 0 500px; }
+    }
+    body.basic-mode {
+      background: #2d1846 !important;
+      animation: none !important;
+    }
+    body.basic-mode::before,
+    body.basic-mode::after {
+      display: none !important;
+      animation: none !important;
+    }
+    .home-button { position:fixed;top:20px;right:20px;z-index:1000;display:inline-block;padding:6px 18px;background:#111;color:#00bcd4;border-radius:5px;border:2px solid #00bcd4;text-decoration:none;font-family:'Arial',sans-serif;font-size:1.08em;font-weight:600;box-shadow:none;opacity:0.92;transition:background 0.2s, color 0.2s; }
+    .home-button:hover { background:#00bcd4; color:#fff; }
+    .quiz-button { position:fixed;top:20px;right:120px;z-index:1000;display:inline-block;padding:6px 18px;background:#111;color:#ff6b6b;border-radius:5px;border:2px solid #ff6b6b;text-decoration:none;font-family:'Arial',sans-serif;font-size:1.08em;font-weight:600;box-shadow:none;opacity:0.92;transition:background 0.2s, color 0.2s; }
+    .quiz-button:hover { background:#ff6b6b; color:#fff; }
+    .tips-button { position:fixed;top:20px;right:220px;z-index:1000;display:inline-block;padding:6px 18px;background:#111;color:#00d4ff;border-radius:5px;border:2px solid #00d4ff;text-decoration:none;font-family:'Arial',sans-serif;font-size:1.08em;font-weight:600;box-shadow:none;opacity:0.92;transition:background 0.2s, color 0.2s; }
+    .tips-button:hover { background:#00d4ff; color:#fff; }
+    .class-selection { 
+      margin:60px auto 30px auto; 
+      max-width:700px; 
+      text-align:center; 
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      border: 1px solid #e0e0e0;
+      position: relative;
+      overflow: hidden;
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+    .class-selection::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: transparent;
+      pointer-events: none;
+    }
+    .class-selection h2 {
+      position: relative;
+      z-index: 1;
+      color: #9c27b0;
+      text-shadow: 0 0 20px #9c27b0, 0 0 40px #ffd700, 0 0 60px #8e24aa;
+      animation: modernGlowAvansati 3s ease-in-out infinite;
+      font-weight: 900;
+      letter-spacing: 1.7px;
+      transform: perspective(1000px) rotateX(0deg);
+      transition: transform 0.3s ease;
+    }
+    .class-selection h2:hover {
+      transform: perspective(1000px) rotateX(10deg) scale(1.05);
+      text-shadow: 0 0 30px #9c27b0, 0 0 50px #ffd700, 0 0 70px #8e24aa, 0 0 90px #fff;
+    }
+    .class-selection h2::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #9c27b0, #ffd700, #8e24aa, #ffd700, #9c27b0, transparent);
+      transform: translateX(-50%);
+      animation: modernUnderlineAvansati 4s ease-in-out infinite;
+    }
+    @keyframes modernGlowAvansati {
+      0%, 100% { 
+        color: #9c27b0; 
+        text-shadow: 0 0 20px #9c27b0, 0 0 40px #ffd700, 0 0 60px #8e24aa;
+        transform: perspective(1000px) rotateX(0deg);
+      }
+      25% { 
+        color: #ffd700; 
+        text-shadow: 0 0 25px #ffd700, 0 0 45px #8e24aa, 0 0 65px #9c27b0;
+        transform: perspective(1000px) rotateX(2deg);
+      }
+      50% { 
+        color: #8e24aa; 
+        text-shadow: 0 0 30px #8e24aa, 0 0 50px #9c27b0, 0 0 70px #ffd700;
+        transform: perspective(1000px) rotateX(0deg);
+      }
+      75% { 
+        color: #ffd700; 
+        text-shadow: 0 0 25px #ffd700, 0 0 45px #8e24aa, 0 0 65px #9c27b0;
+        transform: perspective(1000px) rotateX(-2deg);
+      }
+    }
+    @keyframes modernUnderlineAvansati {
+      0%, 100% {
+        width: 0;
+        opacity: 0;
+      }
+      25% {
+        width: 40%;
+        opacity: 0.5;
+      }
+      50% {
+        width: 80%;
+        opacity: 1;
+      }
+      75% {
+        width: 40%;
+        opacity: 0.5;
+      }
+    }
+    .current-class-indicator {
+      background: #ffffff;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+      border: 1px solid #e0e0e0;
+      margin: 20px auto 30px auto;
+      max-width: 600px;
+      text-align: center;
+      display: none;
+      animation: fadeInDown 0.5s ease-out;
+    }
+    .current-class-indicator h3 {
+      margin: 0;
+      color: #8e24aa;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2em;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    @keyframes staticGlow {
+      0%, 100% {
+        text-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 0 8px rgba(25, 118, 210, 0.3);
+      }
+      50% {
+        text-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 0 15px rgba(25, 118, 210, 0.5), 0 0 25px rgba(25, 118, 210, 0.2);
+      }
+    }
+    @keyframes underlineExpand {
+      0%, 100% {
+        width: 0;
+        opacity: 0;
+      }
+      50% {
+        width: 80%;
+        opacity: 1;
+      }
+    }
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .class-btn { margin:10px 10px; padding:18px 32px; border-radius:10px; border:2px solid #8e24aa; background:#f3e5f5; color:#8e24aa; font-size:1.1em; font-family:'Orbitron',sans-serif; font-weight:700; cursor:pointer; transition:background 0.2s, color 0.2s, border 0.2s; opacity: 1 !important; transform: none !important; animation: none !important; }
+    .class-btn:hover { background:#8e24aa; color:#fff; }
+    .lessons-container { max-width:900px; margin:0 auto; padding:20px; opacity: 1 !important; transform: none !important; animation: none !important; }
+    .lesson { 
+      background: #ffffff; 
+      border-radius:12px; 
+      margin:30px 0; 
+      padding:24px 20px; 
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1); 
+      border:1.5px solid #8e24aa; 
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInLesson 0.6s cubic-bezier(.23,1.02,.47,.98) forwards;
+    }
+    .lesson:nth-child(1) { animation-delay: 0.2s; }
+    .lesson:nth-child(2) { animation-delay: 0.35s; }
+    .lesson:nth-child(3) { animation-delay: 0.5s; }
+    .lesson:nth-child(4) { animation-delay: 0.65s; }
+    .lesson:nth-child(5) { animation-delay: 0.8s; }
+    .lesson:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    .lesson h3 {
+      margin-top:0;
+      color:#8e24aa;
+      font-size:1.3em;
+      position:relative;
+      opacity:0;
+      transform:translateY(20px);
+      animation: fadeInUp 0.7s cubic-bezier(.23,1.02,.47,.98) forwards;
+    }
+    .lesson h3::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2.5px;
+      background: #8e24aa;
+      border-radius: 2px;
+      transition: width 0.35s cubic-bezier(.23,1.02,.47,.98);
+      margin-top: 4px;
+    }
+    .lesson h3:hover {
+      box-shadow: 0 4px 18px #8e24aa22;
+      transform: translateY(-2px) scale(1.03);
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .lesson h3:hover::after {
+      width: 60%;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+    .lesson p { margin:10px 0; font-size:1.08em; }
+    .lesson pre { background:#f3e5f5; color:#222; border-radius:7px; padding:12px; font-size:1em; overflow-x:auto; }
+    .lesson .def { font-style:italic; color:#8e24aa; }
+    .mark-btn {
+      display:inline-block;
+      margin-top:12px;
+      padding:7px 18px;
+      border-radius:7px;
+      border:1.5px solid #8e24aa;
+      background:#f3e5f5;
+      color:#8e24aa;
+      font-family:'Orbitron',sans-serif;
+      font-size:1em;
+      font-weight:600;
+      cursor:pointer;
+      transition:background 0.2s, color 0.2s, border 0.2s;
+    }
+    .mark-btn:hover {
+      background:#8e24aa;
+      color:#fff;
+    }
+    .mark-btn.completed {
+      background:#8e24aa;
+      color:#fff;
+      border:1.5px solid #43a047;
+    }
+    .notes-btn {
+      display: inline-block;
+      margin-top: 8px;
+      margin-left: 8px;
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: 1.5px solid #ffd700;
+      background: #fff8e1;
+      color: #ff8f00;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+    }
+    .notes-btn:hover {
+      background: #ffd700;
+      color: #8e24aa;
+    }
+    .notes-section {
+      margin-top: 12px;
+      padding: 12px;
+      background: #fff8e1;
+      border-radius: 8px;
+      border-left: 3px solid #ffd700;
+      display: none;
+    }
+    .notes-textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 8px;
+      border: 1px solid #ffcc02;
+      border-radius: 4px;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.95em;
+      resize: vertical;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .notes-textarea:focus {
+      border-color: #ffd700;
+      box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+    }
+    .notes-actions {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+    }
+    .notes-save-btn {
+      padding: 6px 12px;
+      background: #ffd700;
+      color: #8e24aa;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .notes-save-btn:hover {
+      background: #ffc107;
+    }
+    .notes-cancel-btn {
+      padding: 6px 12px;
+      background: #e0e0e0;
+      color: #666;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .notes-cancel-btn:hover {
+      background: #d0d0d0;
+    }
+    .saved-notes {
+      margin-top: 8px;
+      padding: 8px;
+      background: #fff;
+      border-radius: 4px;
+      border: 1px solid #ffcc02;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.9em;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      display: none;
+    }
+    .notes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .notes-edit-btn {
+      padding: 2px 6px;
+      background: #ffd700;
+      color: #8e24aa;
+      border: none;
+      border-radius: 3px;
+      font-size: 0.7em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .notes-edit-btn:hover {
+      background: #ffc107;
+    }
+    .bifa {
+      color: #43a047;
+      font-size: 1.2em;
+      margin-left: 10px;
+      vertical-align: middle;
+      transition: opacity 0.2s;
+    }
+    .show-btn {
+      margin: 6px 8px 6px 0;
+      padding: 5px 14px;
+      border-radius: 7px;
+      border: 1.5px solid #8e24aa;
+      background: #f3e5f5;
+      color: #8e24aa;
+      font-family: 'Orbitron',sans-serif;
+      font-size: 0.98em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+      outline: none;
+    }
+    .show-btn.active, .show-btn:hover {
+      background: #8e24aa;
+      color: #fff;
+    }
+    .analogie-content, .definitie-content, .explicatie-content {
+      margin: 8px 0 12px 0;
+      padding: 8px 14px;
+      background: #f3e5f5;
+      border-radius: 7px;
+      border-left: 3px solid #8e24aa;
+      font-size: 1.04em;
+      display: none;
+      animation: fadeInBox 0.5s;
+    }
+    @keyframes fadeInBox {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .glass-premium {
+      background: #ffffff;
+      border: 2px solid #1976d2;
+      box-shadow: 0 4px 24px 0 rgba(30,144,255,0.10), 0 1.5px 8px 0 rgba(0,0,0,0.08);
+      color: #222;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .glass-premium:focus {
+      border-color: #1976d2;
+      background: #ffffff;
+      box-shadow: 0 8px 32px 0 rgba(30,144,255,0.18);
+    }
+    .search-bar-container {
+      display: flex;
+      justify-content: center;
+      margin: 24px 0 10px 0;
+    }
+    .lesson-search {
+      width: 340px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 2px solid #00bcd4;
+      font-size: 1.1em;
+      font-family: 'Inter', 'Arial', sans-serif;
+      box-shadow: 0 2px 12px #00bcd422;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .test-info, .test-title {
+      color: #ffd700;
+      text-shadow: 0 0 10px #ffd700, 0 0 24px #9c27b0, 0 1px 3px rgba(0,0,0,0.1);
+      animation: testGlowAvansati 3.5s cubic-bezier(.4,0,.2,1) infinite alternate;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+      font-size: 1.18em;
+    }
+    @keyframes testGlowAvansati {
+      0% { color: #ffd700; text-shadow: 0 0 10px #ffd700, 0 0 24px #9c27b0, 0 1px 3px rgba(0,0,0,0.1); }
+      50% { color: #9c27b0; text-shadow: 0 0 20px #9c27b0, 0 0 40px #ffd700, 0 1px 3px rgba(0,0,0,0.1); }
+      100% { color: #ffd700; text-shadow: 0 0 10px #ffd700, 0 0 24px #9c27b0, 0 1px 3px rgba(0,0,0,0.1); }
+    }
+    @keyframes selectGlowAvansati {
+      0% { color: #9c27b0; text-shadow: 0 0 16px #9c27b0, 0 0 32px #ffd700, 0 1px 3px rgba(0,0,0,0.1); }
+      50% { color: #ffd700; text-shadow: 0 0 32px #ffd700, 0 0 48px #9c27b0, 0 1px 3px rgba(0,0,0,0.1); }
+      100% { color: #9c27b0; text-shadow: 0 0 16px #9c27b0, 0 0 32px #ffd700, 0 1px 3px rgba(0,0,0,0.1); }
+    }
+    @keyframes fadeInLesson {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Butoane sus */
+    .home-button, .quiz-button, .tips-button {
+      margin-right: 18px;
+    }
+    .home-button:last-child, .quiz-button:last-child, .tips-button:last-child {
+      margin-right: 0;
+    }
+    /* Stil pentru butonul de manuale */
+    .manuale-button {
+      margin-right: 0;
+      margin-left: 18px;
+      font-size: 1.08em;
+      padding: 6px 18px;
+      background: #111;
+      color: #43e97b;
+      border-radius: 5px;
+      border: 2px solid #43e97b;
+      text-decoration: none;
+      font-family: 'Arial',sans-serif;
+      font-weight: 600;
+      box-shadow: none;
+      opacity: 0.92;
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+    }
+    .manuale-button:hover {
+      background: #43e97b;
+      color: #fff;
+    }
+    .top-navbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      margin-top: 24px;
+      margin-bottom: 32px;
+      z-index: 1000;
+      position: relative;
+    }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: #181a1f;
+      color: #00fff7;
+      border-radius: 8px;
+      border: 2px solid #00fff7;
+      text-decoration: none;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.08em;
+      font-weight: 600;
+      box-shadow: none;
+      opacity: 0.95;
+      transition: background 0.2s, color 0.2s, border 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .nav-btn.home {
+      color: #fff700;
+      border-color: #fff700;
+    }
+    .nav-btn:hover {
+      background: #00fff7;
+      color: #181a1f;
+      border-color: #181a1f;
+      transform: translateY(-2px) scale(1.06);
+      text-decoration: underline;
+    }
+    .explicatii-btn {
+      display: block;
+      margin: 0 auto 24px auto;
+      padding: 12px 16px;
+      background: #23243a;
+      color: #00fff7;
+      border-radius: 10px;
+      border: 2px solid #00fff7;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 0.85em;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 2px 12px #00fff722;
+      transition: all 0.3s ease;
+      opacity: 0.97;
+      position: relative;
+      overflow: hidden;
+      animation: explicatiiPulse 2s infinite alternate;
+    }
+
+    .explicatii-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 247, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .explicatii-btn::after {
+      content: '🔍';
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9em;
+      animation: searchBounce 1.5s infinite;
+    }
+
+    @keyframes explicatiiPulse {
+      0% {
+        box-shadow: 0 2px 12px #00fff722, 0 0 20px #00fff722;
+        transform: scale(1);
+      }
+      100% {
+        box-shadow: 0 4px 20px #00fff744, 0 0 30px #00fff744;
+        transform: scale(1.02);
+      }
+    }
+
+    @keyframes searchBounce {
+      0%, 100% {
+        transform: translateY(-50%) scale(1);
+      }
+      50% {
+        transform: translateY(-50%) scale(1.2);
+      }
+    }
+
+    .explicatii-btn:hover {
+      background: #00fff7;
+      color: #23243a;
+      border-color: #23243a;
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 8px 25px #00fff766, 0 0 40px #00fff766;
+      text-decoration: none;
+    }
+
+    .explicatii-btn:hover::before {
+      left: 100%;
+    }
+
+    .explicatii-btn:hover::after {
+      animation: searchSpin 0.6s ease-in-out;
+    }
+
+    @keyframes searchSpin {
+      0% {
+        transform: translateY(-50%) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-50%) rotate(360deg);
+      }
+    }
+    @media (max-width: 700px) {
+      .top-navbar {
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 12px;
+        margin-bottom: 18px;
+      }
+      .nav-btn {
+        width: 90vw;
+        justify-content: center;
+        font-size: 1.1em;
+      }
+    }
+    /* Butoane flotante pentru avansați */
+    .floating-buttons {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 1000;
+    }
+    .robot-btn, .scroll-top-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .robot-btn {
+      background: linear-gradient(135deg, #9c27b0, #ffd700);
+      color: white;
+    }
+    .robot-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    .scroll-top-btn {
+      background: linear-gradient(135deg, #ffd700, #9c27b0);
+      color: white;
+    }
+    .scroll-top-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    .robot-name {
+      position: absolute;
+      right: 70px;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .robot-name::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid rgba(0,0,0,0.8);
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-navbar">
+    <a href="index.html" class="nav-btn home">⌂</a>
+    <a href="blog.html" class="nav-btn">📓 Despre noi & Blog</a>
+    <a href="manuale.html" class="nav-btn">📚 Manuale</a>
+    <a href="sfaturi-invatare.html" class="nav-btn">🧠 Sfaturi</a>
+    <a href="quiz.html" class="nav-btn">📝 Quiz-uri</a>
+  </div>
+  <a href="explicatii.html" class="explicatii-btn">Vreau mai multe explicații</a>
+  <div class="class-selection">
+    <h2>Selectează clasa:</h2>
+    <button class="class-btn" onclick="showLessons('avansati-clasa-9')">Clasa a IX-a</button>
+    <button class="class-btn" onclick="showLessons('avansati-clasa-10')">Clasa a X-a</button>
+    <button class="class-btn" onclick="showLessons('avansati-clasa-11')">Clasa a XI-a</button>
+    <button class="class-btn" onclick="showLessons('avansati-clasa-12')">Clasa a XII-a</button>
+  </div>
+  <div class="current-class-indicator" id="current-class-indicator">
+    <h3 id="current-class-text"></h3>
+  </div>
+  <div class="search-bar-container">
+    <input type="text" id="lesson-search" class="lesson-search glass-premium" placeholder="Caută o lecție..." oninput="filterLessons()" />
+  </div>
+  <div class="lessons-container" id="lessons-container"></div>
+  <div id="motivational-message" style="display:none;"></div>
+  <div id="quiz-arrow" style="display:none;"></div>
+  <div id="scroll-surprise-msg" style="display:none; position:fixed; top:0; left:0; width:100vw; z-index:2000;"></div>
+  <div id="quiz-avansati-section" style="display:none;"></div>
+  <audio id="success-audio" src="success.mp3" preload="auto"></audio>
+  <!-- Butoane flotante -->
+  <div class="floating-buttons">
+    <button class="robot-btn" onmouseenter="showRobotName()" onmouseleave="hideRobotName()" onclick="openAssistant()">
+      <span class="robot-icon">🤖</span>
+      <span class="robot-name" id="robot-name">Bytey</span>
+    </button>
+    <button class="scroll-top-btn" onclick="scrollToTop()">
+      <span class="scroll-icon">⬆️</span>
+    </button>
+  </div>
+  <script>
+const lectii = {
+  'avansati-clasa-9': [
+    {
+      title: "Recursivitate – început (factorial, fibonacci)",
+      definitie: `Recursivitatea în programare înseamnă că o funcție se cheamă singură ca să rezolve o problemă. Ca să nu se ducă "la infinit", trebuie să existe un moment când se oprește, numit "caz de bază".`,
+      explicatie: `Imaginează că problema ta e o cutie mare care are în interior o cutie mai mică, care la rândul ei are o cutie și mai mică, și tot așa. Recursivitatea deschide cutiile una câte una până ajunge la cea mai mică, pe care o rezolvă direct. Apoi, închide cutiile pe rând, construind răspunsul.`,
+      analogie: `Gândește-te la oglinzile care se reflectă una pe alta la infinit – fiecare reflexie e ca un apel al funcției. Dar totuși, după un moment, se vede o limită, pentru că oglinzile nu sunt infinite (cazul de bază).`,
+      exemplu: `#include <iostream>\nusing namespace std;\n\nint factorial(int n) {\n    if (n <= 1) return 1;  // cazul de bază\n    return n * factorial(n - 1);\n}\n\nint main() {\n    int n = 5;\n    cout << "Factorial(" << n << ") = " << factorial(n) << endl;\n    return 0;\n}`
+    },
+    {
+      title: "Funcții recursive simple și apeluri în lanț",
+      definitie: `Funcțiile recursive simple sunt cele care au un singur apel recursiv și un caz de bază clar.`,
+      explicatie: `Se învață să scrii funcții recursive simple și să înțelegi apelurile în lanț. Fiecare apel recursiv aduce problema mai aproape de cazul de bază.`,
+      analogie: `Ca și cum ai avea o scară cu multe trepte. Pentru a ajunge la ultima treaptă, trebuie să urci treptele una câte una, iar fiecare treaptă te aduce mai aproape de destinație.`,
+      exemplu: `#include <iostream>\nusing namespace std;\n\nint suma(int n) {\n    if (n <= 1) return 1;  // caz de bază\n    return n + suma(n - 1);\n}\n\nint main() {\n    cout << "Suma primelor 5 numere: " << suma(5) << endl;\n    return 0;\n}`
+    }
+  ],
+  'avansati-clasa-10': [
+    {
+      title: "Backtracking: generare de permutări, labirint, sudoku",
+      definitie: `Backtracking e o metodă prin care încerci toate variantele posibile pentru o problemă, dar când vezi că ceva nu merge, te întorci și încerci altceva.`,
+      explicatie: `Imaginează că ești într-un labirint. Încerci o cale, dacă e moartă, te întorci la intersecția anterioară și încerci o altă cale. Așa găsești toate soluțiile sau o soluție care funcționează.`,
+      analogie: `La un sudoku, încerci să pui o cifră. Dacă mai încolo vezi că nu merge, te întorci și schimbi cifra pusă. Așa găsești soluția corectă.`,
+      exemplu: `#include <iostream>\n#include <vector>\nusing namespace std;\n\nvoid backtrack(vector<int>& nums, int start) {\n    if (start == nums.size()) {\n        for (int num : nums) cout << num << " ";\n        cout << "\n";\n        return;\n    }\n    for (int i = start; i < nums.size(); i++) {\n        swap(nums[start], nums[i]);\n        backtrack(nums, start + 1);\n        swap(nums[start], nums[i]);  // revenire\n    }\n}\n\nint main() {\n    vector<int> nums = {1, 2, 3};\n    backtrack(nums, 0);\n    return 0;\n}`
+    },
+    {
+      title: "Divide et impera: quicksort, mergesort",
+      definitie: `Divide et impera înseamnă "împarte și cucerește". Împarți o problemă mare în părți mai mici, le rezolvi separat, apoi combini rezultatele.`,
+      explicatie: `Vrei să sortezi un teanc mare de cărți. Împarți teancul în două, sortezi fiecare jumătate, apoi pui cărțile în ordine una lângă alta.`,
+      analogie: `Sortatul unui playlist uriaș îl împarți pe bucăți, sortezi fiecare bucată și apoi le uneși într-un playlist ordonat.`,
+      exemplu: `#include <iostream>\n#include <vector>\nusing namespace std;\n\nvoid merge(vector<int>& arr, int left, int mid, int right) {\n    vector<int> temp(right - left + 1);\n    int i = left, j = mid + 1, k = 0;\n    while (i <= mid && j <= right) {\n        if (arr[i] < arr[j]) temp[k++] = arr[i++];\n        else temp[k++] = arr[j++];\n    }\n    while (i <= mid) temp[k++] = arr[i++];\n    while (j <= right) temp[k++] = arr[j++];\n    for (int x = 0; x < temp.size(); x++) arr[left + x] = temp[x];\n}\n\nvoid mergeSort(vector<int>& arr, int left, int right) {\n    if (left >= right) return;\n    int mid = (left + right) / 2;\n    mergeSort(arr, left, mid);\n    mergeSort(arr, mid + 1, right);\n    merge(arr, left, mid, right);\n}\n\nint main() {\n    vector<int> arr = {5, 2, 9, 1, 5, 6};\n    mergeSort(arr, 0, arr.size() - 1);\n    for (int x : arr) cout << x << " ";\n    return 0;\n}`
+    }
+  ],
+  'avansati-clasa-11': [
+    {
+      title: "Structuri și clase – constructori, metode, OOP complet",
+      definitie: `OOP (programarea orientată pe obiecte) înseamnă să creezi obiecte care au date (atribute) și funcții (metode). Constructorii sunt funcții speciale care "fac" obiectul atunci când îl creezi.`,
+      explicatie: `Clasa e ca un plan pentru o casă. Constructorul construiește casa cu detalii specifice (culoare, număr camere). Metodele sunt lucrurile pe care le poți face cu casa: deschide ușa, aprinde lumina etc.`,
+      analogie: `Clasa "Mașină" e șablonul, constructorul face o mașină nouă cu culoare și model, iar metodele spun ce poate face mașina (pornește, accelerează).`,
+      exemplu: `#include <iostream>\nusing namespace std;\n\nclass Masina {\nprivate:\n    string marca;\n    int an;\n\npublic:\n    Masina(string m, int a) {\n        marca = m;\n        an = a;\n    }\n\n    void afiseaza() {\n        cout << "Marca: " << marca << ", An: " << an << "\n";\n    }\n};\n\nint main() {\n    Masina m1("Toyota", 2020);\n    m1.afiseaza();\n    return 0;\n}`
+    },
+    {
+      title: "Moștenirea (derivare, public / private)",
+      definitie: `Moștenirea permite unei clase să preia ce are alta, ca să nu scrii totul de la zero.`,
+      explicatie: `Clasa "Animal" are metode generale, clasa "Câine" moștenește tot ce are Animal și adaugă metode speciale, cum ar fi "latră".`,
+      analogie: `"Câine" e un "Animal" cu chestii în plus.`,
+      exemplu: `#include <iostream>\nusing namespace std;\n\nclass Animal {\npublic:\n    void respira() {\n        cout << "Animalul respiră\n";\n    }\n};\n\nclass Caine : public Animal {\npublic:\n    void latra() {\n        cout << "Câinele latră\n";\n    }\n};\n\nint main() {\n    Caine c;\n    c.respira();\n    c.latra();\n    return 0;\n}`
+    },
+    {
+      title: "Polimorfism (funcții virtuale, overriding)",
+      definitie: `Polimorfismul e ca o super-putere pentru funcții să se comporte diferit, chiar dacă le chemi la fel.`,
+      explicatie: `Comanda "vorbește" pentru un animal scoate sunete diferite: "Ham!" la câine, "Miau!" la pisică, deși toate sunt animale.`,
+      analogie: `Toți animalele vorbesc, dar fiecare în felul lui.`,
+      exemplu: `#include <iostream>\nusing namespace std;\n\nclass Animal {\npublic:\n    virtual void vorbeste() {\n        cout << "Animalul face un sunet\n";\n    }\n};\n\nclass Caine : public Animal {\npublic:\n    void vorbeste() override {\n        cout << "Ham!\n";\n    }\n};\n\nclass Pisica : public Animal {\npublic:\n    void vorbeste() override {\n        cout << "Miau!\n";\n    }\n};\n\nvoid faAnimalulSaVorbesc(Animal* a) {\n    a->vorbeste();\n}\n\nint main() {\n    Caine c;\n    Pisica p;\n    faAnimalulSaVorbesc(&c);\n    faAnimalulSaVorbesc(&p);\n    return 0;\n}`
+    }
+  ],
+  'avansati-clasa-12': [
+    {
+      title: "Teoria grafurilor avansată (Kruskal, Bellman-Ford)",
+      definitie: `Grafurile sunt ca niște hărți cu puncte (noduri) și drumuri între ele (muchii). Algoritmii ăștia te ajută să găsești cele mai bune conexiuni: cum să legi orașele cu cel mai mic preț sau să găsești drumul cel mai scurt, chiar și dacă unele drumuri-s periculoase (negative).`,
+      explicatie: `Kruskal: e ca un constructor care vrea să lege toate casele dintr-un cartier cu cât mai puțină sârmă — adică legături cu cost minim. Alege cele mai ieftine conexiuni care nu formează un ciclu, până sunt toate legate. Bellman-Ford: e exploratorul care găsește drumul cel mai scurt de la tine acasă la orice altă casă, chiar dacă unele drumuri sunt "periculoase" (cost negativ), dar are grijă să nu se piardă în cercuri negative.`,
+      analogie: `Vrei să conectezi un grup de prieteni cu cel mai mic cost (Kruskal). Vrei să găsești cel mai rapid traseu în oraș, chiar dacă unele drumuri au taxe negative sau probleme (Bellman-Ford).`,
+      exemplu: `#include <bits/stdc++.h>\nusing namespace std;\n\nstruct Edge {\n    int u, v, cost;\n    bool operator<(const Edge& other) const {\n        return cost < other.cost;\n    }\n};\n\nint parent[100005];\n\nint find(int x) {\n    if (parent[x] == x) return x;\n    return parent[x] = find(parent[x]);\n}\n\nvoid unite(int a, int b) {\n    a = find(a);\n    b = find(b);\n    if (a != b) parent[b] = a;\n}\n\nint main() {\n    int n, m; // n = noduri, m = muchii\n    cin >> n >> m;\n    vector<Edge> edges(m);\n    for (int i = 0; i < n; i++) parent[i] = i;\n    for (int i = 0; i < m; i++) cin >> edges[i].u >> edges[i].v >> edges[i].cost;\n\n    sort(edges.begin(), edges.end());\n\n    int cost_total = 0;\n    for (auto& e : edges) {\n        if (find(e.u) != find(e.v)) {\n            unite(e.u, e.v);\n            cost_total += e.cost;\n        }\n    }\n    cout << "Cost minim total: " << cost_total << "\n";\n}`
+    },
+    {
+      title: "Programare dinamică avansată (LCS, TSP, număr de soluții)",
+      definitie: `Programarea dinamică e ca un plan super-organizat: nu faci aceleași calcule de două ori, ci ții minte rezultatele pentru a merge mai repede spre răspuns.`,
+      explicatie: `LCS (Longest Common Subsequence): găsește cea mai lungă secvență care apare în aceeași ordine în două texte, ca atunci când compari două chat-uri să vezi ce replici s-au repetat. TSP (Travelling Salesman Problem): un curier care trebuie să viziteze toate punctele din oraș cu ruta cea mai scurtă. Număr de soluții: câte variante ai să ajungi din punctul A în B, ca într-un labirint, dar vrei să știi toate opțiunile.`,
+      analogie: `Compari două playlist-uri și vrei să vezi ce melodii au în comun (LCS). Trebuie să vizitezi toate magazinele de pizza cu cea mai scurtă rută (TSP).`,
+      exemplu: `#include <bits/stdc++.h>\nusing namespace std;\n\nint LCS(string &a, string &b) {\n    int n = (int)a.size();\n    int m = (int)b.size();\n    vector<vector<int>> dp(n+1, vector<int>(m+1, 0));\n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= m; j++) {\n            if (a[i-1] == b[j-1])\n                dp[i][j] = dp[i-1][j-1] + 1;\n            else\n                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);\n        }\n    }\n    return dp[n][m];\n}\n\nint main() {\n    string a, b;\n    cin >> a >> b;\n    cout << "Lungimea LCS este: " << LCS(a, b) << "\n";\n}`
+    },
+    {
+      title: "Tehnici algoritmice: memoizare, greedy, branch & bound",
+      definitie: `Trucuri ca să devii ninja în rezolvarea problemelor, să economisești timp și energie.`,
+      explicatie: `Memoizare: ții minte calculele făcute, să nu le refaci — ca un notițar al creierului. Greedy: Alegi mereu opțiunea care pare cea mai bună acum, fără să te complici — ca atunci când iei prima cea mai mare felie de pizza. Branch & Bound: Nu pierzi timpul pe alegeri proaste, explorezi doar cele promițătoare — ca la șah când ignori mutările slabe.`,
+      analogie: `Memoizare e ca să-ți notezi parola să nu o uiți. Greedy e să iei jucăria cea mai cool prima. Branch & Bound e o strategie în jocuri când elimini opțiunile care sigur nu vor merge.`,
+      exemplu: `// Exemplu memoizare - Fibonacci\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nvector<int> memo(100, -1);\n\nint fib(int n) {\n    if (n <= 1) return n;\n    if (memo[n] != -1) return memo[n];\n    return memo[n] = fib(n-1) + fib(n-2);\n}\n\nint main() {\n    cout << "Fibonacci(10) = " << fib(10) << endl;\n    return 0;\n}`
+    },
+    {
+      title: "Structuri de date avansate: heap, trie (introducere)",
+      definitie: `Sunt gadgeturi magice care te ajută să sortezi, cauți și stochezi chestii rapid și eficient.`,
+      explicatie: `Heap: un arbore special care îți oferă mereu cea mai importantă chestie primul (listă de priorități). Trie: un arbore folosit pentru cuvinte, ca autocomplete-ul de la Google.`,
+      analogie: `Heap e managerul playlistului care pune cea mai tare melodie primul. Trie e când începi să tastezi "pizza" și telefonul îți sugerează "pizzeria din cartier".`,
+      exemplu: `#include <bits/stdc++.h>\nusing namespace std;\n\nstruct TrieNode {\n    TrieNode* children[26];\n    bool isEnd;\n    TrieNode() {\n        for (int i = 0; i < 26; i++) children[i] = nullptr;\n        isEnd = false;\n    }\n};\n\nvoid insert(TrieNode* root, string word) {\n    TrieNode* curr = root;\n    for (char c : word) {\n        int idx = c - 'a';\n        if (!curr->children[idx])\n            curr->children[idx] = new TrieNode();\n        curr = curr->children[idx];\n    }\n    curr->isEnd = true;\n}\n\nbool search(TrieNode* root, string word) {\n    TrieNode* curr = root;\n    for (char c : word) {\n        int idx = c - 'a';\n        if (!curr->children[idx]) return false;\n        curr = curr->children[idx];\n    }\n    return curr->isEnd;\n}\n\nint main() {\n    TrieNode* root = new TrieNode();\n    insert(root, "pizza");\n    insert(root, "pizzeria");\n\n    cout << search(root, "pizza") << "\n";    // 1 (true)\n    cout << search(root, "pie") << "\n";      // 0 (false)\n}`
+    }
+  ]
+};
+
+function isLoggedIn() {
+  return !!localStorage.getItem('currentUser');
+}
+
+function getUserCompletions() {
+  const user = localStorage.getItem('currentUser');
+  if (!user) return [];
+  const completions = JSON.parse(localStorage.getItem('userCompletions')||'{}');
+  return completions[user]||[];
+}
+function getUserNotes() {
+  const user = localStorage.getItem('currentUser');
+  if (!user) return {};
+  const notes = JSON.parse(localStorage.getItem('userNotes')||'{}');
+  return notes[user]||{};
+}
+function setUserNotes(notes) {
+  const user = localStorage.getItem('currentUser');
+  if (!user) return;
+  const allNotes = JSON.parse(localStorage.getItem('userNotes')||'{}');
+  allNotes[user] = notes;
+  localStorage.setItem('userNotes', JSON.stringify(allNotes));
+}
+function setUserCompletions(arr) {
+  const user = localStorage.getItem('currentUser');
+  if (!user) return;
+  const completions = JSON.parse(localStorage.getItem('userCompletions')||'{}');
+  completions[user] = arr;
+  localStorage.setItem('userCompletions', JSON.stringify(completions));
+}
+function showLessons(clasa) {
+  const container = document.getElementById('lessons-container');
+  const indicator = document.getElementById('current-class-indicator');
+  const indicatorText = document.getElementById('current-class-text');
+  
+  // Afișează indicatorul clasei curente
+  const classNames = {
+    'avansati-clasa-9': 'Clasa a IX-a - Avansat',
+    'avansati-clasa-10': 'Clasa a X-a - Avansat', 
+    'avansati-clasa-11': 'Clasa a XI-a - Avansat',
+    'avansati-clasa-12': 'Clasa a XII-a - Avansat'
+  };
+  
+  indicatorText.textContent = classNames[clasa];
+  indicator.style.display = 'block';
+  
+  container.innerHTML = '';
+  const completate = getUserCompletions();
+  const notes = getUserNotes();
+  lectii[clasa].forEach((lec, idx) => {
+    let markBtn = '';
+    let bifa = '';
+    const key = clasa+'-'+idx;
+    const completed = completate.includes(key);
+    const lessonNotes = notes[key] || '';
+    if (isLoggedIn()) {
+      markBtn = `<button class=\"mark-btn${completed?" completed":""}\" onclick=\"toggleMark('${clasa}',${idx},this)\">${completed?"Demarchează lecția":"Marchează ca parcurs"}</button>`;
+    }
+    if (completed) {
+      bifa = '<span class=\"bifa\">✔</span>';
+    }
+    const notesBtn = isLoggedIn() ? `<button class=\"notes-btn\" onclick=\"toggleNotes('${key}')\">📝 Notițe</button>` : '';
+    const notesSection = isLoggedIn() ? `
+      <div class=\"notes-section\" id=\"notes-section-${key}\" style=\"display:none;\">
+        <textarea class=\"notes-textarea\" id=\"notes-textarea-${key}\" placeholder=\"Scrie aici idei, curiozități, observații...\">${lessonNotes}</textarea>
+        <div class=\"notes-actions\">
+          <button class=\"notes-save-btn\" onclick=\"saveNotes('${key}')\">Salvează</button>
+          <button class=\"notes-cancel-btn\" onclick=\"cancelNotes('${key}')\">Anulează</button>
+        </div>
+      </div>
+      <div class=\"saved-notes\" id=\"saved-notes-${key}\" style=\"display:${lessonNotes ? 'block' : 'none'};\">
+        <div class=\"notes-header\">
+          <strong>📝 Notițele tale:</strong>
+          <button class=\"notes-edit-btn\" onclick=\"editNotes('${key}')\">Editează</button>
+        </div>
+        <div>${lessonNotes}</div>
+      </div>
+    ` : '';
+    // Adaugă link video doar la clasa a 9-a avansați, primele două lecții
+    let videoBtn = '';
+    if (clasa === 'avansati-clasa-9' && (idx === 0 || idx === 1)) {
+      videoBtn = `<a href="https://www.youtube.com/watch?v=q3bdBoW_oNg" target="_blank" style="display:inline-block;margin:8px 0 8px 10px;padding:7px 18px;background:#fff3e1;color:#8e24aa;border:2px solid #8e24aa;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:1em;font-weight:600;text-decoration:none;transition:background 0.2s, color 0.2s, border 0.2s;box-shadow:0 2px 8px #8e24aa22;">▶ Lecție video recursivitate</a>`;
+    }
+    if (clasa === 'avansati-clasa-10' && idx === 0) {
+      videoBtn = `<a href="https://www.youtube.com/watch?v=jrPkvvCy4gk" target="_blank" style="display:inline-block;margin:8px 0 8px 10px;padding:7px 18px;background:#fff3e1;color:#8e24aa;border:2px solid #8e24aa;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:1em;font-weight:600;text-decoration:none;transition:background 0.2s, color 0.2s, border 0.2s;box-shadow:0 2px 8px #8e24aa22;">▶ Lecție video backtracking</a>`;
+    }
+    if (clasa === 'avansati-clasa-10' && idx === 1) {
+      videoBtn = `<a href="https://www.youtube.com/watch?v=GWJQCeZvPu4" target="_blank" style="display:inline-block;margin:8px 0 8px 10px;padding:7px 18px;background:#fff3e1;color:#8e24aa;border:2px solid #8e24aa;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:1em;font-weight:600;text-decoration:none;transition:background 0.2s, color 0.2s, border 0.2s;box-shadow:0 2px 8px #8e24aa22;">▶ Lecție video divide et impera</a>`;
+    }
+    container.innerHTML += `
+      <div class=\"lesson\">
+        <h3>${lec.title}${bifa}</h3>
+        ${videoBtn}
+        <button class=\"show-btn\" onclick=\"toggleShow(this, 'analogie', '${clasa}', ${idx})\">Vreau un exemplu real-life</button>
+        <div class=\"analogie-content\" style=\"display:none\">${lec.analogie}</div>
+        <button class=\"show-btn\" onclick=\"toggleShow(this, 'definitie', '${clasa}', ${idx})\">Definiție</button>
+        <div class=\"definitie-content\" style=\"display:none\">${lec.definitie}</div>
+        <button class=\"show-btn\" onclick=\"toggleShow(this, 'explicatie', '${clasa}', ${idx})\">Explicație</button>
+        <div class=\"explicatie-content\" style=\"display:none\">${lec.explicatie}</div>
+        <p><strong>Exemplu C++:</strong></p>
+        <pre>${lec.exemplu}</pre>
+        ${markBtn}${notesBtn}
+        ${notesSection}
+      </div>
+    `;
+  });
+  setTimeout(()=>{
+    document.querySelectorAll('.lesson h3').forEach(h3=>{
+      h3.style.animation = 'none';
+      void h3.offsetWidth;
+      h3.style.animation = '';
+    });
+  }, 10);
+}
+
+function toggleMark(clasa, idx, btn) {
+  const key = clasa+'-'+idx;
+  let completate = getUserCompletions();
+  const lessonDiv = btn.closest('.lesson');
+  const h3 = lessonDiv.querySelector('h3');
+  let bifa = h3.querySelector('.bifa');
+  if (completate.includes(key)) {
+    completate = completate.filter(x=>x!==key);
+    btn.classList.remove('completed');
+    btn.textContent = 'Marchează ca parcurs';
+    if (bifa) bifa.remove();
+  } else {
+    completate.push(key);
+    btn.classList.add('completed');
+    btn.textContent = 'Demarchează lecția';
+    if (!bifa) h3.innerHTML += '<span class=\"bifa\">✔</span>';
+  }
+  setUserCompletions(completate);
+}
+
+function toggleNotes(key) {
+  const notesSection = document.getElementById(`notes-section-${key}`);
+  const savedNotes = document.getElementById(`saved-notes-${key}`);
+  const notes = getUserNotes();
+  const currentNotes = notes[key] || '';
+  
+  if (notesSection.style.display === 'none') {
+    notesSection.style.display = 'block';
+    savedNotes.style.display = 'none';
+    document.getElementById(`notes-textarea-${key}`).value = currentNotes;
+  } else {
+    notesSection.style.display = 'none';
+    if (currentNotes) {
+      savedNotes.style.display = 'block';
+    }
+  }
+}
+function saveNotes(key) {
+  const textarea = document.getElementById(`notes-textarea-${key}`);
+  const notes = getUserNotes();
+  notes[key] = textarea.value.trim();
+  setUserNotes(notes);
+  
+  // Actualizează afișarea
+  const savedNotes = document.getElementById(`saved-notes-${key}`);
+  const notesSection = document.getElementById(`notes-section-${key}`);
+  
+  if (notes[key]) {
+    savedNotes.style.display = 'block';
+    savedNotes.querySelector('div:last-child').textContent = notes[key];
+  } else {
+    savedNotes.style.display = 'none';
+  }
+  
+  notesSection.style.display = 'none';
+}
+function cancelNotes(key) {
+  const notesSection = document.getElementById(`notes-section-${key}`);
+  const savedNotes = document.getElementById(`saved-notes-${key}`);
+  const notes = getUserNotes();
+  
+  notesSection.style.display = 'none';
+  if (notes[key]) {
+    savedNotes.style.display = 'block';
+  }
+}
+function editNotes(key) {
+  const notesSection = document.getElementById(`notes-section-${key}`);
+  const savedNotes = document.getElementById(`saved-notes-${key}`);
+  const notes = getUserNotes();
+  
+  notesSection.style.display = 'block';
+  savedNotes.style.display = 'none';
+  document.getElementById(`notes-textarea-${key}`).value = notes[key] || '';
+}
+function toggleShow(btn, type, clasa, idx) {
+  const lesson = btn.closest('.lesson');
+  const content = lesson.querySelector('.' + type + '-content');
+  if (content.style.display === 'none') {
+    content.style.display = 'block';
+    btn.classList.add('active');
+  } else {
+    content.style.display = 'none';
+    btn.classList.remove('active');
+  }
+}
+
+function filterLessons() {
+  const search = document.getElementById('lesson-search').value.toLowerCase();
+  document.querySelectorAll('.lesson').forEach(lesson => {
+    const title = lesson.querySelector('h3') ? lesson.querySelector('h3').textContent.toLowerCase() : '';
+    const text = lesson.textContent.toLowerCase();
+    lesson.style.display = (title.includes(search) || text.includes(search)) ? '' : 'none';
+  });
+}
+function getAvansatiCompletionsCount() {
+  // Adună toate lecțiile marcate ca parcurse din avansați (clasa 9-12)
+  const completate = getUserCompletions();
+  let count = 0;
+  ['avansati-clasa-9','avansati-clasa-10','avansati-clasa-11','avansati-clasa-12'].forEach(clasa=>{
+    for(let i=0;i<(lectii[clasa]?.length||0);i++){
+      if(completate.includes(clasa+'-'+i)) count++;
+    }
+  });
+  return count;
+}
+let motivationalTimeout = null;
+let motivationalShown = false;
+let arrowShown = false;
+let scrollMsgTimeout = null;
+function showMotivationalMessage() {
+  if (motivationalShown) return;
+  motivationalShown = true;
+  let countdown = 10;
+  const alertDiv = document.createElement('div');
+  alertDiv.id = 'motivational-alert';
+  alertDiv.style.position = 'fixed';
+  alertDiv.style.top = '32px';
+  alertDiv.style.left = '50%';
+  alertDiv.style.transform = 'translateX(-50%)';
+  alertDiv.style.background = 'linear-gradient(90deg,#9c27b0 0%,#ffd700 100%)';
+  alertDiv.style.color = '#fff';
+  alertDiv.style.fontSize = '1.15em';
+  alertDiv.style.fontWeight = '700';
+  alertDiv.style.padding = '18px 32px';
+  alertDiv.style.borderRadius = '14px';
+  alertDiv.style.boxShadow = '0 4px 24px #9c27b088';
+  alertDiv.style.zIndex = '9999';
+  alertDiv.style.display = 'flex';
+  alertDiv.style.alignItems = 'center';
+  alertDiv.innerHTML = `🧠 Mai parcurge încă <b>3 lecții</b> și ai să primești un cadou special! <span id='motiv-countdown' style='margin-left:18px;font-weight:700;color:#fff;'>${countdown}s</span>`;
+  document.body.appendChild(alertDiv);
+  clearInterval(motivationalTimeout);
+  motivationalTimeout = setInterval(()=>{
+    countdown--;
+    document.getElementById('motiv-countdown').textContent = countdown+'s';
+    if(countdown<=0) {
+      alertDiv.remove();
+      clearInterval(motivationalTimeout);
+    }
+  },1000);
+}
+function hideMotivationalMessage() {
+  const alertDiv = document.getElementById('motivational-alert');
+  if (alertDiv) alertDiv.remove();
+  clearInterval(motivationalTimeout);
+  motivationalShown = false;
+}
+function showQuizArrow() {
+  if (arrowShown) return;
+  arrowShown = true;
+  // Afișează mesajul de scroll
+  const scrollMsg = document.getElementById('scroll-surprise-msg');
+  scrollMsg.innerHTML = `<div class='scroll-surprise-box'>🧠 Dă scroll ca să revendici surpriza specială!</div>`;
+  scrollMsg.style.display = '';
+  setTimeout(()=>{ scrollMsg.classList.add('fade-in'); }, 10);
+  // Ascunde mesajul după 15 secunde
+  clearTimeout(scrollMsgTimeout);
+  scrollMsgTimeout = setTimeout(() => {
+    scrollMsg.style.display = 'none';
+    scrollMsg.classList.remove('fade-in');
+  }, 15000);
+  const arrowDiv = document.getElementById('quiz-arrow');
+  arrowDiv.innerHTML = `<div class='quiz-arrow-anim' onclick='showQuizAvansati()'>⬇️</div>`;
+  arrowDiv.style.display = '';
+}
+function hideQuizArrow() {
+  document.getElementById('quiz-arrow').style.display = 'none';
+  arrowShown = false;
+  // Ascunde mesajul de scroll
+  const scrollMsg = document.getElementById('scroll-surprise-msg');
+  scrollMsg.style.display = 'none';
+  scrollMsg.classList.remove('fade-in');
+  clearTimeout(scrollMsgTimeout);
+}
+function showQuizAvansati() {
+  document.getElementById('quiz-arrow').style.display = 'none';
+  const section = document.getElementById('quiz-avansati-section');
+  section.style.display = '';
+  section.innerHTML = `
+    <div class="quiz-section unlock-anim">
+      <div class="quiz-card gradient-border">
+        <div class="quiz-title">
+          <span class="brain-anim">🧠</span> 🧮 Quiz C++ – Programare Avansată
+        </div>
+        <div class="quiz-desc">
+          Test grilă cu 15 întrebări din C++ pentru nivel avansat.<br>
+          Acoperă conceptele complexe din programare:<br>
+          🔹 OOP - Clase, moștenire, polimorfism<br>
+          🔹 Algoritmi avansați - Backtracking, Divide et Impera<br>
+          🔹 Teoria grafurilor - Kruskal, Bellman-Ford<br>
+          🔹 Programare dinamică - LCS, TSP<br>
+          🔹 Structuri de date avansate - Heap, Trie<br>
+          🔹 Tehnici algoritmice - Memoizare, Greedy<br>
+          🔹 Complexitate algoritmică avansată<br>
+          <span style="display:block;margin-top:8px;">Ideal pentru pregătirea concursurilor de informatică, olimpiade și examene de admitere.</span>
+        </div>
+        <div class="quiz-iframe-wrap">
+          <iframe style="max-width:100%" src="https://wordwall.net/ro/embed/e968baf4cce241349c4000210a38c9f9?themeId=49&templateId=36&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // Salvează deblocarea în profilul utilizatorului
+  const currentUser = localStorage.getItem('currentUser');
+  if (currentUser) {
+    const userProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+    if (!userProfiles[currentUser]) {
+      userProfiles[currentUser] = {};
+    }
+    userProfiles[currentUser].quizAvansatiUnlocked = true;
+    localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
+  }
+  
+  // Efect de unlock: confetti + sunet doar la prima deblocare
+  launchConfetti(section.querySelector('.quiz-card'));
+  if (!localStorage.getItem('quizAvansatiSoundPlayed')) {
+    playSuccessAudio();
+    localStorage.setItem('quizAvansatiSoundPlayed', '1');
+  }
+  setTimeout(()=>{
+    section.querySelector('.quiz-section').classList.remove('unlock-anim');
+  }, 1200);
+}
+function playSuccessAudio() {
+  const audio = document.getElementById('success-audio');
+  if(audio) { audio.currentTime = 0; audio.play(); }
+}
+function checkAndShowQuizAvansati() {
+  const completate = getAvansatiCompletionsCount();
+  const currentUser = localStorage.getItem('currentUser');
+  if (!currentUser) {
+    // Dacă nu e logat, ascunde quiz-ul și resetează
+    hideMotivationalMessage();
+    hideQuizArrow();
+    document.getElementById('quiz-avansati-section').style.display = 'none';
+    return;
+  }
+  
+  const userProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+  const userProfile = userProfiles[currentUser] || {};
+  const quizUnlocked = userProfile.quizAvansatiUnlocked === true;
+  
+  // Dacă quiz-ul e deblocat, nu mai afișăm săgeata sau mesajul de scroll
+  if (quizUnlocked) {
+    hideMotivationalMessage();
+    hideQuizArrow();
+    // Verific dacă quiz-ul este deja afișat pentru a evita confetti repetat
+    const quizSection = document.getElementById('quiz-avansati-section');
+    if (quizSection.style.display === 'none' || quizSection.innerHTML === '') {
+      showQuizAvansati();
+    }
+    return;
+  }
+  if (completate >= 5) {
+    hideMotivationalMessage();
+    showQuizArrow();
+  } else if (completate === 2) {
+    hideQuizArrow();
+    if (!motivationalShown) showMotivationalMessage();
+  } else {
+    hideMotivationalMessage();
+    hideQuizArrow();
+    if (completate < 2) motivationalShown = false;
+    if (completate < 5) arrowShown = false;
+  }
+}
+function launchConfetti(container) {
+  // Confetti + artificii simple cu canvas
+  const canvas = document.createElement('canvas');
+  canvas.width = 600; canvas.height = 300;
+  canvas.style.position = 'absolute';
+  canvas.style.left = '50%';
+  canvas.style.top = '0';
+  canvas.style.transform = 'translateX(-50%)';
+  canvas.style.pointerEvents = 'none';
+  container.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: 300, y: 150,
+      r: Math.random()*7+3,
+      c: `hsl(${Math.random()*360},90%,60%)`,
+      vx: Math.cos(Math.random()*2*Math.PI)*Math.random()*7,
+      vy: Math.sin(Math.random()*2*Math.PI)*Math.random()*7,
+      g: 0.18+Math.random()*0.08
+    });
+  }
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0,0,600,300);
+    for (const p of particles) {
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+      ctx.fillStyle = p.c; ctx.fill();
+      p.x += p.vx; p.y += p.vy; p.vy += p.g;
+    }
+    t++;
+    if (t<60) requestAnimationFrame(draw); else canvas.remove();
+  }
+  draw();
+}
+// Animare smooth la schimbarea paginii
+document.addEventListener('DOMContentLoaded', function() {
+  document.body.style.opacity = 0;
+  document.body.style.transition = 'opacity 0.6s cubic-bezier(.4,0,.2,1)';
+  setTimeout(()=>{ document.body.style.opacity = 1; }, 30);
+  checkAndShowQuizAvansati();
+  document.querySelectorAll('a,button').forEach(el => {
+    el.addEventListener('click', function(e) {
+      const href = el.getAttribute('href');
+      if (href && !href.startsWith('#') && !el.hasAttribute('download')) {
+        e.preventDefault();
+        document.body.style.opacity = 0;
+        setTimeout(()=>{ window.location.href = href; }, 400);
+      }
+    });
+  });
+});
+// Re-verifică la fiecare marcare/demarcare lecție
+const origToggleMark = window.toggleMark;
+window.toggleMark = function(clasa, idx, btn) {
+  origToggleMark(clasa, idx, btn);
+  checkAndShowQuizAvansati();
+}
+function showRobotName() {
+  const robotName = document.getElementById('robot-name');
+  robotName.style.opacity = '1';
+  robotName.style.transform = 'translateX(0)';
+}
+function hideRobotName() {
+  const robotName = document.getElementById('robot-name');
+  robotName.style.opacity = '0';
+  robotName.style.transform = 'translateX(-10px)';
+}
+function openAssistant() {
+  window.open('assistant.html', '_blank');
+}
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+  </script>
+  <style>
+/* Gradient animat și border pentru quiz-card avansați */
+.quiz-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 420px;
+  margin: 40px 0 30px 0;
+  animation: fadeInQuiz 1.2s cubic-bezier(.23,1.02,.47,.98);
+}
+.quiz-section.unlock-anim {
+  animation: unlockPop 1.2s cubic-bezier(.23,1.02,.47,.98);
+}
+@keyframes unlockPop {
+  0% { transform: scale(0.7) rotate(-8deg); opacity: 0; }
+  60% { transform: scale(1.08) rotate(3deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes fadeInQuiz {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.quiz-card {
+  background: linear-gradient(120deg, #667eea 0%, #9c27b0 100%);
+  border-radius: 22px;
+  box-shadow: 0 8px 40px #9c27b044, 0 2px 8px #ffd70033;
+  padding: 36px 32px 32px 32px;
+  min-width: 340px;
+  max-width: 540px;
+  border: 4px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+.gradient-border {
+  border-image: linear-gradient(120deg, #9c27b0 0%, #ffd700 50%, #667eea 100%) 1;
+  animation: borderAnim 2.5s linear infinite alternate;
+}
+@keyframes borderAnim {
+  0% { border-image-source: linear-gradient(120deg, #9c27b0 0%, #ffd700 50%, #667eea 100%); }
+  100% { border-image-source: linear-gradient(120deg, #667eea 0%, #ffd700 50%, #9c27b0 100%); }
+}
+.quiz-title {
+  font-size: 1.45em;
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 12px #9c27b0cc, 0 1px 3px #ffd70099;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brain-anim {
+  font-size: 1.5em;
+  animation: brainPulse 1.2s infinite alternate cubic-bezier(.4,0,.2,1);
+  filter: drop-shadow(0 2px 8px #ffd700cc);
+}
+@keyframes brainPulse {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-8px) scale(1.12); }
+}
+.quiz-desc {
+  color: #e0fff7;
+  font-size: 1.08em;
+  margin-bottom: 18px;
+  font-family: 'Inter', Arial, sans-serif;
+  background: rgba(156,39,176,0.10);
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 8px #9c27b022;
+}
+.quiz-iframe-wrap {
+  margin-top: 12px;
+  text-align: center;
+  position: relative;
+}
+/* Mesaj scroll pentru surpriză avansați */
+#scroll-surprise-msg {
+  width: 100vw;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  pointer-events: none;
+  min-height: 40px;
+  transition: transform 0.7s, opacity 0.7s;
+}
+.scroll-surprise-box {
+  display: inline-block;
+  background: rgba(156,39,176,0.92);
+  color: #fff;
+  font-size: 1.25em;
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-weight: 800;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px #9c27b044;
+  padding: 14px 32px;
+  margin: 12px auto 0 auto;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+#scroll-surprise-msg.fade-in .scroll-surprise-box {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Săgeată animată pentru avansați */
+.quiz-arrow-anim {
+  font-size: 2.5rem;
+  color: #ffd700;
+  text-align: center;
+  margin: 32px auto 0 auto;
+  cursor: pointer;
+  animation: arrowBounce 1.2s infinite alternate cubic-bezier(.4,0,.2,1);
+  user-select: none;
+}
+  @keyframes arrowBounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(18px) scale(1.08); }
+  }
+  /* Butoane flotante pentru avansați */
+  .floating-buttons {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+  }
+  .robot-btn, .scroll-top-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .robot-btn {
+    background: linear-gradient(135deg, #9c27b0, #ffd700);
+    color: white;
+  }
+  .robot-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .scroll-top-btn {
+    background: linear-gradient(135deg, #ffd700, #9c27b0);
+    color: white;
+  }
+  .scroll-top-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .robot-name {
+    position: absolute;
+    right: 70px;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  .robot-name::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid rgba(0,0,0,0.8);
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
+  </style>
+</body>
+</html> 

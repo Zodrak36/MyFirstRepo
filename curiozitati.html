@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Curiozități</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: #181a1f;
+      overflow-x: hidden;
+      position: relative;
+    }
+    .curio-container {
+      max-width: 900px;
+      margin: 48px auto 0 auto;
+      padding: 0 18px 64px 18px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 24px;
+      box-shadow: 0 4px 32px #1976d222;
+      position: relative;
+      animation: fadeInUp 1.2s cubic-bezier(.23,1.02,.47,.98);
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(60px); }
+      100% { opacity: 1; transform: none; }
+    }
+    .curio-title {
+      font-size: 2.7rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 900;
+      text-align: center;
+      margin: 48px 0 32px 0;
+      letter-spacing: -1.5px;
+      background: linear-gradient(90deg, #1976d2 10%, #43e97b 90%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      animation: title-gradient-move 6s linear infinite alternate;
+    }
+    @keyframes title-gradient-move {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .curio-section {
+      margin: 48px 0 56px 0;
+      padding: 32px 24px;
+      background: rgba(236, 248, 255, 0.85);
+      border-radius: 18px;
+      box-shadow: 0 2px 16px #1976d211;
+      animation: fadeInUp 1.2s cubic-bezier(.23,1.02,.47,.98);
+      transition: box-shadow 0.3s;
+    }
+    .curio-section:hover {
+      box-shadow: 0 8px 32px #43e97b44;
+    }
+    .curio-section h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 0 0 18px 0;
+      color: #1976d2;
+      letter-spacing: -0.5px;
+    }
+    .curio-section p {
+      font-size: 1.13rem;
+      margin: 0 0 18px 0;
+      color: #222;
+      line-height: 1.7;
+    }
+    .curio-iframe {
+      width: 100%;
+      max-width: 540px;
+      min-height: 320px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px #1976d222;
+      margin: 0 auto 0 auto;
+      display: block;
+      background: #fff;
+      transition: box-shadow 0.3s;
+    }
+    .curio-section .curio-iframe:hover {
+      box-shadow: 0 8px 32px #43e97b44;
+    }
+    @media (max-width: 700px) {
+      .curio-title { font-size: 1.5rem; }
+      .curio-section { padding: 16px 4vw; }
+      .curio-iframe { min-height: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="curio-title">✨ Curiozități ✨</div>
+  <div class="curio-container">
+    <div class="curio-section">
+      <h2>🔍 Joc interactiv: Găsește secvența corectă!</h2>
+      <p>Testează-ți logica și atenția cu acest joc interactiv. Potrivește secvențele în ordinea corectă!</p>
+      <iframe class="curio-iframe" style="max-width:100%" src="https://wordwall.net/ro/embed/794108820c224fa1a4e326904232480b?themeId=1042&templateId=70&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="curio-section">
+      <h2>🏠 Pagina Principală</h2>
+      <p>Întoarce-te la pagina principală pentru a explora toate resursele educaționale disponibile!</p>
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="index.html" style="display: inline-block; padding: 15px 30px; background: linear-gradient(90deg, #1976d2, #43e97b); color: white; text-decoration: none; border-radius: 25px; font-weight: 700; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);">
+          🏠 Mergi la Pagina Principală
+        </a>
+      </div>
+    </div>
+    <div class="curio-section">
+      <h2>💡 Povestește-mi curiozitatea ta!</h2>
+      <p>Ai o întrebare, o idee sau o curiozitate? Scrie-o la feedback și poate o vei regăsi pe site!</p>
+      <!-- Poți adăuga un formular sau un buton de contact aici -->
+    </div>
+  </div>
+</body>
+</html> 

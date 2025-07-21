@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explicații - Foaie scrisă</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(160, 82, 45, 0.08) 0%, transparent 50%),
+        linear-gradient(135deg, #f5f5dc 0%, #faf0e6 50%, #fff8dc 100%);
+      min-height: 100vh;
+      font-family: 'Caveat', cursive;
+      color: #2f1b14;
+      padding: 20px;
+      position: relative;
+    }
+    
+    /* Efect de hârtie veche */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(139, 69, 19, 0.03) 2px,
+          rgba(139, 69, 19, 0.03) 4px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 2px,
+          rgba(139, 69, 19, 0.03) 2px,
+          rgba(139, 69, 19, 0.03) 4px
+        );
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .paper-container {
+      max-width: 1000px;
+      margin: 50px auto;
+      background:
+        linear-gradient(135deg, #fff 0%, #fefefe 100%),
+        url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23f0f0f0" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      border-radius: 12px;
+      box-shadow: 
+        0 4px 20px rgba(139, 69, 19, 0.2),
+        0 0 0 1px rgba(139, 69, 19, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+      padding: 80px 60px;
+      position: relative;
+      z-index: 2;
+      transform: rotate(-0.5deg);
+      transition: transform 0.3s ease;
+    }
+    
+    .paper-container:hover {
+      transform: rotate(0deg);
+    }
+    
+    /* Efect de marginare */
+    .paper-container::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      border: 2px solid rgba(139, 69, 19, 0.2);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    
+    /* Efect de lipire */
+    .paper-container::after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 30px;
+      height: 30px;
+      background: rgba(139, 69, 19, 0.1);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+      font-family: 'Kalam', cursive;
+      font-size: 4rem;
+      font-weight: 700;
+      color: #2f1b14;
+      text-align: center;
+      margin-bottom: 50px;
+      text-shadow: 2px 2px 4px rgba(139, 69, 19, 0.2);
+      position: relative;
+      transform: rotate(-1deg);
+    }
+    
+    h1::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: rgba(255, 255, 0, 0.3);
+      border-radius: 8px;
+      z-index: -1;
+      transform: rotate(1deg);
+    }
+    
+    h2 {
+      font-family: 'Kalam', cursive;
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: #2f1b14;
+      margin: 50px 0 30px 0;
+      text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.2);
+      position: relative;
+      transform: rotate(-0.5deg);
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #ffd700, transparent);
+      border-radius: 1px;
+    }
+    
+    .code-block {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      background: 
+        linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(139, 69, 19, 0.05) 2px,
+          rgba(139, 69, 19, 0.05) 4px
+        );
+      border: 2px solid #d2b48c;
+      border-radius: 12px;
+      padding: 35px;
+      margin: 35px 0;
+      box-shadow: 
+        0 2px 8px rgba(139, 69, 19, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      position: relative;
+      transform: rotate(0.5deg);
+      line-height: 2.2;
+      white-space: pre-line;
+      letter-spacing: 0.02em;
+    }
+    
+    .code-block::before {
+      content: '📝';
+      position: absolute;
+      top: -15px;
+      left: 20px;
+      font-size: 1.5rem;
+      background: #fff;
+      padding: 5px 10px;
+      border-radius: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .explanation {
+      font-family: 'Caveat', cursive;
+      font-size: 1.6rem;
+      line-height: 1.8;
+      margin: 35px 0;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.7);
+      border-left: 4px solid #ffd700;
+      border-radius: 0 12px 12px 0;
+      position: relative;
+      transform: rotate(-0.3deg);
+    }
+    
+    .explanation::before {
+      content: '💡';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      font-size: 1.2rem;
+      background: #fff;
+      padding: 5px;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .highlight {
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(139, 69, 19, 0.2);
+      position: relative;
+    }
+    
+    .highlight::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.3) 2px,
+        rgba(255, 255, 255, 0.3) 4px
+      );
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    
+    .keyword {
+      color: #8b4513;
+      font-weight: 700;
+      text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.2);
+    }
+    
+    .function {
+      color: #0066cc;
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-color: #ffd700;
+      text-decoration-thickness: 2px;
+    }
+    
+    .number {
+      color: #cc6600;
+      font-weight: 600;
+    }
+    
+    .string {
+      color: #cc3300;
+      font-weight: 500;
+    }
+    
+    .comment {
+      color: #666;
+      font-style: italic;
+      opacity: 0.8;
+    }
+    
+    .arrow {
+      font-size: 1.4rem;
+      color: #8b4513;
+      margin: 0 8px;
+    }
+    
+    .step {
+      margin: 25px 0;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 12px;
+      border-left: 4px solid #ffd700;
+      position: relative;
+      transform: rotate(0.2deg);
+      line-height: 1.8;
+    }
+    
+    .step::before {
+      content: '→';
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #ffd700;
+      color: #2f1b14;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    .note {
+      background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+      border: 2px dashed #ffc107;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 35px 0;
+      position: relative;
+      transform: rotate(-0.5deg);
+      font-size: 1.5rem;
+      line-height: 1.8;
+    }
+    
+    .note::before {
+      content: '📌';
+      position: absolute;
+      top: -15px;
+      left: 25px;
+      background: #fff;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 1.2rem;
+    }
+    
+    .warning {
+      background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+      border: 2px solid #ff6b6b;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 35px 0;
+      position: relative;
+      transform: rotate(0.3deg);
+      font-size: 1.5rem;
+      line-height: 1.8;
+    }
+    
+    .warning::before {
+      content: '⚠️';
+      position: absolute;
+      top: -15px;
+      left: 25px;
+      background: #fff;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 1.2rem;
+    }
+    
+    .success {
+      background: linear-gradient(135deg, #e6ffe6 0%, #ccffcc 100%);
+      border: 2px solid #4caf50;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 35px 0;
+      position: relative;
+      transform: rotate(-0.2deg);
+      font-size: 1.5rem;
+      line-height: 1.8;
+    }
+    
+    .success::before {
+      content: '✅';
+      position: absolute;
+      top: -15px;
+      left: 25px;
+      background: #fff;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 1.2rem;
+    }
+    
+    /* Butoane de navigare */
+    .nav-buttons {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      top: auto;
+      flex-direction: column;
+      gap: 14px;
+      z-index: 1000;
+      align-items: flex-end;
+    }
+    
+    .nav-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #8b4513, #a0522d);
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .nav-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(139, 69, 19, 0.4);
+    }
+    
+    /* Efecte de creion */
+    .pencil-effect {
+      position: relative;
+    }
+    
+    .pencil-effect::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 1px,
+        rgba(139, 69, 19, 0.02) 1px,
+        rgba(139, 69, 19, 0.02) 2px
+      );
+      pointer-events: none;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .paper-container {
+        padding: 30px 20px;
+        margin: 20px auto;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .code-block, .explanation {
+        font-size: 1.1rem;
+        padding: 15px;
+      }
+      
+      .nav-buttons {
+        bottom: 10px;
+        right: 10px;
+      }
+      
+      .nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+    }
+    
+    /* Animații subtile */
+    @keyframes paperFloat {
+      0%, 100% { transform: translateY(0px) rotate(-0.5deg); }
+      50% { transform: translateY(-2px) rotate(-0.3deg); }
+    }
+    
+    .paper-container {
+      animation: paperFloat 6s ease-in-out infinite;
+    }
+    
+    @keyframes highlightGlow {
+      0%, 100% { box-shadow: 0 1px 3px rgba(139, 69, 19, 0.2); }
+      50% { box-shadow: 0 2px 6px rgba(139, 69, 19, 0.4); }
+    }
+    
+    .highlight {
+      animation: highlightGlow 3s ease-in-out infinite;
+    }
+    .nav-btn.up {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px) scale(0.95);
+      transition: opacity 0.4s cubic-bezier(.4,0,.2,1), transform 0.4s cubic-bezier(.4,0,.2,1);
+      display: flex;
+    }
+    .nav-btn.up.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-buttons">
+    <button class="nav-btn home" onclick="window.location.href='index.html'" title="Acasă">🏠</button>
+    <button class="nav-btn up" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Sus">⬆️</button>
+  </div>
+  
+  <div class="paper-container pencil-effect">
+    <h1>📚 Explicații Detaliate</h1>
+    
+    <h2>🔢 Funcția Factorial - Codul Complet</h2>
+    <div class="code-block"><pre style="margin:0;background:none;border:none;padding:0;font-family:inherit;font-size:inherit;line-height:2.2;white-space:pre;">#include &lt;iostream&gt;
+using namespace std;
+
+int factorial(int n) {
+    if (n &lt;= 1) return 1;  // cazul de bază
+    return n * factorial(n - 1);
+}
+
+int main() {
+    int n = 5;
+    cout &lt;&lt; "Factorial(" &lt;&lt; n &lt;&lt; ") = " &lt;&lt; factorial(n) &lt;&lt; endl;
+    return 0;
+}</pre></div>
+    
+    <h2>🔍 Explicații Linie cu Linie</h2>
+    
+    <div class="explanation">
+      <div class="step">
+        <span class="highlight">#include &lt;iostream&gt;</span><br>
+        <span class="arrow">→</span> Include biblioteca pentru input/output<br>
+        <span class="arrow">→</span> Necesară pentru <span class="function">cout</span> și <span class="function">cin</span>
+    </div>
+      
+      <div class="step">
+        <span class="highlight">using namespace std;</span><br>
+        <span class="arrow">→</span> Permite folosirea directă a <span class="function">cout</span>, <span class="function">cin</span><br>
+        <span class="arrow">→</span> Fără aceasta ar trebui să scrii <span class="function">std::cout</span>
+    </div>
+      
+      <div class="step">
+        <span class="highlight">int factorial(int n) {</span><br>
+        <span class="arrow">→</span> Declarăm funcția <span class="function">factorial</span><br>
+        <span class="arrow">→</span> Primește un parametru <span class="keyword">int n</span><br>
+        <span class="arrow">→</span> Returnează un <span class="keyword">int</span>
+    </div>
+      
+      <div class="step">
+        <span class="highlight">if (n <= 1) return 1;</span><br>
+        <span class="arrow">→</span> oprește recursivitatea<br>
+        <span class="arrow">→</span> Dacă n ≤ 1, factorialul = 1<br>
+        <span class="arrow">→</span> Previne bucla infinită
+    </div>
+      
+      <div class="step">
+        <span class="highlight">return n * factorial(n - 1);</span><br>
+        <span class="arrow">→</span> funcția se apelează pe ea însăși<br>
+        <span class="arrow">→</span> n! = n × (n-1)!<br>
+        <span class="arrow">→</span> Exemplu: 5! = 5 × 4! = 5 × 4 × 3! = ... = 120
+    </div>
+    </div>
+    
+    <h2>💡 Cum Funcționează Recursivitatea</h2>
+    
+    <div class="note">
+      <strong>Exemplu pentru factorial(5):</strong><br>
+      <span class="arrow">→</span> factorial(5) = 5 × factorial(4)<br>
+      <span class="arrow">→</span> factorial(4) = 4 × factorial(3)<br>
+      <span class="arrow">→</span> factorial(3) = 3 × factorial(2)<br>
+      <span class="arrow">→</span> factorial(2) = 2 × factorial(1)<br>
+      <span class="arrow">→</span> factorial(1) = 1 <span class="comment">(cazul de bază)</span><br>
+      <span class="arrow">→</span> Rezultat: 5 × 4 × 3 × 2 × 1 = 120
+    </div>
+    
+    <h2>⚠️ Atenție la Recursivitate</h2>
+    
+    <div class="warning">
+      <strong>Limitări importante:</strong><br>
+      <span class="arrow">→</span> Numere prea mari pot cauza overflow<br>
+      <span class="arrow">→</span> Recursivitatea profundă poate cauza stack overflow<br>
+      <span class="arrow">→</span> Pentru numere mari, folosește iterativ
+    </div>
+    
+    <h2>✅ Avantajele Recursivității</h2>
+    
+    <div class="success">
+      <strong>De ce să folosim recursivitatea?</strong><br>
+      <span class="arrow">→</span> Cod mai curat și mai ușor de înțeles<br>
+      <span class="arrow">→</span> Reflectă direct definiția matematică<br>
+      <span class="arrow">→</span> Ideal pentru probleme cu structură recursivă<br>
+      <span class="arrow">→</span> Mai elegant decât buclele complexe
+    </div>
+    
+    <h2>🎯 Exerciții Practice</h2>
+    
+    <div class="explanation">
+      <div class="step">
+        <strong>1. Calculează factorial(3):</strong><br>
+        <span class="arrow">→</span> 3! = 3 × 2 × 1 = 6
+      </div>
+      
+      <div class="step">
+        <strong>2. Calculează factorial(4):</strong><br>
+        <span class="arrow">→</span> 4! = 4 × 3 × 2 × 1 = 24
+      </div>
+      
+      <div class="step">
+        <strong>3. Ce se întâmplă cu factorial(0)?</strong><br>
+        <span class="arrow">→</span> 0! = 1 (definit matematic)
+      </div>
+    </div>
+    
+    <div class="note">
+      <strong>💭 Gândire recursivă:</strong><br>
+      Pentru a rezolva o problemă recursiv, gândește-te la:<br>
+      <span class="arrow">→</span> Cazul de bază (când se oprește)<br>
+      <span class="arrow">→</span> Cum se reduce problema la o subproblemă mai mică<br>
+      <span class="arrow">→</span> Cum se combină rezultatele
+    </div>
+  </div>
+  <script>
+    // Săgeata sus apare/dispare cu animație
+      function toggleUpBtn() {
+      const upBtn = document.querySelector('.nav-btn.up');
+        if (window.scrollY > 40) {
+        upBtn.classList.add('show');
+        } else {
+        upBtn.classList.remove('show');
+      }
+    }
+    window.addEventListener('scroll', toggleUpBtn);
+    document.addEventListener('DOMContentLoaded', function() {
+      toggleUpBtn();
+    });
+  </script>
+</body>
+</html> 

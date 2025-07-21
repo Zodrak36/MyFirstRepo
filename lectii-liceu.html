@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lecții LICEU - InfoWorld</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body { 
+      background: linear-gradient(120deg, #232526 0%, #414345 100%);
+      background-attachment: fixed;
+      position: relative;
+      color: #222; 
+      font-family: 'Playfair Display', serif; 
+      margin:0; 
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: -1;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 15% 20%, rgba(0,255,255,0.10) 0, transparent 60%),
+        radial-gradient(circle at 85% 80%, rgba(255,0,255,0.10) 0, transparent 60%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,0,0.08) 0, transparent 60%),
+        repeating-linear-gradient(120deg, rgba(0,255,255,0.04) 0 2px, transparent 2px 40px),
+        repeating-linear-gradient(-60deg, rgba(255,0,255,0.04) 0 2px, transparent 2px 40px);
+      animation: bgMoveLectii 14s linear infinite alternate, bgLines 18s linear infinite alternate;
+    }
+    @keyframes bgMoveLectii {
+      0% { background-position: 0% 0%, 100% 100%, 50% 100%; }
+      100% { background-position: 100% 100%, 0% 0%, 50% 0%; }
+    }
+    @keyframes bgLines {
+      0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: 100px 200px, 200px 100px, 0 0, 200px 0, 0 200px; }
+    }
+    .home-button { position:fixed;top:20px;right:20px;z-index:1000;display:inline-block;padding:6px 18px;background:#111;color:#00bcd4;border-radius:5px;border:2px solid #00bcd4;text-decoration:none;font-family:'Arial',sans-serif;font-size:1.08em;font-weight:600;box-shadow:none;opacity:0.92;transition:background 0.2s, color 0.2s; }
+    .home-button:hover { background:#00bcd4; color:#fff; }
+    .quiz-button { position:fixed;top:20px;right:120px;z-index:1000;display:inline-block;padding:6px 18px;background:#111;color:#ff6b6b;border-radius:5px;border:2px solid #ff6b6b;text-decoration:none;font-family:'Arial',sans-serif;font-size:1.08em;font-weight:600;box-shadow:none;opacity:0.92;transition:background 0.2s, color 0.2s; }
+    .quiz-button:hover { background:#ff6b6b; color:#fff; }
+    .tips-button { position:fixed;top:20px;right:220px;z-index:1000;display:inline-block;padding:6px 18px;background:#111;color:#00d4ff;border-radius:5px;border:2px solid #00d4ff;text-decoration:none;font-family:'Arial',sans-serif;font-size:1.08em;font-weight:600;box-shadow:none;opacity:0.92;transition:background 0.2s, color 0.2s; }
+    .tips-button:hover { background:#00d4ff; color:#fff; }
+    .class-selection {
+      margin:60px auto 30px auto; 
+      max-width:700px; 
+      text-align:center; 
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      border: 1px solid #e0e0e0;
+      position: relative;
+      overflow: hidden;
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+    .class-selection::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: transparent;
+      pointer-events: none;
+    }
+    .class-selection h2 {
+      position: relative;
+      z-index: 1;
+      color: #00fff7;
+      text-shadow: 0 0 20px #00fff7, 0 0 40px #00bcd4, 0 0 60px #1976d2;
+      animation: modernGlow 3s ease-in-out infinite;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      transform: perspective(1000px) rotateX(0deg);
+      transition: transform 0.3s ease;
+    }
+    .class-selection h2:hover {
+      transform: perspective(1000px) rotateX(10deg) scale(1.05);
+      text-shadow: 0 0 30px #00fff7, 0 0 50px #00bcd4, 0 0 70px #1976d2, 0 0 90px #fff;
+    }
+    .class-selection h2::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00fff7, #00bcd4, #1976d2, #00bcd4, #00fff7, transparent);
+      transform: translateX(-50%);
+      animation: modernUnderline 4s ease-in-out infinite;
+    }
+    .current-class-indicator {
+      background: #ffffff;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+      border: 1px solid #e0e0e0;
+      margin: 20px auto 30px auto;
+      max-width: 600px;
+      text-align: center;
+      display: none;
+      animation: fadeInDown 0.5s ease-out;
+    }
+    .current-class-indicator h3 {
+      margin: 0;
+      color: #1976d2;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2em;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    @keyframes modernGlow {
+      0%, 100% { 
+        color: #00fff7; 
+        text-shadow: 0 0 20px #00fff7, 0 0 40px #00bcd4, 0 0 60px #1976d2;
+        transform: perspective(1000px) rotateX(0deg);
+      }
+      25% { 
+        color: #00bcd4; 
+        text-shadow: 0 0 25px #00bcd4, 0 0 45px #1976d2, 0 0 65px #00fff7;
+        transform: perspective(1000px) rotateX(2deg);
+      }
+      50% { 
+        color: #1976d2; 
+        text-shadow: 0 0 30px #1976d2, 0 0 50px #00fff7, 0 0 70px #00bcd4;
+        transform: perspective(1000px) rotateX(0deg);
+      }
+      75% { 
+        color: #00bcd4; 
+        text-shadow: 0 0 25px #00bcd4, 0 0 45px #1976d2, 0 0 65px #00fff7;
+        transform: perspective(1000px) rotateX(-2deg);
+      }
+    }
+    @keyframes modernUnderline {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .class-btn {
+      margin:10px 10px;
+      padding:18px 32px;
+      border-radius:10px;
+      border:2px solid #1976d2;
+      background:#e3f2fd;
+      color:#1976d2;
+      font-size:1.1em;
+      font-family:'Orbitron',sans-serif;
+      font-weight:700;
+      cursor:pointer;
+      transition:background 0.2s, color 0.2s, border 0.2s;
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+    .class-btn:hover { background:#1976d2; color:#fff; }
+    .lessons-container {
+      max-width:900px; 
+      margin:0 auto; 
+      padding:20px;
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+    .lesson {
+      background: #ffffff; 
+      border-radius:12px; 
+      margin:30px 0; 
+      padding:24px 20px; 
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1); 
+      border:1.5px solid #1976d2; 
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInLesson 0.6s cubic-bezier(.23,1.02,.47,.98) forwards;
+    }
+    .lesson:nth-child(1) { animation-delay: 0.2s; }
+    .lesson:nth-child(2) { animation-delay: 0.35s; }
+    .lesson:nth-child(3) { animation-delay: 0.5s; }
+    .lesson:nth-child(4) { animation-delay: 0.65s; }
+    .lesson:nth-child(5) { animation-delay: 0.8s; }
+    .lesson:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    .lesson h3 {
+      margin-top:0;
+      color:#1976d2;
+      font-size:1.3em;
+      position:relative;
+      opacity:0;
+      transform:translateY(20px);
+      animation: fadeInUp 0.7s cubic-bezier(.23,1.02,.47,.98) forwards;
+    }
+    .lesson h3::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2.5px;
+      background: #1976d2;
+      border-radius: 2px;
+      transition: width 0.35s cubic-bezier(.23,1.02,.47,.98);
+      margin-top: 4px;
+    }
+    .lesson h3:hover {
+      box-shadow: 0 4px 18px #1976d222;
+      transform: translateY(-2px) scale(1.03);
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .lesson h3:hover::after {
+      width: 60%;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+    .lesson p { margin:10px 0; font-size:1.08em; }
+    .lesson pre { background:#e3f2fd; color:#222; border-radius:7px; padding:12px; font-size:1em; overflow-x:auto; }
+    .lesson .def { font-style:italic; color:#1976d2; }
+    .mark-btn {
+      display:inline-block;
+      margin-top:12px;
+      padding:7px 18px;
+      border-radius:7px;
+      border:1.5px solid #1976d2;
+      background:#e3f2fd;
+      color:#1976d2;
+      font-family:'Orbitron',sans-serif;
+      font-size:1em;
+      font-weight:600;
+      cursor:pointer;
+      transition:background 0.2s, color 0.2s, border 0.2s;
+    }
+    .mark-btn:hover {
+      background:#1976d2;
+      color:#fff;
+    }
+    .mark-btn.completed {
+      background:#1976d2;
+      color:#fff;
+      border:1.5px solid #43a047;
+    }
+    .notes-btn {
+      display: inline-block;
+      margin-top: 8px;
+      margin-left: 8px;
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: 1.5px solid #ff9800;
+      background: #fff3e0;
+      color: #ff9800;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+    }
+    .notes-btn:hover {
+      background: #ff9800;
+      color: #fff;
+    }
+    .notes-section {
+      margin-top: 12px;
+      padding: 12px;
+      background: #fff3e0;
+      border-radius: 8px;
+      border-left: 3px solid #ff9800;
+      display: none;
+    }
+    .notes-textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 8px;
+      border: 1px solid #ffcc80;
+      border-radius: 4px;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.95em;
+      resize: vertical;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .notes-textarea:focus {
+      border-color: #ff9800;
+      box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+    }
+    .notes-actions {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+    }
+    .notes-save-btn {
+      padding: 6px 12px;
+      background: #ff9800;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .notes-save-btn:hover {
+      background: #f57c00;
+    }
+    .notes-cancel-btn {
+      padding: 6px 12px;
+      background: #e0e0e0;
+      color: #666;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .notes-cancel-btn:hover {
+      background: #d0d0d0;
+    }
+    .saved-notes {
+      margin-top: 8px;
+      padding: 8px;
+      background: #fff;
+      border-radius: 4px;
+      border: 1px solid #ffcc80;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.9em;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      display: none;
+    }
+    .notes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .notes-edit-btn {
+      padding: 2px 6px;
+      background: #ff9800;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      font-size: 0.7em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .notes-edit-btn:hover {
+      background: #f57c00;
+    }
+    .bifa {
+      color: #43a047;
+      font-size: 1.2em;
+      margin-left: 10px;
+      vertical-align: middle;
+      transition: opacity 0.2s;
+    }
+    .show-btn {
+      margin: 6px 8px 6px 0;
+      padding: 5px 14px;
+      border-radius: 7px;
+      border: 1.5px solid #1976d2;
+      background: #e3f2fd;
+      color: #1976d2;
+      font-family: 'Orbitron',sans-serif;
+      font-size: 0.98em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+      outline: none;
+    }
+    .show-btn.active, .show-btn:hover {
+      background: #1976d2;
+      color: #fff;
+    }
+    .analogie-content, .definitie-content, .explicatie-content {
+      margin: 8px 0 12px 0;
+      padding: 8px 14px;
+      background: #e3f2fd;
+      border-radius: 7px;
+      border-left: 3px solid #1976d2;
+      font-size: 1.04em;
+      display: none;
+      animation: fadeInBox 0.5s;
+    }
+    @keyframes fadeInBox {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .search-bar-container {
+      display: flex;
+      justify-content: center;
+      margin: 24px 0 10px 0;
+    }
+    .lesson-search {
+      width: 340px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 2px solid #00bcd4;
+      font-size: 1.1em;
+      font-family: 'Inter', 'Arial', sans-serif;
+      box-shadow: 0 2px 12px #00bcd422;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .lesson-search:focus {
+      border-color: #1976d2;
+      box-shadow: 0 4px 18px #1976d244;
+    }
+    .glass-premium {
+      background: #ffffff;
+      border: 2px solid #1976d2;
+      box-shadow: 0 4px 24px 0 rgba(30,144,255,0.10), 0 1.5px 8px 0 rgba(0,0,0,0.08);
+      color: #222;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .glass-premium:focus {
+      border-color: #1976d2;
+      background: #ffffff;
+      box-shadow: 0 8px 32px 0 rgba(30,144,255,0.18);
+    }
+    .test-info, .test-title {
+      color: #00fff7;
+      text-shadow: 0 0 10px #00fff7, 0 0 24px #fff, 0 1px 3px rgba(0,0,0,0.1);
+      animation: testGlow 3.5s cubic-bezier(.4,0,.2,1) infinite alternate;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      font-size: 1.18em;
+    }
+    @keyframes testGlow {
+      0% { color: #00fff7; text-shadow: 0 0 10px #00fff7, 0 0 24px #fff, 0 1px 3px rgba(0,0,0,0.1); }
+      50% { color: #fff700; text-shadow: 0 0 20px #fff700, 0 0 40px #fff, 0 1px 3px rgba(0,0,0,0.1); }
+      100% { color: #00fff7; text-shadow: 0 0 10px #00fff7, 0 0 24px #fff, 0 1px 3px rgba(0,0,0,0.1); }
+    }
+    @keyframes fadeInLesson {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    body.basic-mode {
+      background: #2d1846 !important;
+      animation: none !important;
+    }
+    body.basic-mode::before,
+    body.basic-mode::after {
+      display: none !important;
+      animation: none !important;
+    }
+    /* Butoane sus */
+    .home-button, .quiz-button, .tips-button {
+      margin-right: 18px;
+    }
+    .home-button:last-child, .quiz-button:last-child, .tips-button:last-child {
+      margin-right: 0;
+    }
+    /* Stil pentru butonul de manuale */
+    .manuale-button {
+      margin-right: 0;
+      margin-left: 18px;
+      font-size: 1.08em;
+      padding: 6px 18px;
+      background: #111;
+      color: #43e97b;
+      border-radius: 5px;
+      border: 2px solid #43e97b;
+      text-decoration: none;
+      font-family: 'Arial',sans-serif;
+      font-weight: 600;
+      box-shadow: none;
+      opacity: 0.92;
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+    }
+    .manuale-button:hover {
+      background: #43e97b;
+      color: #fff;
+    }
+    .top-navbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      margin-top: 24px;
+      margin-bottom: 32px;
+      z-index: 1000;
+      position: relative;
+    }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: #181a1f;
+      color: #00fff7;
+      border-radius: 8px;
+      border: 2px solid #00fff7;
+      text-decoration: none;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.08em;
+      font-weight: 600;
+      box-shadow: none;
+      opacity: 0.95;
+      transition: background 0.2s, color 0.2s, border 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .nav-btn.home {
+      color: #fff700;
+      border-color: #fff700;
+    }
+    .nav-btn:hover {
+      background: #00fff7;
+      color: #181a1f;
+      border-color: #181a1f;
+      transform: translateY(-2px) scale(1.06);
+      text-decoration: underline;
+    }
+    @media (max-width: 700px) {
+      .top-navbar {
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 12px;
+        margin-bottom: 18px;
+      }
+      .nav-btn {
+        width: 90vw;
+        justify-content: center;
+        font-size: 1.1em;
+      }
+    }
+    .explicatii-btn {
+      display: block;
+      margin: 0 auto 24px auto;
+      padding: 12px 16px;
+      background: #23243a;
+      color: #00fff7;
+      border-radius: 10px;
+      border: 2px solid #00fff7;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 0.85em;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 2px 12px #00fff722;
+      transition: all 0.3s ease;
+      opacity: 0.97;
+      position: relative;
+      overflow: hidden;
+      animation: explicatiiPulse 2s infinite alternate;
+    }
+
+    .explicatii-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 247, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .explicatii-btn::after {
+      content: '🔍';
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9em;
+      animation: searchBounce 1.5s infinite;
+    }
+
+    @keyframes explicatiiPulse {
+      0% {
+        box-shadow: 0 2px 12px #00fff722, 0 0 20px #00fff722;
+        transform: scale(1);
+      }
+      100% {
+        box-shadow: 0 4px 20px #00fff744, 0 0 30px #00fff744;
+        transform: scale(1.02);
+      }
+    }
+
+    @keyframes searchBounce {
+      0%, 100% {
+        transform: translateY(-50%) scale(1);
+      }
+      50% {
+        transform: translateY(-50%) scale(1.2);
+      }
+    }
+
+    .explicatii-btn:hover {
+      background: #00fff7;
+      color: #23243a;
+      border-color: #23243a;
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 8px 25px #00fff766, 0 0 40px #00fff766;
+      text-decoration: none;
+    }
+
+    .explicatii-btn:hover::before {
+      left: 100%;
+    }
+
+    .explicatii-btn:hover::after {
+      animation: searchSpin 0.6s ease-in-out;
+    }
+
+    @keyframes searchSpin {
+      0% {
+        transform: translateY(-50%) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-50%) rotate(360deg);
+      }
+    }
+    .quiz-arrow-anim {
+      font-size: 2.5rem;
+      color: #43e97b;
+      text-align: center;
+      margin: 32px auto 0 auto;
+      cursor: pointer;
+      animation: arrowBounce 1.2s infinite alternate cubic-bezier(.4,0,.2,1);
+      user-select: none;
+    }
+    @keyframes arrowBounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(18px) scale(1.08); }
+    }
+    .back-arrow {
+      position: fixed;
+      top: 30px;
+      left: 20px;
+      background: transparent;
+      color: #1976d2;
+      border: 2px solid #1976d2;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 0 10px #1976d2;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      text-decoration: none;
+    }
+    .back-arrow:hover {
+      background: rgba(25, 118, 210, 0.1);
+      box-shadow: 0 0 20px #1976d2;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="top-navbar">
+    <a href="index.html" class="nav-btn home">⌂</a>
+    <a href="blog.html" class="nav-btn">📓 Despre noi & Blog</a>
+    <a href="manuale.html" class="nav-btn">📚 Manuale</a>
+    <a href="sfaturi-invatare.html" class="nav-btn">🧠 Sfaturi</a>
+    <a href="quiz.html" class="nav-btn">📝 Quiz-uri</a>
+  </div>
+  <a href="explicatii.html" class="explicatii-btn">Vreau mai multe explicații</a>
+  <div class="class-selection">
+    <h2>Selectează clasa:</h2>
+    <button class="class-btn" onclick="showLessons('liceu-clasa-9')">Clasa a IX-a</button>
+    <button class="class-btn" onclick="showLessons('liceu-clasa-10')">Clasa a X-a</button>
+    <button class="class-btn" onclick="showLessons('liceu-clasa-11')">Clasa a XI-a</button>
+    <button class="class-btn" onclick="showLessons('liceu-clasa-12')">Clasa a XII-a</button>
+  </div>
+  <div class="current-class-indicator" id="current-class-indicator">
+    <h3 id="current-class-text"></h3>
+  </div>
+  <div class="search-bar-container">
+    <input type="text" id="lesson-search" class="lesson-search glass-premium" placeholder="Caută o lecție..." oninput="filterLessons()" />
+  </div>
+  <div class="lessons-container" id="lessons-container"></div>
+  <div id="motivational-message" style="display:none;"></div>
+  <div id="quiz-arrow" style="display:none;"></div>
+  <div id="scroll-surprise-msg" style="display:none; position:fixed; top:0; left:0; width:100vw; z-index:2000;"></div>
+  <div id="quiz-liceu-section" style="display:none;"></div>
+  <audio id="success-audio" src="success.mp3" preload="auto"></audio>
+  <!-- Butoane flotante -->
+  <div class="floating-buttons">
+    <button class="robot-btn" onmouseenter="showRobotName()" onmouseleave="hideRobotName()" onclick="openAssistant()">
+      <span class="robot-icon">🤖</span>
+      <span class="robot-name" id="robot-name">Bytey</span>
+    </button>
+    <button class="scroll-top-btn" onclick="scrollToTop()">
+      <span class="scroll-icon">⬆️</span>
+    </button>
+  </div>
+  <script>
+const lectii = {
+  'liceu-clasa-9': [
+    {
+      title: "Introducere în informatică (algoritmi, informație, limbaje, C++)",
+      definitie: `Informatica este știința care studiază prelucrarea automată a informației folosind algoritmi și calculatoare. A apărut în secolul XX pentru a automatiza calculul și procesarea datelor, fiind dezvoltată de pionieri precum Alan Turing (care a introdus ideea de mașină de calcul abstractă) și Ada Lovelace (primul programator).`,
+      explicatie: `Se discută despre conceptele de bază precum algoritmi (pași clari pentru rezolvarea unei probleme), informație, limbaje de programare (precum C++) și noțiuni fundamentale de programare.`,
+      analogie: `Un algoritm este ca o rețetă de gătit: urmezi pașii în ordine și obții un rezultat. Calculatorul este bucătarul care urmează rețeta.`,
+      exemplu: `#include &ltiostream&gt\nusing namespace std;\nint main() {\n    cout << \"Salut! Acesta este primul program in C++.\" << endl;\n    return 0;\n}`
+    },
+    {
+      title: "Tipuri de date și variabile (int, char, bool, float)",
+      definitie: `Tipurile de date definesc ce fel de informație poate fi stocată într-o variabilă. În C++, tipuri fundamentale includ int (numere întregi), float (zecimale), char (caractere) și bool (adevărat/fals).`,
+      explicatie: `Variabilele sunt locuri din memorie în care stocăm date. Le folosim pentru a păstra informații și a le manipula.`,
+      analogie: `Variabilele sunt ca niște cutii etichetate în care pui diverse lucruri: o cutie pentru numere, una pentru litere, etc.`,
+      exemplu: `int varsta = 16;\nchar initiala = 'A';\nbool esteElev = true;\nfloat media = 9.75;`
+    },
+    {
+      title: "Operații aritmetice și logice (+, -, *, /, %, &&, ||, !)",
+      definitie: `Operațiile aritmetice permit calcul numeric (+, -, *, /, %) iar cele logice compară și combină condiții (&&, ||, !).`,
+      explicatie: `Folosim aceste operații pentru a efectua calcule și a lua decizii în programe.`,
+      analogie: `Operațiile aritmetice sunt ca într-un calculator de buzunar, iar cele logice sunt ca niște întrebări de genul: "Este X mai mare decât Y ȘI Y diferit de 0?"`,
+      exemplu: `int a = 10, b = 5;\nint suma = a + b;\nbool rezultat = (a > b) && (b != 0);`
+    },
+    {
+      title: "Instrucțiuni condiționale (if, else, switch)",
+      definitie: `Instrucțiunile condiționale permit executarea diferită a codului în funcție de adevărul unei expresii logice.`,
+      explicatie: `Cu if, else și switch, putem controla "ce se întâmplă dacă".`,
+      analogie: `Ca la o răscruce: dacă plouă, iei umbrela; altfel, ieși fără.`,
+      exemplu: `int nota;\ncin >> nota;\nif (nota >= 5) {\n    cout << \"Promovat\";\n} else {\n    cout << \"Respins\";\n}`
+    },
+    {
+      title: "Bucla for, while, do-while",
+      definitie: `Bucla este o instrucțiune care repetă un bloc de cod până când o condiție este falsă.`,
+      explicatie: `for este pentru un număr cunoscut de pași, while cât timp condiția e adevărată, do-while execută cel puțin o dată.`,
+      analogie: `Repeți "spălatul pe dinți" în fiecare dimineață – e o acțiune repetitivă.`,
+      exemplu: `for (int i = 0; i < 5; i++) {\n    cout << i << \" \";\n}`
+    },
+    {
+      title: "Funcții simple (cu parametri și return)",
+      definitie: `O funcție este un bloc de cod care îndeplinește o sarcină. Primește date prin parametri și poate întoarce un rezultat prin return.`,
+      explicatie: `Ajută la structurarea codului în bucăți mai ușor de gestionat.`,
+      analogie: `Ca un robot de cafea – îi dai apă și cafea, îți returnează cafeaua gata făcută.`,
+      exemplu: `int aduna(int a, int b) {\n    return a + b;\n}\n\nint main() {\n    cout << aduna(3, 4);\n    return 0;\n}`
+    }
+  ],
+  'liceu-clasa-10': [
+    {
+      title: "Structuri și clase (introducere – fără moștenire)",
+      definitie: `Structuri/grupe de variabile (și funcții) într-un tip.`,
+      explicatie: `Organizăm legat datele într-un singur obiect.`,
+      analogie: `Fișă de date despre un elev: nume, vârstă.`,
+      exemplu: `struct Elev {\n    string nume;\n    int varsta;\n};`
+    },
+    {
+      title: "Vectori (cu std::vector)",
+      definitie: `Colecții dinamice de valori.`,
+      explicatie: `Stocare flexibilă, cu acces după index.`,
+      analogie: `Cutie de creioane, mărimea se schimbă.`,
+      exemplu: `#include &ltiostream&gt<vector>\nvector<int> v = {1,2,3,4,5};\nv.push_back(6);`
+    },
+    {
+      title: "Căutare: liniară și binară",
+      definitie: `Găsirea unui element într-o colecție.`,
+      explicatie: `Liniară scanează tot, binară folosește diviziune.`,
+      analogie: `Căutare în dicționar alfabetizat (binary search).`,
+      exemplu: `bool binarySearch(vector<int>& v, int x) {\n    int st = 0, dr = v.size()-1;\n    while (st <= dr) {\n        int mid = (st + dr) / 2;\n        if (v[mid] == x) return true;\n        else if (v[mid] < x) st = mid + 1;\n        else dr = mid - 1;\n    }\n    return false;\n}`
+    },
+    {
+      title: "Sortare: selecție, inserție, bule",
+      definitie: `Aranjarea valorilor într-un anumit mod.`,
+      explicatie: `Bule compară vecinii; selecție alege minimul; inserție construiește secvența ordonată.`,
+      analogie: `Sortare manuală de cărți după titlu.`,
+      exemplu: `void bubbleSort(vector<int>& v) {\n    int n = v.size();\n    for (int i = 0; i < n-1; i++)\n        for (int j = 0; j < n-i-1; j++)\n            if (v[j] > v[j+1]) swap(v[j], v[j+1]);\n}`
+    },
+    {
+      title: "Noțiuni de complexitate (Big‑O simplu)",
+      definitie: `Măsoară cât de eficient e un algoritm.`,
+      explicatie: `O(n) = linear; O(n²) = pătrat (două bucle imbricate).`,
+      analogie: `O(n) – deschid cutia de 100 odată; O(n²) – combin toate cu toate.`,
+      exemplu: `// Exemplu O(n) vs O(n²)\nfor (int i = 0; i < n; i++) {  // O(n)\n    cout << i << \" \";\n}\n\nfor (int i = 0; i < n; i++) {  // O(n²)\n    for (int j = 0; j < n; j++) {\n        cout << i << \",\" << j << \" \";\n    }\n}`
+    }
+  ],
+  'liceu-clasa-11': [
+    {
+      title: "Liste înlănțuite simple",
+      definitie: `Structură din noduri conectate.`,
+      explicatie: `Fiecare nod are valoare și link la următor.`,
+      analogie: `Lanț real de chei.`,
+      exemplu: `struct Nod {\n    int val;\n    Nod* next;\n    Nod(int v): val(v), next(nullptr) {}\n};`
+    },
+    {
+      title: "Stivă și coadă (STL sau manual)",
+      definitie: `Stivă = LIFO; Coada = FIFO.`,
+      explicatie: `Stivar = ultimul intrat iese primul; coadă = primul intră iese primul.`,
+      analogie: `Stiva de farfurii vs. coada la magazin.`,
+      exemplu: `#include &ltiostream&gt<stack> <queue>\nstack<int> stiva;\nqueue<int> coada;`
+    },
+    {
+      title: "Reprezentarea grafurilor (matrice/liste)",
+      definitie: `doi moduri: matrice de adiacență sau liste de vecini.`,
+      explicatie: `Matrice = tabel 2D; liste = vector de liste.`,
+      analogie: `Hartă a orașelor și drumurilor.`,
+      exemplu: `int G[100][100];\nvector<int> L[100];`
+    },
+    {
+      title: "Parcurgeri DFS și BFS",
+      definitie: `Algoritmi de vizitare a nodurilor.`,
+      explicatie: `DFS: mergi cât poți înainte, apoi backtrack.\nBFS: mergi nivel cu nivel.`,
+      analogie: `DFS = intri într-un tunel până la capăt; BFS = explorezi camere într-un etaj.`,
+      exemplu: `int nod {\n    vizitat[nod] = true;\n    for (int vecin : G[nod])\n        if (!vizitat[vecin])\n            DFS(vecin);\n}\n\nvoid BFS(int start) {\n    queue<int> q;\n    q.push(start);\n    vizitat[start] = true;\n    while (!q.empty()) {\n        int nod = q.front(); q.pop();\n        for (int vecin : G[nod])\n            if (!vizitat[vecin]) {\n                q.push(vecin);\n                vizitat[vecin] = true;\n            }\n    }\n}`
+    }
+  ],
+  'liceu-clasa-12': [
+    {
+      title: "Dijkstra – cel mai scurt drum",
+      definitie: `Algoritm pentru cel mai scurt drum pe un graf cu greutăți pozitive.`,
+      explicatie: `Similar Google Maps – calculează cost minim de la un punct la toate celelalte.`,
+      analogie: `Găsești ruta cea mai rapidă spre prieteni.`,
+      exemplu: `int start, vector<vector<pair<int,int>>>& adj, vector<int>& dist {\n    int n = adj.size();\n    dist.assign(n, INT_MAX);\n    dist[start] = 0;\n    priority_queue< pair<int,int>, vector<pair<int,int>>, greater<>> pq;\n    pq.push({0, start});\n    while (!pq.empty()) {\n        auto [d,u] = pq.top(); pq.pop();\n        if (d > dist[u]) continue;\n        for (auto [v, w] : adj[u]) {\n            if (dist[u] + w < dist[v]) {\n                dist[v] = dist[u] + w;\n                pq.push({dist[v], v});\n            }\n        }\n    }\n}`
+    },
+    {
+      title: "Programare dinamică – Knapsack",
+      definitie: `Metodă de a găsi soluția optimă prin memorarea sub-problemelor.`,
+      explicatie: `Creează tablou dp[i][w] – valoarea maximă folosind primele i obiecte cu greutate w.`,
+      analogie: `Îți umpli rucsacul în mod eficient, alegând obiectele potrivite.`,
+      exemplu: `int n, int W, vector<int>& wt, vector<int>& val {\n    vector<vector<int>> dp(n+1, vector<int>(W+1, 0));\n    for (int i = 1; i <= n; i++) {\n        for (int w = 0; w <= W; w++) {\n            dp[i][w] = dp[i-1][w];\n            if (wt[i-1] <= w)\n                dp[i][w] = max(dp[i][w], dp[i-1][w-wt[i-1]] + val[i-1]);\n        }\n    }\n    return dp[n][W];\n}`
+    }
+  ]
+};
+function isLoggedIn() {
+  return !!localStorage.getItem('currentUser');
+}
+function getUserCompletions() {
+  const user = localStorage.getItem('currentUser');
+  if (!user) return [];
+  const completions = JSON.parse(localStorage.getItem('userCompletions')||'{}');
+  return completions[user]||[];
+}
+function getUserNotes() {
+  const user = localStorage.getItem('currentUser');
+  if (!user) return {};
+  const notes = JSON.parse(localStorage.getItem('userNotes')||'{}');
+  return notes[user]||{};
+}
+function setUserNotes(notes) {
+  const user = localStorage.getItem('currentUser');
+  if (!user) return;
+  const allNotes = JSON.parse(localStorage.getItem('userNotes')||'{}');
+  allNotes[user] = notes;
+  localStorage.setItem('userNotes', JSON.stringify(allNotes));
+}
+function setUserCompletions(arr) {
+  const user = localStorage.getItem('currentUser');
+  if (!user) return;
+  const completions = JSON.parse(localStorage.getItem('userCompletions')||'{}');
+  completions[user] = arr;
+  localStorage.setItem('userCompletions', JSON.stringify(completions));
+}
+function showLessons(clasa) {
+  const container = document.getElementById('lessons-container');
+  const indicator = document.getElementById('current-class-indicator');
+  const indicatorText = document.getElementById('current-class-text');
+  
+  // Afișează indicatorul clasei curente
+  const classNames = {
+    'liceu-clasa-9': 'Clasa a IX-a',
+    'liceu-clasa-10': 'Clasa a X-a', 
+    'liceu-clasa-11': 'Clasa a XI-a',
+    'liceu-clasa-12': 'Clasa a XII-a'
+  };
+  
+  indicatorText.textContent = classNames[clasa];
+  indicator.style.display = 'block';
+  
+  container.innerHTML = '';
+  const completate = getUserCompletions();
+  const notes = getUserNotes();
+  lectii[clasa].forEach((lec, idx) => {
+    let markBtn = '';
+    let bifa = '';
+    const key = clasa+'-'+idx;
+    const completed = completate.includes(key);
+    const lessonNotes = notes[key] || '';
+    if (isLoggedIn()) {
+      markBtn = `<button class=\"mark-btn${completed?" completed":""}\" onclick=\"toggleMark('${clasa}',${idx},this)\">${completed?"Demarchează lecția":"Marchează ca parcurs"}</button>`;
+    }
+    if (completed) {
+      bifa = '<span class=\"bifa\">✔</span>';
+    }
+    const notesBtn = isLoggedIn() ? `<button class=\"notes-btn\" onclick=\"toggleNotes('${key}')\">📝 Notițe</button>` : '';
+    const notesSection = isLoggedIn() ? `
+      <div class=\"notes-section\" id=\"notes-section-${key}\" style=\"display:none;\">
+        <textarea class=\"notes-textarea\" id=\"notes-textarea-${key}\" placeholder=\"Scrie aici idei, curiozități, observații...\">${lessonNotes}</textarea>
+        <div class=\"notes-actions\">
+          <button class=\"notes-save-btn\" onclick=\"saveNotes('${key}')\">Salvează</button>
+          <button class=\"notes-cancel-btn\" onclick=\"cancelNotes('${key}')\">Anulează</button>
+        </div>
+      </div>
+      <div class=\"saved-notes\" id=\"saved-notes-${key}\" style=\"display:${lessonNotes ? 'block' : 'none'};\">
+        <div class=\"notes-header\">
+          <strong>📝 Notițele tale:</strong>
+          <button class=\"notes-edit-btn\" onclick=\"editNotes('${key}')\">Editează</button>
+        </div>
+        <div>${lessonNotes}</div>
+      </div>
+    ` : '';
+    container.innerHTML += `
+      <div class=\"lesson\">
+        <h3>${lec.title}${bifa}</h3>
+        <button class=\"show-btn\" onclick=\"toggleShow(this, 'analogie', '${clasa}', ${idx})\">Vreau un exemplu real-life</button>
+        <div class=\"analogie-content\" style=\"display:none\">${lec.analogie}</div>
+        <button class=\"show-btn\" onclick=\"toggleShow(this, 'definitie', '${clasa}', ${idx})\">Definiție</button>
+        <div class=\"definitie-content\" style=\"display:none\">${lec.definitie}</div>
+        <button class=\"show-btn\" onclick=\"toggleShow(this, 'explicatie', '${clasa}', ${idx})\">Explicație</button>
+        <div class=\"explicatie-content\" style=\"display:none\">${lec.explicatie}</div>
+        <p><strong>Exemplu C++:</strong></p>
+        <pre>${lec.exemplu}</pre>
+        ${markBtn}${notesBtn}
+        ${notesSection}
+      </div>
+    `;
+  });
+  setTimeout(()=>{
+    document.querySelectorAll('.lesson h3').forEach(h3=>{
+      h3.style.animation = 'none';
+      void h3.offsetWidth;
+      h3.style.animation = '';
+    });
+  }, 10);
+}
+function toggleMark(clasa, idx, btn) {
+  const key = clasa+'-'+idx;
+  let completate = getUserCompletions();
+  const lessonDiv = btn.closest('.lesson');
+  const h3 = lessonDiv.querySelector('h3');
+  let bifa = h3.querySelector('.bifa');
+  if (completate.includes(key)) {
+    completate = completate.filter(x=>x!==key);
+    btn.classList.remove('completed');
+    btn.textContent = 'Marchează ca parcurs';
+    if (bifa) bifa.remove();
+  } else {
+    completate.push(key);
+    btn.classList.add('completed');
+    btn.textContent = 'Demarchează lecția';
+    if (!bifa) h3.innerHTML += '<span class=\"bifa\">✔</span>';
+  }
+  setUserCompletions(completate);
+}
+function toggleNotes(key) {
+  const notesSection = document.getElementById(`notes-section-${key}`);
+  const savedNotes = document.getElementById(`saved-notes-${key}`);
+  const notes = getUserNotes();
+  const currentNotes = notes[key] || '';
+  
+  if (notesSection.style.display === 'none') {
+    notesSection.style.display = 'block';
+    savedNotes.style.display = 'none';
+    document.getElementById(`notes-textarea-${key}`).value = currentNotes;
+  } else {
+    notesSection.style.display = 'none';
+    if (currentNotes) {
+      savedNotes.style.display = 'block';
+    }
+  }
+}
+function saveNotes(key) {
+  const textarea = document.getElementById(`notes-textarea-${key}`);
+  const notes = getUserNotes();
+  notes[key] = textarea.value.trim();
+  setUserNotes(notes);
+  
+  // Actualizează afișarea
+  const savedNotes = document.getElementById(`saved-notes-${key}`);
+  const notesSection = document.getElementById(`notes-section-${key}`);
+  
+  if (notes[key]) {
+    savedNotes.style.display = 'block';
+    savedNotes.querySelector('div:last-child').textContent = notes[key];
+  } else {
+    savedNotes.style.display = 'none';
+  }
+  
+  notesSection.style.display = 'none';
+}
+function cancelNotes(key) {
+  const notesSection = document.getElementById(`notes-section-${key}`);
+  const savedNotes = document.getElementById(`saved-notes-${key}`);
+  const notes = getUserNotes();
+  
+  notesSection.style.display = 'none';
+  if (notes[key]) {
+    savedNotes.style.display = 'block';
+  }
+}
+function editNotes(key) {
+  const notesSection = document.getElementById(`notes-section-${key}`);
+  const savedNotes = document.getElementById(`saved-notes-${key}`);
+  const notes = getUserNotes();
+  
+  notesSection.style.display = 'block';
+  savedNotes.style.display = 'none';
+  document.getElementById(`notes-textarea-${key}`).value = notes[key] || '';
+}
+function toggleShow(btn, type, clasa, idx) {
+  const lesson = btn.closest('.lesson');
+  const content = lesson.querySelector('.' + type + '-content');
+  if (content.style.display === 'none') {
+    content.style.display = 'block';
+    btn.classList.add('active');
+  } else {
+    content.style.display = 'none';
+    btn.classList.remove('active');
+  }
+}
+function filterLessons() {
+  const search = document.getElementById('lesson-search').value.toLowerCase();
+  document.querySelectorAll('.lesson').forEach(lesson => {
+    const title = lesson.querySelector('h3') ? lesson.querySelector('h3').textContent.toLowerCase() : '';
+    const text = lesson.textContent.toLowerCase();
+    lesson.style.display = (title.includes(search) || text.includes(search)) ? '' : 'none';
+  });
+}
+function getLiceuCompletionsCount() {
+  // Adună toate lecțiile marcate ca parcurse din liceu (clasa 9-12)
+  const completate = getUserCompletions();
+  let count = 0;
+  ['liceu-clasa-9','liceu-clasa-10','liceu-clasa-11','liceu-clasa-12'].forEach(clasa=>{
+    for(let i=0;i<(lectii[clasa]?.length||0);i++){
+      if(completate.includes(clasa+'-'+i)) count++;
+    }
+  });
+  return count;
+}
+let motivationalTimeout = null;
+let motivationalShown = false;
+let arrowShown = false;
+let scrollMsgTimeout = null;
+function showMotivationalMessage() {
+  if (motivationalShown) return;
+  motivationalShown = true;
+  let countdown = 10;
+  const alertDiv = document.createElement('div');
+  alertDiv.id = 'motivational-alert';
+  alertDiv.style.position = 'fixed';
+  alertDiv.style.top = '32px';
+  alertDiv.style.left = '50%';
+  alertDiv.style.transform = 'translateX(-50%)';
+  alertDiv.style.background = 'linear-gradient(90deg,#43e97b 0%,#1976d2 100%)';
+  alertDiv.style.color = '#fff';
+  alertDiv.style.fontSize = '1.15em';
+  alertDiv.style.fontWeight = '700';
+  alertDiv.style.padding = '18px 32px';
+  alertDiv.style.borderRadius = '14px';
+  alertDiv.style.boxShadow = '0 4px 24px #1976d288';
+  alertDiv.style.zIndex = '9999';
+  alertDiv.style.display = 'flex';
+  alertDiv.style.alignItems = 'center';
+  alertDiv.innerHTML = `🎁 Mai parcurge încă <b>3</b> lecții și ai să primești un cadou! <span id='motiv-countdown' style='margin-left:18px;font-weight:700;color:#fff;'>${countdown}s</span>`;
+  document.body.appendChild(alertDiv);
+  clearInterval(motivationalTimeout);
+  motivationalTimeout = setInterval(()=>{
+    countdown--;
+    document.getElementById('motiv-countdown').textContent = countdown+'s';
+    if(countdown<=0) {
+      alertDiv.remove();
+      clearInterval(motivationalTimeout);
+    }
+  },1000);
+}
+function hideMotivationalMessage() {
+  const alertDiv = document.getElementById('motivational-alert');
+  if (alertDiv) alertDiv.remove();
+  clearInterval(motivationalTimeout);
+  motivationalShown = false;
+}
+function showQuizArrow() {
+  if (arrowShown) return;
+  arrowShown = true;
+  // Afișează mesajul de scroll
+  const scrollMsg = document.getElementById('scroll-surprise-msg');
+  scrollMsg.innerHTML = `<div class='scroll-surprise-box'>🎁 Dă scroll ca să revendici surpriza!</div>`;
+  scrollMsg.style.display = '';
+  setTimeout(()=>{ scrollMsg.classList.add('fade-in'); }, 10);
+  // Ascunde mesajul după 15 secunde
+  clearTimeout(scrollMsgTimeout);
+  scrollMsgTimeout = setTimeout(() => {
+    scrollMsg.style.display = 'none';
+    scrollMsg.classList.remove('fade-in');
+  }, 15000);
+  const arrowDiv = document.getElementById('quiz-arrow');
+  arrowDiv.innerHTML = `<div class='quiz-arrow-anim' onclick='showQuizLiceu()'>⬇️</div>`;
+  arrowDiv.style.display = '';
+}
+function hideQuizArrow() {
+  document.getElementById('quiz-arrow').style.display = 'none';
+  arrowShown = false;
+  // Ascunde mesajul de scroll
+  const scrollMsg = document.getElementById('scroll-surprise-msg');
+  scrollMsg.style.display = 'none';
+  scrollMsg.classList.remove('fade-in');
+  clearTimeout(scrollMsgTimeout);
+}
+function showQuizLiceu() {
+  document.getElementById('quiz-arrow').style.display = 'none';
+  const section = document.getElementById('quiz-liceu-section');
+  section.style.display = '';
+  section.innerHTML = `
+    <div class="quiz-section unlock-anim">
+      <div class="quiz-card gradient-border">
+        <div class="quiz-title">
+          <span class="trophy-anim">🏆</span> 🧮 Quiz C++ – Bazele Programării (Liceu)
+        </div>
+        <div class="quiz-desc">
+          Test grilă cu 10 întrebări din C++ pentru nivel liceal.<br>
+          Acoperă conceptele de bază din programare:<br>
+          🔹 Operații aritmetice și logice<br>
+          🔹 Condiționale if și bucle for, while<br>
+          🔹 Vectori cu std::vector<br>
+          🔹 Căutare liniară și binară<br>
+          🔹 Clase simple în C++<br>
+          🔹 Algoritmul Dijkstra<br>
+          🔹 Noțiuni de complexitate Big-O<br>
+          <span style="display:block;margin-top:8px;">Ideal pentru recapitulare, autoevaluare sau pregătire pentru concursuri de informatică.</span>
+        </div>
+        <div class="quiz-iframe-wrap">
+          <iframe style="max-width:100%" src="https://wordwall.net/ro/embed/384043cfbdc84b3bb2617e0ad54c5e66?themeId=23&templateId=5&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // Salvează deblocarea în profilul utilizatorului
+  const currentUser = localStorage.getItem('currentUser');
+  if (currentUser) {
+    const userProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+    if (!userProfiles[currentUser]) {
+      userProfiles[currentUser] = {};
+    }
+    userProfiles[currentUser].quizLiceuUnlocked = true;
+    localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
+  }
+  
+  // Efect de unlock: confetti + sunet doar la prima deblocare
+  launchConfetti(section.querySelector('.quiz-card'));
+  if (!localStorage.getItem('quizLiceuSoundPlayed')) {
+    playSuccessAudio();
+    localStorage.setItem('quizLiceuSoundPlayed', '1');
+  }
+  setTimeout(()=>{
+    section.querySelector('.quiz-section').classList.remove('unlock-anim');
+  }, 1200);
+}
+function playSuccessAudio() {
+  const audio = document.getElementById('success-audio');
+  if(audio) { audio.currentTime = 0; audio.play(); }
+}
+function showRobotName() {
+  const robotName = document.getElementById('robot-name');
+  robotName.style.opacity = '1';
+  robotName.style.transform = 'translateX(0)';
+}
+function hideRobotName() {
+  const robotName = document.getElementById('robot-name');
+  robotName.style.opacity = '0';
+  robotName.style.transform = 'translateX(-10px)';
+}
+function openAssistant() {
+  window.open('assistant.html', '_blank');
+}
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+function checkAndShowQuizLiceu() {
+  const completate = getLiceuCompletionsCount();
+  const currentUser = localStorage.getItem('currentUser');
+  if (!currentUser) {
+    // Dacă nu e logat, ascunde quiz-ul și resetează
+    hideMotivationalMessage();
+    hideQuizArrow();
+    document.getElementById('quiz-liceu-section').style.display = 'none';
+    return;
+  }
+  
+  const userProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+  const userProfile = userProfiles[currentUser] || {};
+  const quizUnlocked = userProfile.quizLiceuUnlocked === true;
+  
+  // Dacă quiz-ul e deblocat, nu mai afișăm săgeata sau mesajul de scroll
+  if (quizUnlocked) {
+    hideMotivationalMessage();
+    hideQuizArrow();
+    showQuizLiceu();
+    return;
+  }
+  if (completate >= 5) {
+    hideMotivationalMessage();
+    showQuizArrow();
+  } else if (completate === 2) {
+    hideQuizArrow();
+    // Resetăm motivationalShown dacă era false, ca să poată apărea mesajul la fiecare 2 bifate
+    if (!motivationalShown) showMotivationalMessage();
+  } else {
+    hideMotivationalMessage();
+    hideQuizArrow();
+    // Resetăm motivationalShown dacă avem <2 bifate, ca să poată apărea din nou la 2
+    if (completate < 2) motivationalShown = false;
+    if (completate < 5) arrowShown = false;
+  }
+  // Quiz-ul nu apare decât după săgeată
+  if (userProfile.quizLiceuUnlocked === true) {
+    document.getElementById('quiz-liceu-section').style.display = '';
+  }
+}
+function startQuizLiceu(btn) {
+  btn.style.display = 'none';
+  const wrap = btn.parentElement.querySelector('.quiz-iframe-wrap');
+  wrap.style.display = 'block';
+  launchConfetti(btn.parentElement);
+}
+function launchConfetti(container) {
+  // Confetti + artificii simple cu canvas
+  const canvas = document.createElement('canvas');
+  canvas.width = 600; canvas.height = 300;
+  canvas.style.position = 'absolute';
+  canvas.style.left = '50%';
+  canvas.style.top = '0';
+  canvas.style.transform = 'translateX(-50%)';
+  canvas.style.pointerEvents = 'none';
+  container.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: 300, y: 150,
+      r: Math.random()*7+3,
+      c: `hsl(${Math.random()*360},90%,60%)`,
+      vx: Math.cos(Math.random()*2*Math.PI)*Math.random()*7,
+      vy: Math.sin(Math.random()*2*Math.PI)*Math.random()*7,
+      g: 0.18+Math.random()*0.08
+    });
+  }
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0,0,600,300);
+    for (const p of particles) {
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+      ctx.fillStyle = p.c; ctx.fill();
+      p.x += p.vx; p.y += p.vy; p.vy += p.g;
+    }
+    t++;
+    if (t<60) requestAnimationFrame(draw); else canvas.remove();
+  }
+  draw();
+}
+document.addEventListener('DOMContentLoaded', function() {
+  checkAndShowQuizLiceu();
+  // Detectează când quiz-ul e completat (simplu: la click pe iframe, arată felicitarea după 2s)
+  document.body.addEventListener('click', function(e) {
+    if (e.target.classList.contains('quiz-iframe')) {
+      setTimeout(function() {
+        const felicitari = e.target.parentElement.querySelector('.quiz-felicitari');
+        if (felicitari) felicitari.style.display = 'block';
+      }, 2000);
+    }
+  });
+});
+// Re-verifică la fiecare marcare/demarcare lecție
+const origToggleMark = window.toggleMark;
+window.toggleMark = function(clasa, idx, btn) {
+  origToggleMark(clasa, idx, btn);
+  checkAndShowQuizLiceu();
+}
+  </script>
+  <style>
+/* Gradient animat și border pentru quiz-card */
+.quiz-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 420px;
+  margin: 40px 0 30px 0;
+  animation: fadeInQuiz 1.2s cubic-bezier(.23,1.02,.47,.98);
+}
+.quiz-section.unlock-anim {
+  animation: unlockPop 1.2s cubic-bezier(.23,1.02,.47,.98);
+}
+@keyframes unlockPop {
+  0% { transform: scale(0.7) rotate(-8deg); opacity: 0; }
+  60% { transform: scale(1.08) rotate(3deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes fadeInQuiz {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.quiz-card {
+  background: linear-gradient(120deg, #232526 0%, #43e97b 100%);
+  border-radius: 22px;
+  box-shadow: 0 8px 40px #1976d244, 0 2px 8px #43e97b33;
+  padding: 36px 32px 32px 32px;
+  min-width: 340px;
+  max-width: 540px;
+  border: 4px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+.gradient-border {
+  border-image: linear-gradient(120deg, #43e97b 0%, #38f9d7 50%, #1976d2 100%) 1;
+  animation: borderAnim 2.5s linear infinite alternate;
+}
+@keyframes borderAnim {
+  0% { border-image-source: linear-gradient(120deg, #43e97b 0%, #38f9d7 50%, #1976d2 100%); }
+  100% { border-image-source: linear-gradient(120deg, #1976d2 0%, #38f9d7 50%, #43e97b 100%); }
+}
+.quiz-title {
+  font-size: 1.45em;
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 12px #1976d2cc, 0 1px 3px #43e97b99;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.trophy-anim {
+  font-size: 1.5em;
+  animation: trophyBounce 1.2s infinite alternate cubic-bezier(.4,0,.2,1);
+  filter: drop-shadow(0 2px 8px #fff700cc);
+}
+@keyframes trophyBounce {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-8px) scale(1.12); }
+}
+.quiz-desc {
+  color: #e0fff7;
+  font-size: 1.08em;
+  margin-bottom: 18px;
+  font-family: 'Inter', Arial, sans-serif;
+  background: rgba(25,118,210,0.10);
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 8px #43e97b22;
+}
+.quiz-btn {
+  display: block;
+  margin: 0 auto 18px auto;
+  padding: 12px 32px;
+  background: linear-gradient(90deg,#43e97b 0%,#1976d2 100%);
+  color: #fff;
+  border-radius: 10px;
+  border: none;
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-size: 1.15em;
+  font-weight: 700;
+  box-shadow: 0 2px 12px #43e97b44;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.quiz-btn:hover {
+  background: linear-gradient(90deg,#1976d2 0%,#43e97b 100%);
+  color: #fff700;
+  transform: scale(1.06);
+}
+.quiz-iframe-wrap {
+  margin-top: 12px;
+  text-align: center;
+  position: relative;
+}
+.quiz-felicitari {
+  margin-top: 18px;
+  font-size: 1.18em;
+  color: #43e97b;
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-weight: 700;
+  text-shadow: 0 2px 8px #1976d2cc;
+  animation: fadeInQuiz 1.2s cubic-bezier(.23,1.02,.47,.98);
+}
+/* Mesaj scroll pentru surpriză */
+#scroll-surprise-msg {
+  width: 100vw;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  pointer-events: none;
+  min-height: 40px;
+  transition: transform 0.7s, opacity 0.7s;
+}
+.scroll-surprise-box {
+  display: inline-block;
+  background: rgba(67,233,123,0.92);
+  color: #fff;
+  font-size: 1.25em;
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-weight: 800;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px #1976d244;
+  padding: 14px 32px;
+  margin: 12px auto 0 auto;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+#scroll-surprise-msg.fade-in .scroll-surprise-box {
+  opacity: 1;
+  transform: translateY(0);
+}
+  /* Butoane flotante */
+  .floating-buttons {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+  }
+  .robot-btn, .scroll-top-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .robot-btn {
+    background: linear-gradient(135deg, #00d4ff, #ff6b9d);
+    color: white;
+  }
+  .robot-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .scroll-top-btn {
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+    color: white;
+  }
+  .scroll-top-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .robot-name {
+    position: absolute;
+    right: 70px;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  .robot-name::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid rgba(0,0,0,0.8);
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
+  </style>
+</body>
+</html> 

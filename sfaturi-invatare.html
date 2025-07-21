@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sfaturi Învățare Eficientă - InfoEducație</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #000000 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(100, 150, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 100, 200, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 200, 100, 0.05) 0%, transparent 50%);
+      animation: backgroundShift 20s ease infinite;
+      z-index: -2;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+      opacity: 0.3;
+      z-index: -1;
+      animation: float 15s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(180deg); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(90deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .header h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: 3.5em;
+      font-weight: 700;
+      background: linear-gradient(45deg, #00d4ff, #ff6b9d, #ffd93d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+      animation: titleGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { filter: brightness(1) drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)); }
+      50% { filter: brightness(1.2) drop-shadow(0 0 30px rgba(255, 107, 157, 0.8)); }
+    }
+
+    .header p {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.3em;
+      color: #b8c5d6;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* AI Robot */
+    .ai-robot {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      z-index: 1000;
+      animation: robotThink 4s ease-in-out infinite;
+    }
+
+    .robot-body {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #00d4ff, #ff6b9d);
+      border-radius: 15px;
+      position: relative;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+    }
+
+    .robot-eyes {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+
+    .robot-eye {
+      width: 6px;
+      height: 6px;
+      background: #000;
+      border-radius: 50%;
+      animation: robotBlink 3s ease-in-out infinite;
+    }
+
+    .robot-mouth {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 3px;
+      background: #000;
+      border-radius: 2px;
+      animation: robotTalk 0.8s ease-in-out infinite;
+    }
+
+    @keyframes robotThink {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      25% { transform: translateY(-5px) rotate(-2deg); }
+      75% { transform: translateY(-3px) rotate(2deg); }
+    }
+
+    @keyframes robotBlink {
+      0%, 90%, 100% { opacity: 1; }
+      95% { opacity: 0; }
+    }
+
+    @keyframes robotTalk {
+      0%, 100% { transform: translateX(-50%) scaleY(1); }
+      50% { transform: translateX(-50%) scaleY(1.5); }
+    }
+
+    /* Home Button */
+    .home-button {
+      position: fixed;
+      top: 20px;
+      left: 120px;
+      z-index: 1000;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #ff6b9d;
+      color: #ff6b9d;
+      border-radius: 25px;
+      text-decoration: none;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9em;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .home-button:hover {
+      background: rgba(255, 107, 157, 0.2);
+      box-shadow: 0 0 15px rgba(255, 107, 157, 0.5);
+    }
+
+    /* Tips Grid */
+    .tips-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .tip-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: cardAppear 0.6s ease-out forwards;
+    }
+
+    .tip-card:nth-child(1) { animation-delay: 0.1s; }
+    .tip-card:nth-child(2) { animation-delay: 0.2s; }
+    .tip-card:nth-child(3) { animation-delay: 0.3s; }
+    .tip-card:nth-child(4) { animation-delay: 0.4s; }
+    .tip-card:nth-child(5) { animation-delay: 0.5s; }
+    .tip-card:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes cardAppear {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tip-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: rgba(0, 212, 255, 0.5);
+    }
+
+    .tip-icon {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      background: linear-gradient(45deg, #00d4ff, #ff6b9d);
+      border-radius: 15px;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .tip-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.4em;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #ffffff;
+    }
+
+    .tip-content {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.1em;
+      line-height: 1.6;
+      color: #b8c5d6;
+      margin-bottom: 20px;
+    }
+
+    .tip-details {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .tip-details h4 {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1em;
+      color: #00d4ff;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+
+    .tip-details p {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1em;
+      color: #b8c5d6;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .tip-details ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    .tip-details li {
+      margin-bottom: 8px;
+      color: #b8c5d6;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .tip-details strong {
+      color: #00d4ff;
+      font-weight: 600;
+    }
+
+    .tip-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, #00d4ff, #ff6b9d);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Quiz Section */
+    .quiz-section {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 25px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: cardAppear 0.8s ease-out forwards;
+      animation-delay: 0.8s;
+    }
+
+    .quiz-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      background: linear-gradient(45deg, #ffd93d, #ff6b9d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .quiz-option {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .quiz-option:hover {
+      transform: translateY(-5px);
+      border-color: #ffd93d;
+      box-shadow: 0 10px 25px rgba(255, 217, 61, 0.3);
+    }
+
+    .quiz-option.selected {
+      border-color: #00d4ff;
+      background: rgba(0, 212, 255, 0.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2.5em;
+      }
+      
+      .tips-container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+      }
+      
+      .tip-card {
+        padding: 20px;
+      }
+      
+      .quiz-options {
+        grid-template-columns: 1fr;
+      }
+      
+      .ai-robot {
+        width: 50px;
+        height: 50px;
+        top: 10px;
+        right: 10px;
+      }
+      
+      .home-button {
+        left: 100px;
+        padding: 8px 16px;
+        font-size: 0.8em;
+      }
+    }
+
+    /* --- Adaug CSS pentru card aplicat si fundal stele --- */
+    .tip-card.aplicat {
+      background: #2d1846 url('data:image/svg+xml;utf8,<svg width="100%25" height="100%25" xmlns="http://www.w3.org/2000/svg"><g><circle cx="10" cy="10" r="1.5" fill="%23fff7"/><circle cx="80" cy="40" r="1" fill="%23fff5"/><circle cx="60" cy="90" r="1.2" fill="%23fff6"/><circle cx="120" cy="60" r="1.3" fill="%23fff4"/><circle cx="200" cy="30" r="1.1" fill="%23fff3"/><circle cx="170" cy="80" r="1.4" fill="%23fff5"/></g></svg>') repeat;
+      box-shadow: 0 0 20px #a084ca44;
+      border: 1.5px solid #a084ca;
+      position: relative;
+    }
+    .tip-card.aplicat .tip-actions button.btn-primary {
+      background: #a084ca;
+      color: #fff;
+      border: none;
+      cursor: default;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    .tip-card.aplicat .tip-actions button.btn-primary::after {
+      content: ' ✨';
+      font-size: 1.1em;
+    }
+
+    /* Spațiu între butoane */
+    .tip-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    /* BADGE SFATURI - stil distinct */
+    .badge-tips {
+      width: 64px;
+      height: 64px;
+      display: inline-block;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6b9d 0%, #ffd93d 100%);
+      box-shadow: 0 0 18px #ff6b9d88, 0 0 32px #ffd93d55;
+      border: 3px solid #fff;
+      position: relative;
+      margin: 8px 12px 16px 12px;
+      animation: badgeTipsPulse 2s infinite alternate;
+    }
+    .badge-tips-icon {
+      font-size: 2.2em;
+      color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-shadow: 0 0 12px #ff6b9d, 0 0 18px #ffd93d;
+    }
+    .badge-tips-label {
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 0.85em;
+      font-weight: bold;
+      color: #ff6b9d;
+      text-shadow: 0 2px 8px #ffd93d99;
+      pointer-events: none;
+    }
+    @keyframes badgeTipsPulse {
+      0% { box-shadow: 0 0 18px #ff6b9d88, 0 0 32px #ffd93d55; }
+      100% { box-shadow: 0 0 32px #ffd93d, 0 0 48px #ff6b9d; }
+    }
+    .nav-buttons-group {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 12px;
+      z-index: 1000;
+      align-items: center;
+    }
+    .back-arrow {
+      background: transparent;
+      color: #1976d2;
+      border: 2px solid #1976d2;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 0 8px #1976d2;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .back-arrow:hover {
+      background: rgba(25, 118, 210, 0.1);
+      box-shadow: 0 0 15px #1976d2;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-buttons-group">
+    <a href="javascript:history.back()" class="back-arrow">←</a>
+    <a href="index.html" class="home-button">⌂</a>
+  </div>
+
+  <!-- AI Robot -->
+  <div class="ai-robot">
+    <div class="robot-body">
+      <div class="robot-eyes">
+        <div class="robot-eye"></div>
+        <div class="robot-eye"></div>
+      </div>
+      <div class="robot-mouth"></div>
+    </div>
+  </div>
+  <audio id="click-audio" src="click.mp3" preload="auto"></audio>
+  <audio id="sad-audio" src="sad.mp3" preload="auto"></audio>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>🧠 Sfaturi Învățare Eficientă</h1>
+    <p>Descoperă metodele științifice pentru a învăța mai rapid, mai eficient și să păstrezi informațiile pe termen lung. AI-ul nostru a analizat sute de studii pentru a-ți oferi cele mai eficiente tehnici.</p>
+  </div>
+
+  <!-- Tips Grid -->
+  <div class="tips-container">
+    <div class="tip-card">
+      <div class="tip-icon">⏰</div>
+      <h3 class="tip-title">Tehnica Pomodoro</h3>
+      <p class="tip-content">Împarte timpul în sesiuni de 25 de minute de concentrare urmate de 5 minute pauză. După 4 sesiuni, ia o pauză mai lungă (15-20 min).</p>
+      <div class="tip-details" style="display: none;">
+        <h4>De ce funcționează?</h4>
+        <p>Creierul nu rezistă atent mult timp fără să obosească. Pauzele scurte îl „resetează".</p>
+        <h4>Exemplu real:</h4>
+        <p>Imaginează-ți că ești o mașină – dacă accelerezi mereu fără pauze, se supraîncălzește. Dar dacă mergi pe sprinturi scurte, ai randament maxim.</p>
+      </div>
+      <div class="tip-actions">
+        <button class="btn btn-primary" onclick="applyTip('pomodoro')">Aplică Sfatul</button>
+        <button class="btn btn-secondary" onclick="toggleDetails(this)">Află Mai Multe</button>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">🧠</div>
+      <h3 class="tip-title">Învață Activ - Efectul Feynman</h3>
+      <p class="tip-content">În loc să citești pasiv lecția, explică tu cu voce tare ce ai înțeles, ca și cum i-ai spune unui prieten.</p>
+      <div class="tip-details" style="display: none;">
+        <h4>De ce funcționează?</h4>
+        <p>Se numește efectul Feynman – când explici, îți dai seama ce nu înțelegi bine și îți fixezi mai ușor informația.</p>
+        <h4>Exemplu real:</h4>
+        <p>Dacă înveți un algoritm nou, încearcă să-l povestești ca o rețetă de gătit. Dacă te încurci, înseamnă că ai o „gaură" în înțelegere. Revii și o corectezi.</p>
+      </div>
+      <div class="tip-actions">
+        <button class="btn btn-primary" onclick="applyTip('feynman')">Aplică Sfatul</button>
+        <button class="btn btn-secondary" onclick="toggleDetails(this)">Află Mai Multe</button>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">🔄</div>
+      <h3 class="tip-title">Repetare Spațiată (Flashcarduri)</h3>
+      <p class="tip-content">Repetă informația la intervale de timp din ce în ce mai mari: după 1 zi, apoi 3, apoi 7, apoi 15.</p>
+      <div class="tip-details" style="display: none;">
+        <h4>Cum?</h4>
+        <p>Folosește aplicații ca Anki, Quizlet, sau scrie tu întrebări pe foi.</p>
+        <h4>De ce funcționează?</h4>
+        <p>Creierul uită rapid ce nu e repetat. Dacă revii înainte să uiți complet, „salvezi" informația pe termen lung.</p>
+        <h4>Exemplu:</h4>
+        <p>Pentru formule, definiții, algoritmi rapizi – fă carduri gen:<br>
+        <strong>Q:</strong> „Ce face algoritmul lui Dijkstra?"<br>
+        <strong>A:</strong> „Găsește cel mai scurt drum de la un nod la toate celelalte într-un graf cu costuri pozitive."</p>
+      </div>
+      <div class="tip-actions">
+        <button class="btn btn-primary" onclick="applyTip('spaced')">Aplică Sfatul</button>
+        <button class="btn btn-secondary" onclick="toggleDetails(this)">Află Mai Multe</button>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">✍️</div>
+      <h3 class="tip-title">Scrie cu Mâna</h3>
+      <p class="tip-content">Notează-ți ideile, conceptele și rezolvările pe caiet, nu doar în minte sau pe calculator.</p>
+      <div class="tip-details" style="display: none;">
+        <h4>De ce funcționează?</h4>
+        <p>Scrisul cu mâna activează mai multe zone din creier (vizual, motor, logic), ceea ce ajută memoria.</p>
+        <h4>Exemplu:</h4>
+        <p>Când înveți recursivitate, scrie pas cu pas ce se întâmplă în memorie. Vei înțelege mai bine decât doar urmărind un tutorial video.</p>
+      </div>
+      <div class="tip-actions">
+        <button class="btn btn-primary" onclick="applyTip('writing')">Aplică Sfatul</button>
+        <button class="btn btn-secondary" onclick="toggleDetails(this)">Află Mai Multe</button>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">📊</div>
+      <h3 class="tip-title">Planifică-ți Învățarea</h3>
+      <p class="tip-content">Împarte materia pe zile, în bucăți mici. Fă o listă cu ce înveți azi, ce repeți mâine.</p>
+      <div class="tip-details" style="display: none;">
+        <h4>Unelte utile:</h4>
+        <ul>
+          <li>Notion</li>
+          <li>Google Calendar</li>
+          <li>Planner pe hârtie</li>
+        </ul>
+        <h4>Exemplu:</h4>
+        <p>Ai test la C++ în 5 zile? Fă planul:<br>
+        <strong>Luni:</strong> if/else + switch<br>
+        <strong>Marți:</strong> while + for<br>
+        <strong>Miercuri:</strong> vectori<br>
+        <strong>Joi:</strong> funcții<br>
+        <strong>Vineri:</strong> recapitulare + teste</p>
+      </div>
+      <div class="tip-actions">
+        <button class="btn btn-primary" onclick="applyTip('planning')">Aplică Sfatul</button>
+        <button class="btn btn-secondary" onclick="toggleDetails(this)">Află Mai Multe</button>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">📱</div>
+      <h3 class="tip-title">Elimină Distragerile</h3>
+      <p class="tip-content">Când înveți, închide notificările, sunetul și păstrează telefonul la distanță.</p>
+      <div class="tip-details" style="display: none;">
+        <h4>De ce funcționează?</h4>
+        <p>Fiecare întrerupere îți „resetează" concentrarea – durează până la 20 minute să revii.</p>
+        <h4>Truc:</h4>
+        <p>Folosește aplicații ca:<br>
+        <strong>Forest</strong> (nu poți folosi telefonul cât timp crește un copac)<br>
+        <strong>Focus To-Do</strong> (Pomodoro + taskuri)</p>
+      </div>
+      <div class="tip-actions">
+        <button class="btn btn-primary" onclick="applyTip('distractions')">Aplică Sfatul</button>
+        <button class="btn btn-secondary" onclick="toggleDetails(this)">Află Mai Multe</button>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">🛌</div>
+      <h3 class="tip-title">Dormi Suficient și Bine</h3>
+      <p class="tip-content">7–9 ore de somn pe noapte, fără ecrane cu 30 minute înainte.</p>
+      <div class="tip-details" style="display: none;">
+        <h4>De ce contează?</h4>
+        <p>Noaptea, creierul consolidează ce ai învățat. Fără somn, nu reții bine nimic.</p>
+        <h4>Exemplu:</h4>
+        <p>Chiar dacă ai învățat 5 ore azi, dacă dormi doar 4, pierzi 50% din ce ai reținut.</p>
+      </div>
+      <div class="tip-actions">
+        <button class="btn btn-primary" onclick="applyTip('sleep')">Aplică Sfatul</button>
+        <button class="btn btn-secondary" onclick="toggleDetails(this)">Află Mai Multe</button>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">🎧</div>
+      <h3 class="tip-title">Muzică Ambientală</h3>
+      <p class="tip-content">Muzica fără cuvinte (Lo-fi, jazz soft, ambientală) ajută concentrarea.</p>
+      <div class="tip-details" style="display: none;">
+        <h4>De ce funcționează?</h4>
+        <p>Fără versuri, creierul nu e distras de cuvinte, dar ritmul ajută la ritm de lucru.</p>
+        <h4>Playlist recomandat:</h4>
+        <ul>
+          <li>Lo-fi beats</li>
+          <li>Music for deep focus</li>
+          <li>Game soundtracks (Minecraft, Skyrim)</li>
+        </ul>
+      </div>
+      <div class="tip-actions">
+        <button class="btn btn-primary" onclick="applyTip('music')">Aplică Sfatul</button>
+        <button class="btn btn-secondary" onclick="toggleDetails(this)">Află Mai Multe</button>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">🎮</div>
+      <h3 class="tip-title">Gamifică Învățatul</h3>
+      <p class="tip-content">Fă-ți provocări, puncte, insigne, badge-uri pentru învățat.</p>
+      <div class="tip-details" style="display: none;">
+        <h4>Exemplu:</h4>
+        <ul>
+          <li>Azi ai învățat 2 algoritmi → primești „Badge: algoritmistul zilei"</li>
+          <li>Ai făcut testul de recapitulare → primești puncte în cont</li>
+        </ul>
+      </div>
+      <div class="tip-actions">
+        <button class="btn btn-primary" onclick="applyTip('gamification')">Aplică Sfatul</button>
+        <button class="btn btn-secondary" onclick="toggleDetails(this)">Află Mai Multe</button>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">🙋‍♀️</div>
+      <h3 class="tip-title">Întreabă, Nu Învăța Singur</h3>
+      <p class="tip-content">Dacă nu înțelegi ceva, cere ajutor colegilor, pe grupuri, sau întreabă AI-ul!</p>
+      <div class="tip-details" style="display: none;">
+        <h4>Unde poți întreba?</h4>
+        <ul>
+          <li>Pe grupuri de Discord/WhatsApp</li>
+          <li>Pe forumuri (StackOverflow)</li>
+          <li>Pe site-ul nostru (asistent AI)</li>
+        </ul>
+      </div>
+      <div class="tip-actions">
+        <button class="btn btn-primary" onclick="applyTip('ask')">Aplică Sfatul</button>
+        <button class="btn btn-secondary" onclick="toggleDetails(this)">Află Mai Multe</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Section -->
+  <div class="quiz-section">
+    <h2 class="quiz-title">🤔 Ce tip de elev ești?</h2>
+    <p style="font-size: 1.2em; margin-bottom: 30px; color: #b8c5d6;">Descoperă-ți stilul de învățare și primește sfaturi personalizate!</p>
+    
+    <div class="quiz-options">
+      <div class="quiz-option" onclick="selectQuizOption(this, 'robot')">
+        <h3>🤖 Robotul Productiv</h3>
+        <p>Înveți 12h pe zi și uiți tot în 3 zile</p>
+      </div>
+      <div class="quiz-option" onclick="selectQuizOption(this, 'master')">
+        <h3>🧠 Maestrul Memoriei</h3>
+        <p>Retii informațiile pe termen lung</p>
+      </div>
+      <div class="quiz-option" onclick="selectQuizOption(this, 'procrastinator')">
+        <h3>⏰ Marele Procrastinator</h3>
+        <p>Înveți doar în ultima zi</p>
+      </div>
+      <div class="quiz-option" onclick="selectQuizOption(this, 'organized')">
+        <h3>📋 Elevul Organizat</h3>
+        <p>Planifici tot și urmezi programul</p>
+      </div>
+    </div>
+    
+    <button class="btn btn-primary" style="margin-top: 30px; padding: 12px 30px; font-size: 1.1em;" onclick="showQuizResult()">
+      🎯 Vezi Rezultatul
+    </button>
+  </div>
+
+  <script>
+    let currentMode = 'chill';
+    let appliedTips = JSON.parse(localStorage.getItem('appliedTipsSfaturi') || '[]');
+    let selectedQuizOption = null;
+
+    function toggleMode() {
+      const btn = document.querySelector('.toggle-btn');
+      const body = document.body;
+      
+      if (currentMode === 'chill') {
+        // Switch to energetic mode
+        body.style.background = 'linear-gradient(135deg, #ff6b35 0%, #f7931e 25%, #ffd93d 50%, #ff6b9d 75%, #ff006e 100%)';
+        btn.textContent = '⚡ Mod Energetic';
+        currentMode = 'energetic';
+      } else {
+        // Switch to chill mode
+        body.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #000000 100%)';
+        btn.textContent = '🌙 Mod Chill';
+        currentMode = 'chill';
+      }
+    }
+
+    // --- JS: modifică applyTip să marcheze cardul ca aplicat și să schimbe butonul ---
+    function applyTip(tipId) {
+      if (!appliedTips.includes(tipId)) {
+        // Redă sunetul de click
+        const clickAudio = document.getElementById('click-audio');
+        if (clickAudio) {
+          clickAudio.currentTime = 0;
+          clickAudio.play();
+        }
+        appliedTips.push(tipId);
+        localStorage.setItem('appliedTipsSfaturi', JSON.stringify(appliedTips));
+        // Găsește cardul și marchează-l ca aplicat
+        const card = document.querySelector(`.tip-card button[onclick*="applyTip('${tipId}')"]`).closest('.tip-card');
+        card.classList.add('aplicat');
+        // Schimbă butonul principal
+        const btn = card.querySelector('.btn-primary');
+        btn.textContent = 'Aplicat!';
+        btn.disabled = true;
+        btn.style.cursor = 'default';
+        btn.style.opacity = '0.8';
+        btn.style.background = '#a084ca';
+        btn.style.color = '#fff';
+        // Adaugă buton de anulare dacă nu există
+        if (!card.querySelector('.btn-cancel')) {
+          const cancelBtn = document.createElement('button');
+          cancelBtn.className = 'btn btn-cancel';
+          cancelBtn.textContent = 'Anulează';
+          cancelBtn.style.marginLeft = '8px';
+          cancelBtn.onclick = function() { unapplyTip(this, tipId); };
+          card.querySelector('.tip-actions').appendChild(cancelBtn);
+        }
+        // BADGE pentru peste 4 sfaturi aplicate
+        if (appliedTips.length === 1) {
+          // Salvează badge-ul în userProfiles doar la primul sfat aplicat
+          let currentUser = localStorage.getItem('currentUser');
+          if (currentUser) {
+            let userProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+            if (!userProfiles[currentUser]) userProfiles[currentUser] = {};
+            userProfiles[currentUser].hasTipsBadge = true;
+            localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
+          }
+          showNotification('🏆 Felicitări! Ai câștigat badge-ul "Luptător Academic"!');
+        }
+      } else {
+        showNotification('ℹ️ Acest sfat este deja aplicat!');
+      }
+    }
+
+    function unapplyTip(btn, tipId) {
+      // Redă sunetul trist pentru anulare
+      const sadAudio = document.getElementById('sad-audio');
+      if (sadAudio) {
+        sadAudio.currentTime = 0;
+        sadAudio.play();
+      }
+      const idx = appliedTips.indexOf(tipId);
+      if (idx !== -1) appliedTips.splice(idx, 1);
+      localStorage.setItem('appliedTipsSfaturi', JSON.stringify(appliedTips));
+      // Găsește cardul părinte
+      const card = btn.closest('.tip-card');
+      card.classList.remove('aplicat');
+      // Schimbă butonul principal
+      const mainBtn = card.querySelector('.btn-primary');
+      mainBtn.textContent = 'Aplică Sfatul';
+      mainBtn.disabled = false;
+      mainBtn.style.cursor = '';
+      mainBtn.style.opacity = '';
+      mainBtn.style.background = '';
+      mainBtn.style.color = '';
+      // Elimină butonul de anulare
+      btn.remove();
+    }
+
+    function showDetails(tipId) {
+      const details = {
+        pomodoro: 'Tehnica Pomodoro împarte timpul în sesiuni de 25 de minute de concentrare urmate de 5 minute pauză. După 4 sesiuni, ia o pauză mai lungă (15-20 min).',
+        feynman: 'Efectul Feynman – când explici, îți dai seama ce nu înțelegi bine și îți fixezi mai ușor informația.',
+        spaced: 'Repetă informația la intervale de timp din ce în ce mai mari: după 1 zi, apoi 3, apoi 7, apoi 15.',
+        writing: 'Scrisul cu mâna activează mai multe zone din creier (vizual, motor, logic), ceea ce ajută memoria.',
+        planning: 'Împarte materia pe zile, în bucăți mici. Fă o listă cu ce înveți azi, ce repeți mâine.',
+        distractions: 'Fiecare întrerupere îți „resetează" concentrarea – durează până la 20 minute să revii.',
+        sleep: 'Noaptea, creierul consolidează ce ai învățat. Fără somn, nu reții bine nimic.',
+        music: 'Fără versuri, creierul nu e distras de cuvinte, dar ritmul ajută la ritm de lucru.',
+        gamification: 'Fă-ți provocări, puncte, insigne, badge-uri pentru învățat.',
+        ask: 'Dacă nu înțelegi ceva, cere ajutor colegilor, pe grupuri, sau întreabă AI-ul!'
+      };
+      
+      alert(details[tipId] || 'Detalii în curând...');
+    }
+
+    function toggleDetails(button) {
+      const details = button.closest('.tip-card').querySelector('.tip-details');
+      details.style.display = details.style.display === 'none' ? 'block' : 'none';
+      button.textContent = details.style.display === 'none' ? 'Află Mai Multe' : 'Ascunde Detaliile';
+    }
+
+    function selectQuizOption(element, type) {
+      // Remove previous selection
+      document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+      
+      // Add selection to clicked element
+      element.classList.add('selected');
+      selectedQuizOption = type;
+    }
+
+    function showQuizResult() {
+      if (!selectedQuizOption) {
+        alert('Te rog să selectezi o opțiune!');
+        return;
+      }
+
+      const results = {
+        robot: '🤖 Ești un Robot Productiv! Sfaturi: Încearcă să reduci timpul de studiu și să te concentrezi pe calitate, nu cantitate. Folosește tehnica Pomodoro și Active Recall.',
+        master: '🧠 Ești un Maestru al Memoriei! Sfaturi: Continuă cu Spaced Repetition și încearcă să predai altora pentru a-ți consolida cunoștințele.',
+        procrastinator: '⏰ Ești un Procrastinator Iluminat! Sfaturi: Încearcă să împarți materialul în părți mici și să studiezi puțin în fiecare zi. Folosește tehnica Pomodoro.',
+        organized: '📋 Ești un Elev Organizat! Sfaturi: Excelent! Continuă cu planificarea și încearcă să experimentezi cu diferite tehnici pentru optimizare.'
+      };
+
+      alert(results[selectedQuizOption]);
+    }
+
+    function showNotification(message) {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(45deg, #00d4ff, #ff6b9d);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        z-index: 10000;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        animation: slideIn 0.3s ease-out;
+      `;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+
+    // Add CSS for notifications
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // La încărcarea paginii, marchează automat sfaturile aplicate:
+    window.addEventListener('DOMContentLoaded', function() {
+      appliedTips.forEach(function(tipId) {
+        const card = document.querySelector(`.tip-card button[onclick*="applyTip('${tipId}')"]`);
+        if (card) {
+          // Simulează aplicarea vizuală (fără notificare)
+          const tipCard = card.closest('.tip-card');
+          tipCard.classList.add('aplicat');
+          const btn = tipCard.querySelector('.btn-primary');
+          btn.textContent = 'Aplicat!';
+          btn.disabled = true;
+          btn.style.cursor = 'default';
+          btn.style.opacity = '0.8';
+          btn.style.background = '#a084ca';
+          btn.style.color = '#fff';
+          if (!tipCard.querySelector('.btn-cancel')) {
+            const cancelBtn = document.createElement('button');
+            cancelBtn.className = 'btn btn-cancel';
+            cancelBtn.textContent = 'Anulează';
+            cancelBtn.style.marginLeft = '8px';
+            cancelBtn.onclick = function() { unapplyTip(this, tipId); };
+            tipCard.querySelector('.tip-actions').appendChild(cancelBtn);
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html> 

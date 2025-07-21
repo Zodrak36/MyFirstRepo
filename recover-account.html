@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperare Cont</title>
+  <style>
+    body {
+      background: #111;
+      color: #00ffff;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .recover-container {
+      background: rgba(24, 24, 24, 0.95);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0, 255, 0, 0.15);
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      border: 1px solid rgba(0, 255, 0, 0.3);
+    }
+    
+    h1 {
+      color: #00ff00;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .info-box {
+      background: rgba(0, 255, 0, 0.1);
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      border-radius: 8px;
+      padding: 15px;
+      margin: 20px 0;
+    }
+    
+    .warning {
+      background: rgba(255, 165, 0, 0.1);
+      border-color: rgba(255, 165, 0, 0.3);
+      color: #ffa500;
+    }
+    
+    .success {
+      background: rgba(0, 255, 0, 0.1);
+      border-color: rgba(0, 255, 0, 0.3);
+      color: #00ff00;
+    }
+    
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      background: rgba(34, 34, 34, 0.8);
+      color: #00ff00;
+      font-size: 16px;
+    }
+    
+    button {
+      background: linear-gradient(90deg, #00ff00 0%, #00ffff 100%);
+      color: #111;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+    
+    button:hover {
+      background: linear-gradient(90deg, #00ffff 0%, #00ff00 100%);
+    }
+    
+    .back-link {
+      color: #ffdd00;
+      text-align: center;
+      margin-top: 20px;
+      display: block;
+      text-decoration: none;
+    }
+    
+    .back-link:hover {
+      color: #00ff00;
+    }
+  </style>
+</head>
+<body>
+  <div class="recover-container">
+    <h1>🔧 Recuperare Cont</h1>
+    
+    <div class="info-box warning">
+      <h3>⚠️ Problema cu localStorage</h3>
+      <p>Dacă nu te poți loga pe contul tău vechi, probabil localStorage-ul s-a pierdut din următoarele motive:</p>
+      <ul>
+        <li>Ai șters cache-ul browserului</li>
+        <li>Ai reinstalat browserul</li>
+        <li>Ai folosit alt browser</li>
+        <li>Ai folosit funcția "Clear site data"</li>
+      </ul>
+    </div>
+    
+    <div class="info-box">
+      <h3>📋 Soluții:</h3>
+      <ol>
+        <li><strong>Creează un cont nou</strong> - Cel mai simplu</li>
+        <li><strong>Verifică alte browsere</strong> - Poate contul există în alt browser</li>
+        <li><strong>Verifică debug-login.html</strong> - Pentru a vedea ce există în localStorage</li>
+      </ol>
+    </div>
+    
+    <div class="info-box success">
+      <h3>✅ Recomandare</h3>
+      <p>Pentru a evita această problemă în viitor, sistemul va fi conectat la o bază de date pe server, astfel încât conturile să nu se mai piardă.</p>
+    </div>
+    
+    <button onclick="window.location.href='register.html'">Creează cont nou</button>
+    <button onclick="window.location.href='debug-login.html'">Verifică localStorage</button>
+    <button onclick="window.location.href='login.html'">Încearcă din nou login</button>
+    
+    <a href="index.html" class="back-link">← Înapoi la pagina principală</a>
+  </div>
+  
+  <script>
+    // Verifică dacă există utilizatori în localStorage
+    const users = localStorage.getItem('users');
+    if (users) {
+      try {
+        const usersObj = JSON.parse(users);
+        const userCount = Object.keys(usersObj).length;
+        console.log(`Găsite ${userCount} utilizatori în localStorage`);
+      } catch (e) {
+        console.log('Eroare la parsarea users din localStorage');
+      }
+    } else {
+      console.log('Nu există utilizatori în localStorage');
+    }
+  </script>
+</body>
+</html> 

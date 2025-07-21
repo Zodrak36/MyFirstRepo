@@ -1,0 +1,107 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: black; /* Fundal negru pentru efectul de Matrix */
+  color: #00ff00; /* Culoare text verde ca în Matrix */
+  overflow: hidden;
+  position: relative;
+}
+
+.menu-toggle {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background: #006699;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 20;
+  transition: none !important;
+}
+
+#menu {
+  padding: 1rem;
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  background: #e6f2ff;
+  position: absolute;
+  top: 4rem;
+  left: 1rem;
+  width: 200px;
+  z-index: 15;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 8px;
+}
+
+#menu button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: #006699;
+  color: white;
+  border-radius: 5px;
+  text-align: left;
+  transition: none !important;
+}
+
+#chat-form button {
+  padding: 0.5rem 1rem;
+  background-color: #006699;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: none !important;
+}
+
+.test-box {
+  background: white;
+  margin: 1rem auto;
+  padding: 1rem;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Efect de interacțiune la apăsarea butoanelor */
+button:active {
+  transform: scale(0.95);
+}
+
+button, .home-button, .main-lesson-btn, .class-btn {
+  transition: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+button:hover, .home-button:hover, .main-lesson-btn:hover, .class-btn:hover {
+  background: inherit !important;
+  color: inherit !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.home-button {
+  font-size: 2em !important;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #00ffcc !important;
+  border-radius: 16px !important;
+  background: rgba(10, 30, 40, 0.85) !important;
+  box-shadow: 0 0 18px #00fff7, 0 0 32px #00ffcc99;
+  color: #00fff7 !important;
+  padding: 10px 22px !important;
+  transition: box-shadow 0.2s, background 0.2s, border 0.2s;
+}
+.home-button:hover {
+  box-shadow: 0 0 32px #00fff7, 0 0 48px #00ffcc;
+  background: rgba(0, 255, 247, 0.15) !important;
+  border-color: #fff !important;
+  color: #fff !important;
+}

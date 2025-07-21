@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog - Proiect Educațional</title>
+  <link rel="icon" type="image/webp" href="logo.webp">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      color: #212529;
+      font-family: 'Inter', sans-serif;
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+    }
+    .blog-header {
+      margin-bottom: 2.5rem;
+    }
+    .blog-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      color: #1d3557;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .blog-header .subtitle {
+      color: #6c757d;
+      margin-bottom: 1.5rem;
+      font-size: 1.25rem;
+    }
+    .blog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .blog-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      padding: 2.5rem 2.2rem 2rem 2.2rem;
+      width: 100%;
+      max-width: 700px;
+      transition: transform 0.3s ease, box-shadow 0.3s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      align-items: center;
+    }
+    .blog-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 16px 32px rgba(44,62,80,0.10);
+    }
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      font-size: 1.08rem;
+      color: #6c757d;
+      margin-bottom: 0.7rem;
+      justify-content: center;
+    }
+    .blog-meta .author {
+      font-weight: 600;
+      color: #1d3557;
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
+    }
+    .blog-meta .verified {
+      color: #ffd700;
+      font-size: 1.1em;
+      margin-left: 0.2em;
+      vertical-align: middle;
+    }
+    .blog-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #1d3557;
+      margin: 0 0 1.2rem 0;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+    .blog-card .content {
+      font-size: 1.15rem;
+      color: #212529;
+      margin-bottom: 1.1rem;
+      text-align: justify;
+      line-height: 1.7;
+    }
+    .icon {
+      font-size: 1.2em;
+      margin-right: 0.2em;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .back-btn {
+      background: #fff;
+      color: #1d3557;
+      border: 2px solid #ffd700;
+      border-radius: 12px;
+      padding: 0.9rem 2.2rem;
+      font-size: 1.25rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 12px #ffd70022;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+      text-decoration: none;
+      margin-right: 0;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+      display: inline-block;
+    }
+    .back-btn:hover {
+      background: #fff;
+      color: #1d3557;
+      border: 2px solid #e6b800;
+      box-shadow: 0 4px 16px #ffd70033;
+    }
+    .add-post-section {
+      background: linear-gradient(120deg, #f8f9fa 60%, #e9ecef 100%);
+      border-radius: 22px;
+      box-shadow: 0 6px 24px #1d35571a, 0 2px 8px #ffd70033;
+      padding: 2.7rem 2.5rem 2.2rem 2.5rem;
+      margin: 3.5rem auto 3.5rem auto;
+      max-width: 800px;
+      text-align: center;
+      border: 2.5px solid #ffd70044;
+    }
+    .add-post-section h3 {
+      font-family: 'Playfair Display', serif;
+      color: #1d3557;
+      font-size: 2rem;
+      margin-bottom: 1.3rem;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+    }
+    .add-post-section form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.3rem;
+      align-items: center;
+    }
+    .add-post-section input, .add-post-section textarea {
+      width: 100%;
+      max-width: 600px;
+      padding: 1.1rem 1.2rem;
+      border-radius: 10px;
+      border: 2px solid #1d3557;
+      font-size: 1.18rem;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #212529;
+      resize: vertical;
+      box-shadow: 0 1px 6px #1d35571a;
+      transition: border 0.2s;
+    }
+    .add-post-section input:focus, .add-post-section textarea:focus {
+      border: 2px solid #ffd700;
+      outline: none;
+    }
+    .add-post-section textarea {
+      min-height: 120px;
+      max-height: 350px;
+    }
+    .add-post-section button {
+      background: linear-gradient(90deg, #1d3557 0%, #ffd700 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 1rem 2.2rem;
+      font-size: 1.25rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #1d355733;
+      transition: background 0.2s, color 0.2s;
+      margin-top: 0.7rem;
+      letter-spacing: 0.5px;
+    }
+    .add-post-section button:hover {
+      background: linear-gradient(90deg, #ffd700 0%, #1d3557 100%);
+      color: #1d3557;
+    }
+    footer {
+      text-align: center;
+      color: #adb5bd;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+    /* Fundal robotel animat */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      background: url('robotel.png') no-repeat center center/contain;
+      opacity: 0.13;
+      pointer-events: none;
+      animation: robotelMove 18s linear infinite alternate;
+    }
+    @keyframes robotelMove {
+      0% { background-position: 10% 40%; }
+      100% { background-position: 90% 60%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <a href="index.html" class="back-btn">← Înapoi la Prima Pagină</a>
+  </div>
+  <div class="blog-header">
+    <h1>📝 Blog Educațional</h1>
+    <div class="subtitle">Gânduri, lecții și evoluție personală în informatică</div>
+  </div>
+  <div class="about-us-section" style="background: #fffbe6; border-radius: 18px; box-shadow: 0 4px 16px #ffd70022; padding: 2rem 2.2rem 1.5rem 2.2rem; max-width: 700px; margin: 0 auto 2.5rem auto; text-align: center; border: 2px solid #ffd70033;">
+    <h3 style="font-family: 'Playfair Display', serif; color: #1d3557; font-size: 1.5rem; margin-bottom: 0.7rem; font-weight: 700; letter-spacing: 0.5px;">Despre noi</h3>
+    <div style="font-size: 1.13rem; color: #212529; line-height: 1.7;">
+      Managerii acestui proiect sunt <b>Alexe Andrei</b> și <b>Pisoschi Alexandru</b>, elevi în clasa a XI-a la Colegiul Național "Tudor Vladimirescu", București, profil Matematică-Informatică, sub îndrumarea doamnei profesoare Mădălina Mareș.<br>
+      Suntem pasionați de informatică, de codare și tocmai această pasiune ne-a împins să realizăm acest site. Pentru a ne putea contacta, va rugam sa mergeti la sectiunea "Contact" din meniu sau apasati Contact.
+      
+    </div>
+  </div>
+  <div class="blog-list" id="blog-list">
+    <div class="blog-card">
+      <div class="blog-meta"><span>🧭</span> <span class="author">Echipa InfoWorld <span class="verified" title="Verificat InfoWorld">✔️</span></span> <span>•</span> <span>10 iunie 2025</span></div>
+      <h2>Cum îți dai seama ce drum să urmezi după liceu?</h2>
+      <div class="content">
+        <b>Un ghid sincer pentru cei care încă se întreabă „Ce fac mai departe?”</b><br><br>
+        Dacă ești în liceu și ai început să simți presiunea întrebării „Ce vreau să fac după?”, nu ești singur. Mulți elevi se confruntă cu aceeași dilemă: IT, Medicină, Psihologie, Drept, Arhitectură, Inginerie sau poate Artă? Alegerea unei direcții pentru viitor poate părea copleșitoare, dar vestea bună e că nu trebuie să ai toate răspunsurile acum.<br><br>
+        Totuși, sunt câteva lucruri pe care le poți face pentru a-ți clarifica ce ți se potrivește cu adevărat.<br><br>
+        <b>1. 🧪 Experimentează cât mai mult</b><br>
+        Cel mai bun mod de a înțelege dacă un domeniu ți se potrivește este să-l încerci. Poți:<br>
+        <ul style="text-align:left;max-width:600px;margin:10px auto 10px 30px;">
+          <li>participa la ateliere, cluburi sau cursuri online (IT, artă, biologie, drept etc.);</li>
+          <li>face voluntariat sau stagii de practică;</li>
+          <li>discuta cu profesori sau profesioniști din domenii diferite;</li>
+          <li>urmărești documentare sau vloguri despre diverse meserii;</li>
+          <li>lucra la un mic proiect personal – poate o aplicație, un eseu, o machetă, un video sau o expoziție.</li>
+        </ul>
+        Nu trebuie să fie ceva perfect. Important e să iei contact cu realitatea acelui domeniu.<br><br>
+        <b>2. ⚖️ Gândește-te la ce îți place și ce poți susține pe termen lung</b><br>
+        Mulți dintre noi aleg ceva ce pare „interesant” la prima vedere, dar e important să te întrebi:<br>
+        <ul style="text-align:left;max-width:600px;margin:10px auto 10px 30px;">
+          <li>Mă văd făcând asta ani la rând?</li>
+          <li>Îmi oferă satisfacție și provocări plăcute?</li>
+          <li>Pot învăța în ritmul cerut de acel domeniu?</li>
+          <li>Îmi place ideea de a lucra cu oameni? Sau mai mult pe cont propriu?</li>
+        </ul>
+        Unele meserii presupun multă comunicare și empatie (psihologie, educație, medicină), altele mai multă analiză și logică (IT, inginerie, matematică). Descoperă ce ți se potrivește.<br><br>
+        <b>3. 🔍 Informează-te din surse reale</b><br>
+        Nu lua decizii doar în funcție de ce „se poartă” sau ce spun colegii/părinții. Încearcă să:<br>
+        <ul style="text-align:left;max-width:600px;margin:10px auto 10px 30px;">
+          <li>vorbești direct cu oameni care lucrează deja în domeniile care te interesează;</li>
+          <li>urmărești interviuri și povești de carieră;</li>
+          <li>citești despre traseele reale (cu bune și rele) ale unor profesioniști.</li>
+        </ul>
+        Înțelegând cum arată viața de zi cu zi în acel domeniu, îți va fi mai ușor să decizi dacă e pentru tine.<br><br>
+        <b>4. 🧘‍♂️ Nu te grăbi. E normal să nu știi (încă)</b><br>
+        Este absolut firesc să nu ai un răspuns clar în liceu. Mulți oameni își schimbă direcția în timpul facultății sau chiar mai târziu. Alegerea ta nu trebuie să fie definitivă – ci doar un pas în direcția potrivită pentru acum.<br><br>
+        Ce contează e să pornești într-o direcție care ți se pare interesantă, provocatoare și potrivită cu valorile și abilitățile tale.<br><br>
+        <b>💡 Un mic exercițiu:</b><br>
+        Întreabă-te:<br>
+        <ul style="text-align:left;max-width:600px;margin:10px auto 10px 30px;">
+          <li>Ce materii/activități mă entuziasmează cu adevărat?</li>
+          <li>Ce mi-aș dori să învețe oamenii de la mine?</li>
+          <li>Ce problemă din lume mi-ar plăcea să ajut să rezolv?</li>
+          <li>Ce aș face și dacă n-aș fi plătit imediat?</li>
+        </ul>
+        Răspunsurile nu îți vor da un job clar, dar îți vor contura o direcție.<br><br>
+        <b>🔚 Concluzie</b><br>
+        Alegerea unui drum după liceu nu e despre a bifa o meserie, ci despre a-ți descoperi pasiunile, punctele forte și valorile personale.<br>
+        Fii curios, încearcă, greșește, revino și alege în cunoștință de cauză. Nu există un singur drum „corect” – ci acela care se potrivește ție.
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-meta"><span>🌍</span> <span class="author">Echipa InfoWorld <span class="verified" title="Verificat InfoWorld">✔️</span></span> <span>•</span> <span>10 iunie 2025</span></div>
+      <h2>Lansăm site-ul oficial & platformă multilingvă!</h2>
+      <div class="content">
+        Ne propunem să lansăm site-ul oficial! Vrem să transformăm acest proiect într-o platformă educațională accesibilă pentru toți – elevi, profesori și pasionați de informatică din întreaga lume.<br><br>
+        <b>🔄 Unul dintre pașii importanți:</b> adăugarea suportului multilingv – vom oferi traducerea lecțiilor și testelor în 3 limbi majore:<br>
+        🇷🇴 Română • 🇬🇧 Engleză • 🇫🇷 Franceză<br><br>
+        Scopul nostru este să construim un mod nou, accesibil și intuitiv de a învăța informatica, fără bariere de limbă.<br>
+        <b>Ce urmează?</b> Testarea lecțiilor traduse, adăugarea de capitole și publicarea oficială a platformei, gratuit pentru toți!
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-meta"><span>📘</span> <span class="author">Echipa InfoWorld <span class="verified" title="Verificat InfoWorld">✔️</span></span> <span>•</span> <span>17 iulie 2024</span></div>
+      <h2>Cum am învățat să folosesc <code>for</code> în C++</h2>
+      <div class="content">
+        Astăzi am învățat cum funcționează bucla <code>for</code>. La început părea complicat, dar după câteva exerciții simple, am început să înțeleg mai bine.<br>
+        Mi-a fost greu la început să înțeleg ce înseamnă <code>i++</code>, dar acum pare logic: crește cu 1 la fiecare pas.<br>
+        <b>➡️ Data viitoare vreau să încerc un program care calculează suma numerelor până la N.</b>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-meta"><span>🚀</span> <span class="author">Echipa InfoWorld <span class="verified" title="Verificat InfoWorld">✔️</span></span> <span>•</span> <span>5 iunie 2025</span></div>
+      <h2>De ce am pornit InfoWorld?</h2>
+      <div class="content">
+        Ideea a pornit dintr-o nevoie reală: mulți colegi nu aveau acces la lecții de informatică, fie din lipsa profesorilor, fie din cauza profilului. Am vrut să creăm o platformă unde oricine poate învăța, indiferent de nivel sau resurse.<br>
+        Am vrut să facem totul diferit: să fie interactiv, să existe recompense, să fie totul clar structurat și să existe și un AI care să te ajute la orice pas. Ne dorim ca InfoWorld să devină locul preferat al elevilor pasionați de informatică!
+      </div>
+    </div>
+  </div>
+  <div class="add-post-section">
+    <h3>Adaugă și tu o postare pe blog!</h3>
+    <form id="add-post-form">
+      <input type="text" name="nume" id="nume" placeholder="Numele tău" required />
+      <input type="text" name="titlu" id="titlu" placeholder="Titlul postării" required />
+      <textarea name="continut" id="continut" placeholder="Scrie aici conținutul postării..." required></textarea>
+      <button type="submit">Trimite postarea</button>
+    </form>
+  </div>
+  <!-- Pop-up reguli blog -->
+<div id="blog-rules-modal" class="shown" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.45);z-index:2000;align-items:center;justify-content:center;">
+  <div style="background:#fffbe6;max-width:480px;width:90vw;padding:32px 24px 24px 24px;border-radius:18px;box-shadow:0 8px 32px #ffd70055,0 2px 8px #ffd70033;text-align:left;position:relative;">
+    <h2 style="color:#1d3557;font-family:'Playfair Display',serif;font-size:1.3em;margin-bottom:12px;">📜 Reguli pentru a posta pe Blogul Educațional InfoWorld</h2>
+    <div style="font-size:1.08em;line-height:1.7;color:#222;max-height:60vh;overflow-y:auto;">
+      <b>✏️ Ce poți posta:</b><br>
+      ✅ Lecții scurte sau idei utile legate de informatică, algoritmi, C++, structuri de date etc.<br>
+      ✅ Curiozități despre programare sau tehnologie.<br>
+      ✅ Întrebări serioase despre concepte sau probleme de informatică.<br>
+      ✅ Experiențe proprii despre învățare sau competiții.<br>
+      ✅ Sfaturi pentru alți elevi despre cum să învețe mai eficient.<br><br>
+      <b>🚫 Ce NU este permis:</b><br>
+      ⛔ Limbaj ofensator, vulgar sau jignitor.<br>
+      ⛔ Copierea de texte din alte surse fără citare (plagiat).<br>
+      ⛔ Mesaje fără legătură cu informatica sau educația.<br>
+      ⛔ Spam, reclame sau linkuri către site-uri externe fără aprobare.<br>
+      ⛔ Atacuri personale sau discuții toxice.<br><br>
+      <b>📌 Alte reguli importante:</b><br>
+      🔐 Toate postările sunt moderate înainte de publicare – așteaptă puțin până să apară.<br>
+      📝 Scrie corect gramatical și încearcă să te exprimi clar și coerent.<br>
+      🏷️ Folosește titluri relevante și adaugă taguri (ex: „clasa 10”, „structuri de date”, „curiozitate”).<br>
+      ⭐ Comentariile tale pot primi like-uri – fii constructiv și ajută-i pe ceilalți.<br><br>
+      <b>👮 Ce se întâmplă dacă încalci regulile?</b><br>
+      Prima abatere: vei primi un avertisment.<br>
+      A doua abatere: ți se va suspenda temporar accesul la blog.<br>
+      A treia abatere: contul tău poate fi blocat definitiv de pe platforma InfoWorld.<br><br>
+      <b>🤝 Respectă comunitatea InfoWorld</b><br>
+      Toți suntem aici să învățăm. Hai să ne susținem reciproc și să creăm un spațiu în care ideile bune și învățarea prin colaborare să iasă în evidență! 💚
+    </div>
+    <button id="close-rules-btn" style="margin-top:18px;padding:10px 28px;background:#ffd700;color:#1d3557;border:none;border-radius:8px;font-size:1.1em;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;box-shadow:0 2px 8px #ffd70033;display:block;margin-left:auto;margin-right:auto;">Am înțeles</button>
+  </div>
+</div>
+  <footer>
+    © 2025 Proiect Educațional. Toate drepturile rezervate.
+  </footer>
+  <script>
+    // Pop-up reguli blog la fiecare submit, validare nume înainte
+    const rulesModal = document.getElementById('blog-rules-modal');
+    const closeRulesBtn = document.getElementById('close-rules-btn');
+    const blogForm = document.getElementById('add-post-form');
+    let rulesAccepted = false;
+    if(blogForm){
+      blogForm.addEventListener('submit', function(e){
+        const name = blogForm.querySelector('input[name="nume"]');
+        const numeVal = name ? name.value.trim() : '';
+        if(!numeVal){
+          e.preventDefault();
+          alert('Numele este obligatoriu pentru a publica pe blog!');
+          name && name.focus();
+          return false;
+        }
+        if (!rulesAccepted) {
+          e.preventDefault();
+          rulesModal.style.display = 'flex';
+          closeRulesBtn.onclick = function() {
+            rulesModal.style.display = 'none';
+            rulesAccepted = true;
+          };
+          return false;
+        } else {
+          rulesAccepted = false; // reset pentru următoarea postare
+          e.preventDefault();
+          addUserPost();
+          blogForm.reset();
+          setTimeout(() => {
+            const cards = document.querySelectorAll('.blog-card');
+            if (cards.length) cards[cards.length-1].scrollIntoView({behavior:'smooth',block:'center'});
+          }, 100);
+        }
+      });
+    }
+
+    // Salvare și reafișare postări neaprobate cu countdown la refresh
+    function savePendingPost(post) {
+      let arr = JSON.parse(localStorage.getItem('pendingBlogPosts')||'[]');
+      arr.push(post);
+      localStorage.setItem('pendingBlogPosts', JSON.stringify(arr));
+    }
+    function removePendingPost(ts) {
+      let arr = JSON.parse(localStorage.getItem('pendingBlogPosts')||'[]');
+      arr = arr.filter(p=>p.ts!==ts);
+      localStorage.setItem('pendingBlogPosts', JSON.stringify(arr));
+    }
+    function renderPendingPosts() {
+      const blogList = document.getElementById('blog-list');
+      let arr = JSON.parse(localStorage.getItem('pendingBlogPosts')||'[]');
+      arr.forEach(post => {
+        addUserPost(post.nume, post.titlu, post.continut, post.ts, true);
+      });
+    }
+
+    // Modific funcția addUserPost pentru a accepta parametri și a salva în localStorage
+    function addUserPost(nume, titlu, continut, ts, isRestore) {
+      nume = nume || document.getElementById('nume').value.trim() || 'Anonim';
+      titlu = titlu || document.getElementById('titlu').value.trim();
+      continut = continut || document.getElementById('continut').value.trim();
+      if (!titlu || !continut) return;
+      const blogList = document.getElementById('blog-list');
+      const card = document.createElement('div');
+      card.className = 'blog-card';
+      const data = new Date(ts || Date.now());
+      const zi = data.getDate().toString().padStart(2, '0');
+      const luna = (data.getMonth()+1).toString().padStart(2, '0');
+      const an = data.getFullYear();
+      const dataStr = `${zi}.${luna}.${an}`;
+      const isInfoWorld = nume.trim() === 'Echipa InfoWorld';
+      const postTimestamp = ts || Date.now();
+      const twelveHours = 12 * 60 * 60 * 1000;
+      const expireAt = postTimestamp + twelveHours;
+      card.innerHTML = `
+        <div class="blog-meta"><span>👤</span> <span class="author">${nume}${isInfoWorld ? ' <span class=\"verified\" title=\"Verificat InfoWorld\">✔️</span>' : ''}</span> <span>•</span> <span>${dataStr}</span></div>
+        <h2>${titlu}</h2>
+        <div class="content">${continut.replace(/\n/g, '<br>')}</div>
+        ${!isInfoWorld ? `<div class="pending-msg" style="margin-top:12px;padding:10px 18px;background:#fffbe6;border:1.5px solid #ffd700;border-radius:8px;color:#b8860b;font-size:1.08em;">
+          Comentariul tău nu este încă verificat.<br>
+          Acesta va fi șters automat dacă nu este aprobat în următoarele <span class="countdown"></span>.
+        </div>` : ''}
+      `;
+      blogList.appendChild(card);
+      // Countdown pentru postările neaprobate
+      if (!isInfoWorld) {
+        const countdownSpan = card.querySelector('.countdown');
+        function updateCountdown() {
+          const now = Date.now();
+          let diff = expireAt - now;
+          if (diff < 0) diff = 0;
+          const h = Math.floor(diff / (1000*60*60)).toString().padStart(2, '0');
+          const m = Math.floor((diff % (1000*60*60)) / (1000*60)).toString().padStart(2, '0');
+          const s = Math.floor((diff % (1000*60)) / 1000).toString().padStart(2, '0');
+          countdownSpan.textContent = `${h}:${m}:${s}`;
+          if (diff > 0) {
+            setTimeout(updateCountdown, 1000);
+          } else {
+            card.querySelector('.pending-msg').textContent = 'Comentariul a expirat și a fost șters automat.';
+            setTimeout(()=>{ card.remove(); removePendingPost(postTimestamp); }, 2000);
+          }
+        }
+        updateCountdown();
+        if (!isRestore) {
+          savePendingPost({nume, titlu, continut, ts: postTimestamp});
+        }
+      }
+    }
+
+    // La încărcarea paginii, reafișează postările neaprobate
+    window.addEventListener('DOMContentLoaded', renderPendingPosts);
+  </script>
+</body>
+</html> 

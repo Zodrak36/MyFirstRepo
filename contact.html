@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - InfoWorld</title>
+    <link rel="icon" type="image/webp" href="logo.webp">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Georgia&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: linear-gradient(120deg, #fffbe6 0%, #f7e9d2 100%);
+            --text-main: #3d2c1e;
+            --container-bg: rgba(255,255,255,0.98);
+            --container-border: #bfa76a;
+            --container-shadow: #bfa76a33;
+            --btn-bg: linear-gradient(90deg, #ffe082 0%, #ffb300 100%);
+            --btn-bg-hover: linear-gradient(90deg, #ffb300 0%, #ffe082 100%);
+            --btn-text: #3d2c1e;
+            --btn-text-hover: #fff;
+            --quote-bg1: #ffe082cc;
+            --quote-bg2: #ffb300cc;
+            --form-bg: #fffbe6;
+            --msg-bg: linear-gradient(90deg, #fffbe6 0%, #ffe082 100%);
+            --msg-text: #bfa76a;
+        }
+        body.dark-mode {
+            --bg-main: linear-gradient(120deg, #232526 0%, #414345 100%);
+            --text-main: #f7e9d2;
+            --container-bg: rgba(40,40,44,0.98);
+            --container-border: #ffe082;
+            --container-shadow: #00000055;
+            --btn-bg: linear-gradient(90deg, #232526 0%, #414345 100%);
+            --btn-bg-hover: linear-gradient(90deg, #414345 0%, #232526 100%);
+            --btn-text: #ffe082;
+            --btn-text-hover: #232526;
+            --quote-bg1: #232526cc;
+            --quote-bg2: #414345cc;
+            --form-bg: #232526;
+            --msg-bg: linear-gradient(90deg, #232526 0%, #414345 100%);
+            --msg-text: #ffe082;
+        }
+        body {
+            background: var(--bg-main);
+            min-height: 100vh;
+            font-family: 'Georgia', 'Nunito', serif;
+            color: var(--text-main);
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            background: url('robo1.png') no-repeat center center/contain;
+            opacity: 0.13;
+            pointer-events: none;
+            animation: roboMove 18s linear infinite alternate;
+        }
+        @keyframes roboMove {
+            0% { background-position: 10% 60%; }
+            100% { background-position: 90% 40%; }
+        }
+        .container {
+            max-width: 600px;
+            margin: 70px auto 30px auto;
+            padding: 38px 30px 32px 30px;
+            background: var(--container-bg);
+            border-radius: 22px;
+            border: 3.5px double var(--container-border);
+            box-shadow: 0 6px 32px var(--container-shadow), 0 2px 8px #fffbe6cc;
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            font-family: 'Georgia', serif;
+            font-size: 2.5em;
+            color: #bfa76a;
+            margin-bottom: 24px;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 12px #fffbe6cc;
+        }
+        .tips-floating {
+            position: absolute;
+            left: 50%;
+            top: -44px;
+            transform: translateX(-50%);
+            background: #fffde7;
+            color: #ffb300;
+            padding: 13px 32px;
+            border-radius: 16px;
+            font-size: 1.15em;
+            font-weight: 800;
+            box-shadow: 0 2px 12px #ffb30033;
+            animation: floatTips 3.5s ease-in-out infinite alternate;
+            z-index: 2;
+            letter-spacing: 0.5px;
+            border: 2px dashed #ffe082;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tips-floating::before {
+            content: '😊';
+            font-size: 1.3em;
+            margin-right: 6px;
+        }
+        @keyframes floatTips {
+            0% { top: -44px; }
+            100% { top: -34px; }
+        }
+        .tips-floating b { color: #bfa76a; }
+        .tips-floating i { color: #43e97b; font-style: normal; }
+        @media (max-width: 700px) {
+            .container { padding: 14px 2vw; }
+            .tips-floating { font-size: 1em; padding: 9px 10px; }
+        }
+        /* restul stilurilor pentru formular, butoane, etc. să fie simple și aerisite */
+        input, textarea {
+            width: 100%;
+            padding: 15px 18px;
+            border-radius: 10px;
+            border: 2px solid #bfa76a;
+            font-size: 1.13em;
+            margin-bottom: 20px;
+            font-family: 'Nunito', Arial, serif;
+            background: #fffef8;
+            color: #3d2c1e;
+            box-shadow: 0 1px 8px #bfa76a22;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        input:focus, textarea:focus {
+            border-color: #ffb300;
+            box-shadow: 0 0 0 3px #ffe08288;
+            outline: none;
+        }
+        button {
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            border-radius: 22px;
+            padding: 13px 38px;
+            font-size: 1.13em;
+            font-family: 'Nunito', Arial, serif;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #ffb30033;
+            transition: background 0.2s, color 0.2s, transform 0.18s;
+            margin-top: 8px;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        button:hover {
+            background: var(--btn-bg-hover);
+            color: var(--btn-text-hover);
+            transform: scale(1.07) rotate(-2deg);
+            box-shadow: 0 6px 24px #ffb30055;
+        }
+        .animated-title {
+            font-size: 3.2em;
+            font-family: 'Georgia', serif;
+            color: #bfa76a;
+            text-align: center;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            text-shadow: 0 4px 24px #fffbe6cc, 0 1px 0 #fff;
+            animation: popTitle 1.2s cubic-bezier(.68,-0.55,.27,1.55) 1, colorPulse 2.5s infinite alternate;
+            position: relative;
+        }
+        @keyframes popTitle {
+            0% { transform: scale(0.7) rotate(-8deg); opacity: 0; }
+            60% { transform: scale(1.15) rotate(3deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        @keyframes colorPulse {
+            0% { color: #bfa76a; text-shadow: 0 4px 24px #fffbe6cc; }
+            100% { color: #ffb300; text-shadow: 0 6px 32px #ffe082cc; }
+        }
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 30px;
+            margin-top: 10px;
+        }
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 32px;
+            font-size: 1.25em;
+            font-family: 'Nunito', Arial, serif;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #ffb30033;
+            transition: background 0.2s, color 0.2s, transform 0.18s, box-shadow 0.2s;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-btn .fa-instagram {
+            color: #e1306c;
+            font-size: 1.4em;
+            filter: drop-shadow(0 1px 6px #fffbe6cc);
+        }
+        .contact-btn .fa-envelope {
+            color: #1976d2;
+            font-size: 1.4em;
+            filter: drop-shadow(0 1px 6px #fffbe6cc);
+        }
+        .contact-btn:hover {
+            background: var(--btn-bg-hover);
+            color: var(--btn-text-hover);
+            transform: scale(1.09) rotate(-2deg);
+            box-shadow: 0 6px 24px #ffb30055;
+        }
+        .contact-btn:active {
+            transform: scale(0.97);
+        }
+        .contact-btn .btn-text {
+            font-size: 1.1em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        @media (max-width: 700px) {
+            .animated-title { font-size: 2em; }
+            .contact-buttons { gap: 10px; }
+            .contact-btn { padding: 10px 12px; font-size: 1em; }
+        }
+        .contact-message {
+            text-align: center;
+            font-size: 1.25em;
+            color: var(--msg-text);
+            margin-bottom: 18px;
+            margin-top: -10px;
+            font-family: 'Nunito', Arial, serif;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: var(--msg-bg);
+            border-radius: 16px;
+            padding: 12px 18px;
+            box-shadow: 0 2px 12px #ffe08255;
+            display: inline-block;
+            animation: popTitle 1.2s cubic-bezier(.68,-0.55,.27,1.55) 1, colorPulse 2.5s infinite alternate;
+        }
+        .happy-emoji {
+            font-size: 1.3em;
+            margin-left: 6px;
+            animation: bounceHappy 1.2s infinite alternate;
+        }
+        @keyframes bounceHappy {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-7px) scale(1.15); }
+        }
+        .floating-quotes {
+            position: fixed;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .floating-quotes .quote {
+            position: absolute;
+            z-index: 0;
+            font-size: 0.95em;
+            font-family: 'Nunito', Arial, serif;
+            font-weight: 700;
+            padding: 7px 16px;
+            border-radius: 14px;
+            color: #fff;
+            box-shadow: 0 1px 8px #ffb30033;
+            opacity: 0;
+            pointer-events: none;
+            animation: floatQuoteUp 18s linear forwards;
+            border: 2px solid #fffbe6cc;
+            text-shadow: 0 1px 4px #fffbe6cc;
+            transition: background 0.3s, color 0.3s;
+            filter: blur(0.2px);
+            will-change: transform, opacity;
+            background: linear-gradient(90deg, var(--quote-bg1) 0%, var(--quote-bg2) 100%);
+            color: var(--btn-text-hover);
+        }
+        @keyframes floatQuoteUp {
+            0% { transform: translateY(0) scale(0.95); opacity: 0; }
+            8% { opacity: 0.7; }
+            15% { opacity: 0.85; }
+            80% { opacity: 0.85; }
+            100% { transform: translateY(-60vh) scale(1.05) rotate(1deg); opacity: 0; }
+        }
+        @keyframes colorFloatBg {
+            0% { background: linear-gradient(90deg, #ffe082cc 0%, #ffb300cc 100%); color: #fff; }
+            100% { background: linear-gradient(90deg, #ffb300cc 0%, #ffe082cc 100%); color: #bfa76a; }
+        }
+        .nav-buttons-group {
+            position: fixed;
+            top: 22px;
+            right: 22px;
+            z-index: 20;
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            align-items: center;
+        }
+        .home-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 54px;
+            height: 54px;
+            background: linear-gradient(135deg, #fffbe6 0%, #ffe082 100%);
+            border: 3px double #bfa76a;
+            border-radius: 50%;
+            font-size: 2.1em;
+            color: #bfa76a;
+            box-shadow: 0 2px 12px #bfa76a33, 0 1px 4px #fffbe6cc;
+            text-decoration: none;
+            transition: background 0.22s, color 0.22s, transform 0.18s, box-shadow 0.22s;
+            font-family: 'Georgia', serif;
+            font-weight: 900;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .home-arrow:hover, .home-arrow:focus {
+            background: linear-gradient(135deg, #ffb300 0%, #ffe082 100%);
+            color: #fff;
+            transform: scale(1.13) rotate(-8deg);
+            box-shadow: 0 6px 24px #ffb30055;
+        }
+        .form-google-container {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto 0 auto;
+            background: var(--form-bg);
+            border-radius: 18px;
+            border: 2.5px solid #bfa76a;
+            box-shadow: 0 2px 16px #bfa76a22;
+            padding: 0;
+            overflow: hidden;
+            margin-top: 24px;
+        }
+        .form-google-container iframe {
+            background: var(--form-bg) !important;
+            border-radius: 18px;
+            border: 2.5px solid #bfa76a;
+            box-shadow: 0 2px 16px #bfa76a22;
+            margin-top: 24px;
+        }
+        @media (max-width: 900px) {
+            .form-google-container iframe { height: 1100px; }
+        }
+        @media (max-width: 700px) {
+            .form-google-container { border-radius: 10px; }
+            .form-google-container iframe { height: 1400px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons-group">
+        <a href="index.html" class="home-arrow" title="Acasă">⌂</a>
+        <button id="toggle-dark" title="Comută mod întunecat/luminos" style="width: 48px; height: 48px; border-radius: 50%; border: 2.5px solid var(--container-border); background: var(--container-bg); color: var(--container-border); font-size: 1.5em; box-shadow: 0 2px 12px var(--container-shadow); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s;"><span id="dark-icon">🌙</span></button>
+    </div>
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+    <div class="scanline"></div>
+    <div id="fireworks-container"></div>
+    <div class="floating-quotes" id="quotes-container"></div>
+
+    <div class="container">
+        <h1 class="animated-title">Contactează InfoWorld <span style="font-size:0.7em;">🤗</span></h1>
+        <div class="contact-buttons">
+            <button id="show-email-btn" class="contact-btn" type="button" title="Afișează adresa de email">
+                <i class="fa-solid fa-envelope"></i>
+                <span class="btn-text">Email</span>
+            </button>
+            <a href="https://www.instagram.com/infoworld.ro" class="contact-btn" target="_blank" title="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+                <span class="btn-text">Instagram</span>
+            </a>
+        </div>
+        <div id="email-reveal" style="display:none; opacity:0; transition:opacity 0.4s; text-align:center; margin-bottom:10px; font-size:1.13em; font-family:'Nunito',Arial,serif; color:var(--btn-text); font-weight:700; letter-spacing:0.5px;">
+            contact4infoworld@gmail.com
+        </div>
+        <div class="contact-message">Suntem mereu bucuroși să primim mesaje, întrebări sau feedback! Scrie-ne oricând! <span class="happy-emoji">🥳</span></div>
+        <button id="toggle-form-btn" class="contact-btn" style="margin: 0 auto 18px auto; display: block; min-width: 220px;">Deschide formular feedback</button>
+        <div class="form-google-container" id="form-google-container" style="display: none; opacity: 0; max-height: 0; transition: opacity 0.5s, max-height 0.5s;">
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSer-Ix39G9YLCE1LQypFZax2lHkwkhtmCtQuPnjlN8So3feoQ/viewform?usp=dialog" width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0" title="Formular Feedback InfoWorld" loading="lazy">Se încarcă…</iframe>
+        </div>
+    </div>
+
+    <script>
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+        });
+
+        // Hover effects for interactive elements
+        document.querySelectorAll('button, a').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+            });
+
+            element.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+            });
+        });
+
+        // Fireworks effect
+        function createFirework() {
+            const fireworksContainer = document.getElementById('fireworks-container');
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            
+            // Random position on the screen
+            const startX = Math.random() * window.innerWidth;
+            const targetY = Math.random() * (window.innerHeight * 0.5); // Only in top half
+            
+            firework.style.left = startX + 'px';
+            firework.style.bottom = '0';
+            firework.style.setProperty('--target-y', -targetY + 'px');
+            
+            // Create the rising animation
+            const riseTime = 1 + Math.random() * 0.5;
+            firework.style.animation = `rise ${riseTime}s ease-out forwards`;
+            
+            fireworksContainer.appendChild(firework);
+            
+            // When the firework reaches its peak, explode
+            setTimeout(() => {
+                createExplosion(startX, window.innerHeight - targetY);
+                firework.remove();
+            }, riseTime * 1000);
+        }
+
+        function createExplosion(x, y) {
+            const fireworksContainer = document.getElementById('fireworks-container');
+            const explosion = document.createElement('div');
+            explosion.className = 'explosion';
+            explosion.style.left = x + 'px';
+            explosion.style.top = y + 'px';
+            
+            // Create particles
+            const particleCount = 50;
+            const colors = ['#ff0', '#0ff', '#f0f', '#0f0', '#ff6600'];
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random angle and distance
+                const angle = (i / particleCount) * 360 + Math.random() * 20;
+                const distance = 100 + Math.random() * 100;
+                const rad = angle * Math.PI / 180;
+                
+                // Calculate final position
+                const tx = Math.cos(rad) * distance;
+                const ty = Math.sin(rad) * distance;
+                
+                particle.style.setProperty('--tx', tx + 'px');
+                particle.style.setProperty('--ty', ty + 'px');
+                
+                // Random color from the palette
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                explosion.appendChild(particle);
+            }
+            
+            fireworksContainer.appendChild(explosion);
+            
+            // Remove explosion after animation
+            setTimeout(() => {
+                explosion.remove();
+            }, 1000);
+        }
+
+        // Launch fireworks periodically
+        function startFireworks() {
+            createFirework();
+            const delay = 1000 + Math.random() * 2000; // Random delay between 1-3 seconds
+            setTimeout(startFireworks, delay);
+        }
+
+        // Start fireworks when page loads
+        window.addEventListener('load', () => {
+            startFireworks();
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            // No matrix effect to resize
+        });
+
+        // Quotes System
+        const quotes = [
+            '"Informatica este despre oameni, nu doar despre mașini." - Tim Berners-Lee',
+            '"The most important thing in communication is hearing what isn\'t said." - Peter Drucker',
+            '"Cel mai eficient mod de a face ceva este să întrebi."',
+            '"Scrie-ne. Și calculatoarele au fost o idee la început."',
+            '"Technology is best when it brings people together." - Matt Mullenweg',
+            '"Informatica nu rezolvă totul, dar comunicarea ne apropie de soluții."',
+            '"Fiecare bug rezolvat începe cu o întrebare."',
+            '"Comunicarea e cel mai puternic protocol."',
+            '"The computer was born to solve problems that did not exist before." - Bill Gates',
+            '"Suntem aici pentru a răspunde, nu doar pentru a compila."'
+        ];
+
+        function createFloatingQuotes() {
+            const container = document.getElementById('quotes-container');
+            const bgColors = [
+                'linear-gradient(90deg, #ffe082cc 0%, #ffb300cc 100%)',
+                'linear-gradient(90deg, #43e97bcc 0%, #38f9d7cc 100%)',
+                'linear-gradient(90deg, #ff5858cc 0%, #f09819cc 100%)',
+                'linear-gradient(90deg, #a18cd1cc 0%, #fbc2ebcc 100%)',
+                'linear-gradient(90deg, #f7971ecc 0%, #ffd200cc 100%)',
+                'linear-gradient(90deg, #43cea2cc 0%, #185a9dcc 100%)',
+                'linear-gradient(90deg, #fa709acc 0%, #fee140cc 100%)',
+                'linear-gradient(90deg, #30cfd0cc 0%, #330867cc 100%)'
+            ];
+            function createQuote() {
+                const quote = document.createElement('div');
+                quote.className = 'quote';
+                quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+                // Poziționare random: 40% șansă stânga, 60% șansă dreapta (mai spre dreapta)
+                let left;
+                if (Math.random() < 0.4) {
+                    // stânga
+                    left = 5 + Math.random() * 25; // 5-30vw
+                } else {
+                    // dreapta, dar mai spre margine
+                    left = 85 + Math.random() * 12; // 85-97vw
+                }
+                quote.style.left = left + 'vw';
+                quote.style.bottom = '0';
+                quote.style.top = '';
+                // Culoare random din paletă
+                quote.style.background = bgColors[Math.floor(Math.random() * bgColors.length)];
+                // Fade-in și animare direct în sus
+                quote.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(quote);
+                setTimeout(() => {
+                    quote.remove();
+                }, 18000);
+            }
+            // Doar primul quote la început
+            setTimeout(() => createQuote(), 1000);
+            // Continuă să creeze quotes, una câte una, la interval mare
+            setInterval(() => {
+                if (container.children.length < 4) {
+                    createQuote();
+                }
+            }, 6000);
+        }
+
+        // Start floating quotes when page loads
+        window.addEventListener('load', () => {
+            createFloatingQuotes();
+        });
+
+        // Dark mode toggle
+        const darkBtn = document.getElementById('toggle-dark');
+        const darkIcon = document.getElementById('dark-icon');
+        function setDarkMode(on) {
+            if (on) {
+                document.body.classList.add('dark-mode');
+                darkIcon.textContent = '☀️';
+                localStorage.setItem('contact-dark', '1');
+            } else {
+                document.body.classList.remove('dark-mode');
+                darkIcon.textContent = '🌙';
+                localStorage.setItem('contact-dark', '0');
+            }
+        }
+        darkBtn.addEventListener('click', () => {
+            setDarkMode(!document.body.classList.contains('dark-mode'));
+        });
+        window.addEventListener('DOMContentLoaded', () => {
+            setDarkMode(localStorage.getItem('contact-dark') === '1');
+        });
+
+        // Toggle Google Form
+        const formBtn = document.getElementById('toggle-form-btn');
+        const formContainer = document.getElementById('form-google-container');
+        let formVisible = false;
+        formBtn.addEventListener('click', () => {
+            formVisible = !formVisible;
+            if (formVisible) {
+                formContainer.style.display = 'block';
+                setTimeout(() => {
+                    formContainer.style.opacity = '1';
+                    formContainer.style.maxHeight = '2000px';
+                }, 10);
+                formBtn.textContent = 'Ascunde formularul feedback';
+            } else {
+                formContainer.style.opacity = '0';
+                formContainer.style.maxHeight = '0';
+                setTimeout(() => {
+                    formContainer.style.display = 'none';
+                }, 500);
+                formBtn.textContent = 'Deschide formular feedback';
+            }
+        });
+
+        // Email reveal toggle
+        const showEmailBtn = document.getElementById('show-email-btn');
+        const emailReveal = document.getElementById('email-reveal');
+        let emailVisible = false;
+        showEmailBtn.addEventListener('click', () => {
+            emailVisible = !emailVisible;
+            if (emailVisible) {
+                emailReveal.style.display = 'block';
+                setTimeout(() => { emailReveal.style.opacity = '1'; }, 10);
+            } else {
+                emailReveal.style.opacity = '0';
+                setTimeout(() => { emailReveal.style.display = 'none'; }, 400);
+            }
+        });
+    </script>
+</body>
+</html> 

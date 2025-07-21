@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InfoEducație - Lecții BAC</title>
+  <link rel="icon" type="image/webp" href="logo.webp">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: linear-gradient(135deg, #e3f2fd 0%, #c8e6c9 100%);
+      --bg-secondary: rgba(255, 255, 255, 0.95);
+      --text-primary: #1a1a1a;
+      --text-secondary: #2c3e50;
+      --accent-primary: #1976d2;
+      --accent-secondary: #d32f2f;
+      --border-color: rgba(25, 118, 210, 0.3);
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: linear-gradient(135deg, #1b5e20 0%, #4a148c 100%);
+      --bg-secondary: rgba(45, 45, 45, 0.95);
+      --text-primary: #ffffff;
+      --text-secondary: #e0e0e0;
+      --accent-primary: #4caf50;
+      --accent-secondary: #f44336;
+      --border-color: rgba(76, 175, 80, 0.3);
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+      line-height: 1.6;
+      cursor: none;
+    }
+
+    .custom-cursor {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s ease;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    .cursor-book {
+      font-size: 40px;
+      animation: bookFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes bookFloat {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-5px) rotate(5deg);
+      }
+    }
+
+    .cursor-paper {
+      font-size: 35px;
+      animation: paperFloat 2.5s ease-in-out infinite;
+    }
+
+    @keyframes paperFloat {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-3px) rotate(-3deg);
+      }
+    }
+
+    .cursor-papyrus {
+      font-size: 38px;
+      animation: papyrusFloat 3.5s ease-in-out infinite;
+    }
+
+    @keyframes papyrusFloat {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-4px) rotate(2deg);
+      }
+    }
+
+    .cursor-black {
+      width: 20px;
+      height: 20px;
+      background: #000000;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: relative;
+      animation: blackFloat 2s ease-in-out infinite;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    .cursor-black::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      background: #000000;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes blackFloat {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-2px) rotate(1deg);
+      }
+    }
+
+    .cursor-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+      }
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent-primary);
+      border-radius: 50px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 1.2em;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .home-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--bg-secondary);
+      color: var(--accent-primary);
+      border-radius: 25px;
+      border: 2px solid var(--accent-primary);
+      text-decoration: none;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.1em;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    .home-button:hover {
+      background: var(--accent-primary);
+      color: var(--bg-secondary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 20px 40px;
+    }
+
+    .bac-countdown-section {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 248, 255, 0.9) 100%);
+      border-radius: 25px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--accent-primary);
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bac-countdown-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(25, 118, 210, 0.05) 0%, rgba(76, 175, 80, 0.05) 100%);
+      pointer-events: none;
+    }
+
+    [data-theme="dark"] .bac-countdown-section {
+      background: linear-gradient(135deg, rgba(45, 45, 45, 0.9) 0%, rgba(30, 30, 30, 0.9) 100%);
+      border-color: var(--accent-primary);
+    }
+
+    [data-theme="dark"] .bac-countdown-section::before {
+      background: linear-gradient(45deg, rgba(76, 175, 80, 0.1) 0%, rgba(156, 39, 176, 0.1) 100%);
+    }
+
+    .countdown-title {
+      text-align: center;
+      color: var(--accent-primary);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .bac-date-info {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .bac-date-info p {
+      color: var(--accent-secondary);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.2em;
+      font-weight: 600;
+      background: var(--bg-primary);
+      padding: 15px 25px;
+      border-radius: 20px;
+      border: 2px solid var(--accent-secondary);
+      display: inline-block;
+    }
+
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .countdown-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 25px 20px;
+      border-radius: 20px;
+      border: 2px solid rgba(25, 118, 210, 0.3);
+      min-width: 120px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .countdown-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent-primary);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    [data-theme="dark"] .countdown-item {
+      background: rgba(45, 45, 45, 0.8);
+      border-color: rgba(76, 175, 80, 0.3);
+    }
+
+    [data-theme="dark"] .countdown-item:hover {
+      background: rgba(45, 45, 45, 0.9);
+      border-color: var(--accent-primary);
+    }
+
+    .countdown-number {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.8em;
+      font-weight: 700;
+      color: #2c3e50;
+      line-height: 1;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] .countdown-number {
+      color: #ecf0f1;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .countdown-label {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.9em;
+      color: var(--text-secondary);
+      margin-top: 8px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .bac-subjects {
+      margin-top: 50px;
+    }
+
+    .bac-subjects h3 {
+      text-align: center;
+      color: var(--accent-secondary);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2em;
+      font-weight: 700;
+      margin-bottom: 30px;
+      letter-spacing: -1px;
+    }
+
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .subject-card {
+      background: var(--bg-primary);
+      padding: 25px;
+      border-radius: 20px;
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    .subject-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent-primary);
+    }
+
+    .subject-card h4 {
+      color: var(--accent-primary);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.4em;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .subject-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .subject-card li {
+      color: var(--text-primary);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1em;
+      margin-bottom: 10px;
+      padding-left: 25px;
+      position: relative;
+      font-weight: 500;
+    }
+
+    .subject-card li::before {
+      content: '🎯';
+      position: absolute;
+      left: 0;
+      font-size: 0.9em;
+    }
+
+    .subject-card a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .subject-card a:hover {
+      color: var(--accent-secondary);
+      text-decoration: underline;
+    }
+
+    .specialization-section {
+      margin-bottom: 40px;
+    }
+
+    .specialization-title {
+      color: var(--accent-secondary);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.6em;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+      letter-spacing: -1px;
+    }
+
+    .pbinfo-notice {
+      background: var(--bg-primary);
+      padding: 25px;
+      border-radius: 20px;
+      border: 2px solid var(--accent-secondary);
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .pbinfo-notice p {
+      color: var(--text-primary);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.1em;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .pbinfo-link {
+      color: var(--accent-primary);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.3em;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 12px 25px;
+      background: var(--bg-secondary);
+      border-radius: 15px;
+      border: 2px solid var(--accent-primary);
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .pbinfo-link:hover {
+      background: var(--accent-primary);
+      color: var(--bg-secondary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .bac-started {
+      text-align: center;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.2em;
+      font-weight: 700;
+      color: var(--accent-secondary);
+      padding: 40px;
+      background: var(--bg-primary);
+      border-radius: 20px;
+      border: 2px solid var(--accent-secondary);
+      animation: gentleBounce 2s infinite;
+    }
+
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .motivational-section {
+      margin-top: 50px;
+      text-align: center;
+      padding: 35px;
+      background: var(--bg-primary);
+      border-radius: 20px;
+      border: 2px solid var(--border-color);
+    }
+
+    .motivational-section h3 {
+      color: var(--accent-secondary);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-bottom: 25px;
+      letter-spacing: -1px;
+    }
+
+    .motivational-text {
+      color: var(--text-primary);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.2em;
+      line-height: 1.7;
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    .study-tips {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .tip-card {
+      background: var(--bg-secondary);
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px solid var(--accent-primary);
+      transition: all 0.3s ease;
+    }
+
+    .tip-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .tip-card h4 {
+      color: var(--accent-primary);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.2em;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .tip-card p {
+      color: var(--text-secondary);
+      font-size: 1em;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .star-container {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-bottom: 15px;
+    }
+
+    .star {
+      font-size: 1.2em;
+      animation: starTwinkle 2s infinite;
+      opacity: 0.8;
+    }
+
+    .star:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .star:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+
+    .star:nth-child(3) {
+      animation-delay: 1s;
+    }
+
+    @keyframes starTwinkle {
+      0%, 100% {
+        opacity: 0.8;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    .tip-card:hover .star {
+      animation: starSparkle 0.6s ease-in-out;
+    }
+
+    @keyframes starSparkle {
+      0% {
+        transform: scale(1) rotate(0deg);
+      }
+      50% {
+        transform: scale(1.3) rotate(180deg);
+      }
+      100% {
+        transform: scale(1) rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 80px 15px 30px;
+      }
+      
+      .theme-toggle {
+        top: 15px;
+        left: 15px;
+        padding: 8px 12px;
+        font-size: 1em;
+      }
+      
+      .home-button {
+        top: 15px;
+        right: 15px;
+        padding: 10px 20px;
+        font-size: 1em;
+      }
+      
+      .bac-countdown-section {
+        padding: 25px 20px;
+        margin-bottom: 20px;
+      }
+      
+      .countdown-title {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+      }
+      
+      .bac-date-info p {
+        font-size: 1em;
+        padding: 10px 15px;
+      }
+      
+      .countdown-timer {
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .countdown-item {
+        min-width: 80px;
+        padding: 15px 10px;
+      }
+      
+      .countdown-number {
+        font-size: 1.8em;
+      }
+      
+      .countdown-label {
+        font-size: 0.8em;
+      }
+      
+      .specialization-title {
+        font-size: 1.4em;
+        margin-bottom: 15px;
+      }
+      
+      .subjects-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .subject-card {
+        padding: 20px 15px;
+      }
+      
+      .subject-card h4 {
+        font-size: 1.2em;
+        margin-bottom: 12px;
+      }
+      
+      .subject-card li {
+        font-size: 0.9em;
+        margin-bottom: 8px;
+      }
+      
+      .motivational-section {
+        padding: 25px 20px;
+        margin-top: 30px;
+      }
+      
+      .motivational-section h3 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
+      
+      .motivational-text {
+        font-size: 1.1em;
+        margin-bottom: 25px;
+      }
+      
+      .study-tips {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .tip-card {
+        padding: 15px;
+      }
+      
+      .tip-card h4 {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+      }
+      
+      .tip-card p {
+        font-size: 0.9em;
+      }
+      
+      .star {
+        font-size: 1em;
+      }
+      
+      .pbinfo-notice {
+        padding: 20px 15px;
+        margin-top: 25px;
+      }
+      
+      .pbinfo-notice p {
+        font-size: 1em;
+        margin-bottom: 12px;
+      }
+      
+      .pbinfo-link {
+        font-size: 1.1em;
+        padding: 10px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 70px 10px 20px;
+      }
+      
+      .countdown-timer {
+        gap: 8px;
+      }
+      
+      .countdown-item {
+        min-width: 70px;
+        padding: 12px 8px;
+      }
+      
+      .countdown-number {
+        font-size: 1.6em;
+      }
+      
+      .countdown-title {
+        font-size: 1.6em;
+      }
+      
+      .bac-countdown-section {
+        padding: 20px 15px;
+      }
+      
+      .specialization-title {
+        font-size: 1.3em;
+      }
+      
+      .subject-card {
+        padding: 15px 12px;
+      }
+      
+      .motivational-section {
+        padding: 20px 15px;
+      }
+      
+      .tip-card {
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Custom 3D Cursor -->
+  <div class="custom-cursor" id="customCursor">
+    <div class="cursor-glow"></div>
+    <div class="cursor-book">📚</div>
+    <div class="cursor-paper" style="display: none;">📄</div>
+    <div class="cursor-papyrus" style="display: none;">📜</div>
+    <div class="cursor-black" style="display: none;"></div>
+  </div>
+
+  <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  <a href="index.html" class="home-button">⌂ Acasă</a>
+
+  <div class="container">
+    <!-- COUNTDOWN BAC -->
+    <div class="bac-countdown-section">
+      <div class="countdown-container">
+        <h2 class="countdown-title">⏰ Countdown BAC 2026</h2>
+        <div class="bac-date-info">
+          <p>📅 Data BAC: <strong>13 iunie 2026</strong> | ⏰ Ora: <strong>09:00</strong></p>
+        </div>
+        <div class="countdown-timer">
+          <div class="countdown-item">
+            <span class="countdown-number" id="days">00</span>
+            <span class="countdown-label">Zile</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="hours">00</span>
+            <span class="countdown-label">Ore</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="minutes">00</span>
+            <span class="countdown-label">Minute</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="seconds">00</span>
+            <span class="countdown-label">Secunde</span>
+          </div>
+        </div>
+        
+        <div class="bac-subjects">
+          <h3>📚 Subiecte BAC Informatică 2025</h3>
+          
+          <!-- Mate-Info -->
+          <div class="specialization-section">
+            <h4 class="specialization-title">🎓 Mate-Info</h4>
+            <div class="subjects-grid">
+              <div class="subject-card">
+                <h4>📄 Subiecte Oficiale</h4>
+                <ul>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_Informatica_2025_sp_MI_C_var_01_LRO.pdf" target="_blank">C++ - Varianta 1</a></li>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_Informatica_2025_sp_MI_Pascal_var_01_LRO.pdf" target="_blank">Pascal - Varianta 1</a></li>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_Informatica_2025_sp_MI_C_var_07_LRO.pdf" target="_blank">C++ - Subiect de Rezervă</a></li>
+                </ul>
+              </div>
+              <div class="subject-card">
+                <h4>📋 Simulare</h4>
+                <ul>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_Informatica_2025_sp_MI_C_var_Simulare_LRO.pdf" target="_blank">C++ - Subiect</a></li>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_Informatica_2025_sp_MI_Pascal_var_Simulare_LRO.pdf" target="_blank">Pascal - Subiect</a></li>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_Informatica_2025_sp_MI_bar_Simulare_LRO.pdf" target="_blank">Barem Simulare</a></li>
+                </ul>
+              </div>
+              <div class="subject-card">
+                <h4>📝 Modele - 2 noiembrie 2024</h4>
+                <ul>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_informatica_2025_sp_MI_C_var_model.pdf" target="_blank">C++ - Model</a></li>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_informatica_2025_sp_MI_Pascal_var_model.pdf" target="_blank">Pascal - Model</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stiinte ale Naturii -->
+          <div class="specialization-section">
+            <h4 class="specialization-title">🔬 Științe ale Naturii</h4>
+            <div class="subjects-grid">
+              <div class="subject-card">
+                <h4>📄 Subiecte Oficiale</h4>
+                <ul>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_Informatica_2025_sp_SN_C_var_01_LRO.pdf" target="_blank">C++ - Varianta 1</a></li>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_Informatica_2025_sp_SN_Pascal_var_01_LRO.pdf" target="_blank">Pascal - Varianta 1</a></li>
+                </ul>
+              </div>
+              <div class="subject-card">
+                <h4>📋 Simulare</h4>
+                <ul>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_Informatica_2025_sp_SN_C_var_Simulare_LRO.pdf" target="_blank">C++ - Subiect</a></li>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_Informatica_2025_sp_SN_Pascal_var_Simulare_LRO.pdf" target="_blank">Pascal - Subiect</a></li>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_Informatica_2025_sp_SN_bar_Simulare_LRO.pdf" target="_blank">Barem Simulare</a></li>
+                </ul>
+              </div>
+              <div class="subject-card">
+                <h4>📝 Modele - 2 noiembrie 2024</h4>
+                <ul>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_informatica_2025_sp_SN_C_var_model.pdf" target="_blank">C++ - Model</a></li>
+                  <li><a href="https://www.pbinfo.ro/resurse/9dc152/examene/2025/E_d_informatica_2025_sp_SN_Pascal_var_model.pdf" target="_blank">Pascal - Model</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="pbinfo-notice">
+            <p><strong>ℹ️ Pentru modelele mai vechi cât și pentru bareme vă rugăm să vizitați site-ul:</strong></p>
+            <a href="https://www.pbinfo.ro/" target="_blank" class="pbinfo-link">www.pbinfo.ro</a>
+          </div>
+        </div>
+
+        <div class="motivational-section">
+          <h3>💪 Sfaturi pentru BAC</h3>
+          <p class="motivational-text">
+            Fiecare zi contează! Folosește timpul rămas pentru a-ți consolida cunoștințele și a exersa subiectele importante.
+          </p>
+                  <div class="study-tips">
+          <div class="tip-card">
+            <div class="star-container">
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+            </div>
+            <h4>📖 Exercițiu zilnic</h4>
+            <p>Rezolvă cel puțin un subiect BAC pe zi.</p>
+          </div>
+          <div class="tip-card">
+            <div class="star-container">
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+            </div>
+            <h4>⏰ Simulări</h4>
+            <p>Fă simulări complete în timpul limitat</p>
+          </div>
+          <div class="tip-card">
+            <div class="star-container">
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+            </div>
+            <h4>📝 Note importante</h4>
+            <p>Învață formulele și algoritmii cheie</p>
+          </div>
+          <div class="tip-card">
+            <div class="star-container">
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+              <span class="star">⭐</span>
+            </div>
+            <h4>🎯 Focus pe puncte</h4>
+            <p>Concentrează-te pe subiectele cu cele mai multe puncte</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const themeToggle = document.querySelector('.theme-toggle');
+      
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        themeToggle.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+      document.querySelector('.theme-toggle').textContent = '☀️';
+    }
+
+    // BAC Countdown Timer
+    function updateCountdown() {
+      // Data BAC 2026 - 13 iunie 2026
+      const bacDate = new Date('2026-06-13T09:00:00').getTime();
+      const now = new Date().getTime();
+      const distance = bacDate - now;
+
+      if (distance > 0) {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+
+        // Efect special când rămân puține zile
+        if (days <= 7) {
+          document.querySelector('.countdown-timer').style.animation = 'gentleBounce 1s infinite';
+        } else {
+          document.querySelector('.countdown-timer').style.animation = 'none';
+        }
+      } else {
+        // BAC a început
+        document.querySelector('.countdown-timer').innerHTML = '<div class="bac-started">🎉 BAC 2026 a început! Mult succes! 🎉</div>';
+      }
+    }
+
+    // Actualizează countdown-ul la fiecare secundă
+    setInterval(updateCountdown, 1000);
+    updateCountdown(); // Prima actualizare
+
+    // Custom 3D Cursor
+    const cursor = document.getElementById('customCursor');
+    const cursorBook = cursor.querySelector('.cursor-book');
+    const cursorPaper = cursor.querySelector('.cursor-paper');
+    const cursorPapyrus = cursor.querySelector('.cursor-papyrus');
+    const cursorBlack = cursor.querySelector('.cursor-black');
+    let currentCursor = 0;
+    const cursors = [cursorBook, cursorPaper, cursorPapyrus, cursorBlack];
+
+    // Mouse movement
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX - 20 + 'px';
+      cursor.style.top = e.clientY - 20 + 'px';
+    });
+
+    // Switch cursor on click
+    document.addEventListener('click', () => {
+      cursors[currentCursor].style.display = 'none';
+      currentCursor = (currentCursor + 1) % cursors.length;
+      cursors[currentCursor].style.display = 'block';
+    });
+
+    // Hover effects
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
+        cursor.style.transform = 'scale(1.2)';
+      }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
+        cursor.style.transform = 'scale(1)';
+      }
+    });
+
+    // Auto-switch cursor every 10 seconds
+    setInterval(() => {
+      cursors[currentCursor].style.display = 'none';
+      currentCursor = (currentCursor + 1) % cursors.length;
+      cursors[currentCursor].style.display = 'block';
+    }, 10000);
+  </script>
+</body>
+</html> 

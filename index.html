@@ -1,0 +1,5475 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InfoWorld</title>
+  <link rel="icon" type="image/webp" href="logo.webp">
+  <meta name="description" content="Învață informatica pentru BAC. Teste, lecții și asistent." />
+  <link href="https://fonts.googleapis.com/css2?family=Wallpoet&family=Orbitron:wght@400;500;700;900&family=Poiret+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Quicksand:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      color: #00ff00;
+      position: relative;
+      z-index: 1;
+      cursor: default;
+    }
+
+    /* Cursor styles - păstrat pentru funcționalitate */
+    .cursor-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .cursor {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #00ff00;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: transform 0.2s;
+    }
+
+    .cursor-dot {
+      width: 4px;
+      height: 4px;
+      background: #00ff00;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .cursor-trail {
+      position: fixed;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      animation: trailFade 1s ease-out;
+      background: #0ff;
+    }
+
+    @keyframes trailFade {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.1);
+      }
+    }
+
+    .cursor-glow {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(0, 255, 255, 0.2) 0%,
+        rgba(0, 255, 255, 0) 70%
+      );
+      pointer-events: none;
+      z-index: 9997;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Back Arrow Button */
+    .back-arrow {
+      position: fixed;
+      top: 80px;
+      left: 80px;
+      background: transparent;
+      color: #00ff00;
+      border: 2px solid #00ff00;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ff00;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      text-decoration: none;
+    }
+    .back-arrow:hover {
+      background: rgba(0, 255, 0, 0.1);
+      box-shadow: 0 0 20px #00ff00;
+      transform: scale(1.1);
+    }
+
+    /* Cursor hover effect */
+    button:hover ~ .cursor {
+      transform: scale(1.5);
+    }
+
+
+
+    header {
+      background: rgba(0, 0, 0, 0.8);
+      color: #00ff00;
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    .menu-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      background: #e3f2fd;
+      border: 2px solid #1976d2;
+      color: #1976d2;
+      padding: 12px 32px 12px 48px;
+      border-radius: 14px;
+      cursor: pointer;
+      z-index: 20;
+      font-family: 'Nunito', Arial, sans-serif;
+      font-size: 1.18em;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      box-shadow: 0 2px 12px #1976d233;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .menu-toggle .menu-icon {
+      font-size: 1.4em;
+      margin-right: 10px;
+      color: #1976d2;
+      opacity: 0.85;
+    }
+    .menu-toggle:hover {
+      background: #1976d2;
+      color: #fff;
+      border-color: #1565c0;
+      box-shadow: 0 4px 18px #1976d244;
+    }
+    .menu-toggle:hover .menu-icon {
+      color: #fff;
+    }
+    .menu-toggle:active {
+      background: #bbdefb;
+      color: #1976d2;
+      border-color: #1976d2;
+    }
+
+    button {
+      transition: all 0.3s ease;
+      font-family: 'Georgia', serif;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    #menu {
+      padding: 1.5rem 1.2rem;
+      display: none;
+      flex-direction: column;
+      gap: 1.2rem;
+      background: rgba(30, 34, 60, 0.82);
+      backdrop-filter: blur(18px) saturate(1.4);
+      position: absolute;
+      top: 4.2rem;
+      left: 1.2rem;
+      width: 250px;
+      z-index: 15;
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25), 0 2px 0 #43e97b;
+      border: 2px solid #43e97b;
+      border-radius: 28px;
+      opacity: 0;
+      transform: translateY(-40px) scale(0.97);
+      transition: opacity 0.5s cubic-bezier(.4,0,.2,1), transform 0.5s cubic-bezier(.4,0,.2,1);
+    }
+
+    #menu.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #menu button {
+      padding: 18px 28px 18px 60px;
+      cursor: pointer;
+      border: none;
+      background: linear-gradient(90deg, #a7c7e7 0%, #43e97b 100%);
+      color: #1a2330;
+      border-radius: 32px;
+      font-family: 'Quicksand', 'Nunito', Arial, sans-serif;
+      font-size: 1.18em;
+      font-weight: 700;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 18px #43e97b33, 0 1.5px 0 #fff;
+      position: relative;
+      overflow: hidden;
+      margin: 10px 0;
+      width: 100%;
+      text-align: left;
+      transition: all 0.35s cubic-bezier(.4,0,.2,1);
+      outline: none;
+      border-bottom: 2.5px solid #38f9d7;
+      filter: drop-shadow(0 2px 8px #a7c7e7cc);
+    }
+
+    #menu button .menu-icon {
+      position: absolute;
+      left: 22px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5em;
+      opacity: 0.92;
+      pointer-events: none;
+      filter: drop-shadow(0 0 6px #fff8);
+    }
+
+    #menu button::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(120deg, transparent 60%, #fff8 80%, transparent 100%);
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #menu button:hover {
+      background: linear-gradient(90deg, #43e97b 0%, #a7c7e7 100%);
+      box-shadow: 0 0 24px #43e97b, 0 0 48px #a7c7e799;
+      color: #111;
+      letter-spacing: 2.5px;
+      transform: scale(1.07) translateX(6px) rotate(-2deg);
+      filter: drop-shadow(0 0 16px #43e97b99);
+      animation: bounceBtn 0.5s;
+    }
+
+    #menu button:active {
+      transform: scale(0.97) translateX(0) rotate(0);
+      box-shadow: 0 0 8px #43e97b, 0 0 16px #a7c7e799;
+    }
+
+    @keyframes bounceBtn {
+      0% { transform: scale(1) translateX(0) rotate(0); }
+      40% { transform: scale(1.12) translateX(10px) rotate(-4deg); }
+      60% { transform: scale(0.98) translateX(2px) rotate(2deg); }
+      100% { transform: scale(1.07) translateX(6px) rotate(-2deg); }
+    }
+
+    #menu button:hover {
+      background: linear-gradient(90deg, #38f9d7 0%, #43e97b 100%);
+      box-shadow: 0 0 18px #43e97b, 0 0 32px #38f9d799;
+      color: #111;
+      letter-spacing: 2.5px;
+      transform: scale(1.04) translateX(4px);
+    }
+
+    #menu button:active {
+      transform: scale(0.97) translateX(0);
+      box-shadow: 0 0 8px #43e97b, 0 0 16px #38f9d799;
+    }
+
+    #menu button .menu-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.3em;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .content {
+      padding: 1rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Stiluri pentru lecții în funcție de clasă */
+    .lesson {
+      margin: 30px 0;
+      padding: 25px;
+      border-radius: 15px;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-style: italic;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Stiluri pentru toate lecțiile - fundal transparent */
+    .lesson {
+      background: transparent !important;
+      border: 2px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: none !important;
+    }
+
+    .lesson h3, .lesson strong {
+      color: #ffffff !important;
+      text-shadow: none !important;
+    }
+
+
+
+    .lesson h3 {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-style: italic;
+      font-size: 24px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .lesson p {
+      color: #ffffff;
+      font-size: 18px;
+      line-height: 1.6;
+      margin: 15px 0;
+      text-shadow: none;
+    }
+
+    .lesson pre {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+      font-family: 'Consolas', monospace;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #ffffff;
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+
+    .lesson button {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-style: italic;
+      font-size: 16px;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+    }
+    
+    .lesson button.completed {
+      background: rgba(76, 175, 80, 0.3);
+      border-color: rgba(76, 175, 80, 0.6);
+      color: #4CAF50;
+    }
+    
+
+
+
+
+    .bifa {
+      color: #00ff00;
+      font-size: 24px;
+      text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+      margin-left: 10px;
+    }
+
+    /* Ajustare pentru containerul de lecții */
+    #lessons-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+      padding: 20px;
+    }
+
+    /* Stil pentru scrollbar */
+    ::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 20, 20, 0.95);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 255, 255, 0.3);
+      border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 255, 255, 0.5);
+    }
+
+    /* Stil pentru secțiunea de bun venit */
+    .welcome-section {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(20, 20, 0, 0.5);
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      margin: 2rem auto;
+      max-width: 1200px;
+      border-radius: 15px;
+      border: 2px solid rgba(255, 221, 0, 0.3);
+      box-shadow: 
+        0 0 20px rgba(255, 221, 0, 0.2),
+        inset 0 0 30px rgba(255, 221, 0, 0.1);
+    }
+
+    .welcome-text {
+      font-family: 'Poiret One', cursive;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #ffdd00;
+      text-shadow: 
+        0 0 10px rgba(255, 221, 0, 0.8),
+        0 0 20px rgba(255, 221, 0, 0.5),
+        0 0 30px rgba(255, 221, 0, 0.3);
+      margin: 0;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: welcomeAppear 1s forwards;
+      position: relative;
+      line-height: 1.8;
+      padding: 0 2rem;
+    }
+
+    .welcome-text .word {
+      display: inline-block;
+      margin: 0 1rem;
+    }
+
+
+
+    @keyframes welcomeAppear {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 5px #ffdd00, 0 0 10px #ffdd00;
+      }
+      50% {
+        box-shadow: 0 0 20px #ffdd00, 0 0 40px #ffdd00;
+      }
+      100% {
+        box-shadow: 0 0 5px #ffdd00, 0 0 10px #ffdd00;
+      }
+    }
+
+    @keyframes glitch {
+      0% {
+        text-shadow: none;
+        transform: translateX(0);
+      }
+      7% {
+        text-shadow: -2px 0 #ff0000, 2px 0 #00ff00;
+        transform: translateX(-2px);
+      }
+      8% {
+        text-shadow: 2px 0 #ff0000, -2px 0 #00ff00;
+        transform: translateX(2px);
+      }
+      9% {
+        text-shadow: none;
+        transform: translateX(0);
+      }
+      100% {
+        text-shadow: none;
+        transform: translateX(0);
+      }
+    }
+
+
+
+
+
+    .test-box {
+      background: #000000;
+      margin: 1rem auto;
+      padding: 1rem;
+      max-width: 600px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,255,0,0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    #login-form {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .login-box {
+      background: rgba(0, 0, 0, 0.9);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,255,0,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 300px;
+      color: #00ff00;
+    }
+
+    .login-box input, .login-box button {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .login-box input {
+      border: 1px solid #0f0;
+      border-radius: 5px;
+      background: #001100;
+      color: #0f0;
+    }
+
+    .login-box button {
+      background: #003333;
+      color: #00ff00;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #chat-log {
+      height: 200px;
+      overflow-y: auto;
+      background: #001100;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    #user-input {
+      padding: 0.5rem;
+      border-radius: 5px;
+      width: calc(100% - 100px);
+      background: #002200;
+      color: #0f0;
+      border: 1px solid #0f0;
+    }
+
+    .chat-container {
+      padding: 1rem;
+      background: #000000;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,255,0,0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* --- REMOVE CYBER EFFECTS FROM InfoWorld TITLE --- */
+    .cyber-title {
+      font-family: Arial, sans-serif;
+      font-size: 48px;
+      color: #00ffff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: none;
+      animation: none;
+      margin: 25px 0;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .cyber-title:hover {
+      animation: none;
+      text-shadow: none;
+      transform: none;
+    }
+
+    /* --- REMOVE MENU EFFECTS --- */
+    .menu-toggle {
+      background: #222 !important;
+      border: 1px solid #00ffff !important;
+      color: #00ffff !important;
+      padding: 10px 20px !important;
+      font-family: Arial, sans-serif !important;
+      font-size: 16px !important;
+      letter-spacing: 1px !important;
+      text-transform: uppercase !important;
+      transition: none !important;
+      box-shadow: none !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+    .menu-toggle:hover, .menu-toggle:active {
+      background: #333 !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+    #menu {
+      background: #222;
+      border: 1px solid #00ffff;
+      box-shadow: none;
+      backdrop-filter: none;
+      border-radius: 5px;
+      padding: 20px;
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    #menu hr {
+      background: #00ffff;
+      margin: 10px 0;
+    }
+    #menu button {
+      background: #222;
+      border: 1px solid #00ffff;
+      color: #00ffff;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: none;
+      box-shadow: none;
+      margin: 5px 0;
+    }
+    #menu button:hover, #menu button:active {
+      background: #333;
+      box-shadow: none;
+      transform: none;
+      letter-spacing: 1px;
+    }
+    #menu button::before, #menu button::after {
+      display: none !important;
+      content: none !important;
+      animation: none !important;
+    }
+
+    /* --- REMOVE LOGIN/LOGOUT/AUTH STATUS EFFECTS --- */
+    .google-login-btn, .logout-btn {
+      background: #222;
+      color: #00ffff;
+      border: 1px solid #00ffff;
+      border-radius: 5px;
+      padding: 8px 15px;
+      font-size: 16px;
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+      transition: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: none;
+      animation: none;
+      overflow: visible;
+    }
+    .google-login-btn:hover, .logout-btn:hover {
+      background: #333;
+      box-shadow: none;
+      transform: none;
+      animation: none;
+    }
+    .google-login-btn::before, .google-login-btn::after,
+    .logout-btn::before, .logout-btn::after {
+      display: none !important;
+      content: none !important;
+      animation: none !important;
+    }
+    #auth-status {
+      color: #00ffff;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 8px 15px;
+      border: 1px solid #00ffff;
+      background: #222;
+      border-radius: 5px;
+      position: relative;
+      overflow: visible;
+      transition: none;
+      animation: none;
+      box-shadow: none;
+    }
+    #auth-status::before, #auth-status::after {
+      display: none !important;
+      content: none !important;
+      animation: none !important;
+    }
+
+    /* --- REMOVE WELCOME MESSAGE EFFECTS --- */
+    .welcome-section {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #222;
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      margin: 2rem auto;
+      max-width: 1200px;
+      border-radius: 10px;
+      border: 1px solid #00ffff;
+      box-shadow: none;
+      animation: none;
+    }
+    .welcome-text {
+      font-family: Arial, sans-serif;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00ffff;
+      text-shadow: none;
+      margin: 0;
+      opacity: 1;
+      transform: none;
+      animation: none;
+      position: relative;
+      line-height: 1.5;
+      padding: 0 1rem;
+      background: none;
+    }
+    .welcome-text .word {
+      display: inline-block;
+      margin: 0 0.5rem;
+      animation: none;
+    }
+    .welcome-text::before,
+    .welcome-text::after {
+      display: none !important;
+      content: none !important;
+      animation: none !important;
+    }
+    .class-welcome {
+      padding: 15px;
+      margin: 15px 0;
+      text-align: center;
+      border-radius: 7px;
+      font-family: Arial, sans-serif;
+      font-size: 22px;
+      opacity: 1;
+      transform: none;
+      animation: none;
+      position: relative;
+      overflow: hidden;
+      background: #222;
+      color: #00ffff;
+      border: 1px solid #00ffff;
+      text-shadow: none;
+      box-shadow: none;
+    }
+    .class-welcome::before {
+      display: none !important;
+      content: none !important;
+      animation: none !important;
+    }
+    .class-welcome.clasa-9,
+    .class-welcome.clasa-10,
+    .class-welcome.clasa-11,
+    .class-welcome.clasa-12 {
+      background: #222;
+      color: #00ffff;
+      border: 1px solid #00ffff;
+      text-shadow: none;
+      box-shadow: none;
+    }
+
+    /* Stiluri pentru butoanele de marcare/demarcare */
+    /* Clasa 9 - Cyan */
+    .clasa-9 .lesson button {
+      background: rgba(0, 255, 255, 0.1);
+      border: 2px solid #00ffff;
+      color: #00ffff;
+    }
+
+    .clasa-9 .lesson button:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 
+        0 0 10px rgba(0, 255, 255, 0.4),
+        0 0 20px rgba(0, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .clasa-9 .lesson button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid #00ffff;
+      border-radius: 8px;
+      opacity: 0;
+      animation: pulseButton 2s infinite;
+    }
+
+    /* Clasa 10 - Magenta */
+    .clasa-10 .lesson button {
+      background: rgba(255, 0, 255, 0.1);
+      border: 2px solid #ff00ff;
+      color: #ff00ff;
+    }
+
+    .clasa-10 .lesson button:hover {
+      background: rgba(255, 0, 255, 0.2);
+      box-shadow: 
+        0 0 10px rgba(255, 0, 255, 0.4),
+        0 0 20px rgba(255, 0, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .clasa-10 .lesson button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid #ff00ff;
+      border-radius: 8px;
+      opacity: 0;
+      animation: pulseButton 2s infinite;
+    }
+
+    /* Clasa 11 - Verde */
+    .clasa-11 .lesson button {
+      background: rgba(0, 255, 0, 0.1);
+      border: 2px solid #00ff00;
+      color: #00ff00;
+    }
+
+    .clasa-11 .lesson button:hover {
+      background: rgba(0, 255, 0, 0.2);
+      box-shadow: 
+        0 0 10px rgba(0, 255, 0, 0.4),
+        0 0 20px rgba(0, 255, 0, 0.2);
+      transform: scale(1.05);
+    }
+
+    .clasa-11 .lesson button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid #00ff00;
+      border-radius: 8px;
+      opacity: 0;
+      animation: pulseButton 2s infinite;
+    }
+
+    /* Clasa 12 - Galben */
+    .clasa-12 .lesson button {
+      background: rgba(255, 221, 0, 0.1);
+      border: 2px solid #ffdd00;
+      color: #ffdd00;
+    }
+
+    .clasa-12 .lesson button:hover {
+      background: rgba(255, 221, 0, 0.2);
+      box-shadow: 
+        0 0 10px rgba(255, 221, 0, 0.4),
+        0 0 20px rgba(255, 221, 0, 0.2);
+      transform: scale(1.05);
+    }
+
+    .clasa-12 .lesson button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid #ffdd00;
+      border-radius: 8px;
+      opacity: 0;
+      animation: pulseButton 2s infinite;
+    }
+
+    /* Animații comune pentru butoane */
+    @keyframes pulseButton {
+      0% {
+        transform: scale(1);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.3;
+      }
+      100% {
+        transform: scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Stiluri pentru butoane completate */
+    .lesson button.completed {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lesson button.completed::after {
+      content: '✓';
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2em;
+      animation: checkmarkAppear 0.3s forwards;
+    }
+
+    @keyframes checkmarkAppear {
+      from {
+        opacity: 0;
+        transform: translateY(-50%) scale(0);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+      }
+    }
+
+    /* Efect de scanline pentru butoane */
+    .lesson button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      animation: scanline 2s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% {
+        left: -100%;
+      }
+      50% {
+        left: 100%;
+      }
+      100% {
+        left: -100%;
+      }
+    }
+
+    /* Efect de glitch la hover */
+    .lesson button:hover {
+      animation: buttonGlitch 0.3s infinite;
+    }
+
+    @keyframes buttonGlitch {
+      0% {
+        transform: translate(0) scale(1.05);
+      }
+      25% {
+        transform: translate(1px, -1px) scale(1.05);
+      }
+      50% {
+        transform: translate(-1px, 1px) scale(1.05);
+      }
+      75% {
+        transform: translate(1px, 1px) scale(1.05);
+      }
+      100% {
+        transform: translate(0) scale(1.05);
+      }
+    }
+
+    /* Stil pentru textul de instrucțiuni */
+    #welcome-text {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      color: #0ff;
+      text-shadow: 
+        0 0 5px #0ff,
+        0 0 10px #0ff,
+        0 0 20px #0ff;
+      position: relative;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      animation: textGlow 2s infinite;
+      background: linear-gradient(90deg, 
+        rgba(0, 255, 255, 0.1) 0%,
+        rgba(0, 255, 255, 0.2) 50%,
+        rgba(0, 255, 255, 0.1) 100%
+      );
+      border: 2px solid rgba(0, 255, 255, 0.3);
+      border-radius: 5px;
+    }
+
+    @keyframes textGlow {
+      0%, 100% {
+        text-shadow: 
+          0 0 5px #0ff,
+          0 0 10px #0ff,
+          0 0 20px #0ff;
+      }
+      50% {
+        text-shadow: 
+          0 0 10px #0ff,
+          0 0 20px #0ff,
+          0 0 30px #0ff,
+          0 0 40px #0ff;
+      }
+    }
+
+    /* Stil pentru butonul Acasă */
+    .home-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #0ff;
+      color: #0ff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(50px);
+      border-radius: 5px;
+      display: none;
+    }
+
+    .home-button.visible {
+      display: block;
+      animation: buttonAppear 0.5s forwards;
+    }
+
+    @keyframes buttonAppear {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .home-button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid #0ff;
+      border-radius: 5px;
+      animation: borderPulse 1.5s infinite;
+    }
+
+    .home-button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 255, 255, 0.2),
+        transparent
+      );
+      transform: translateX(-100%);
+      animation: buttonScan 2s linear infinite;
+    }
+
+    @keyframes borderPulse {
+      0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes buttonScan {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .home-button:hover {
+      background: rgba(0, 255, 255, 0.1);
+      transform: scale(1.05);
+      box-shadow: 
+        0 0 10px rgba(0, 255, 255, 0.5),
+        0 0 20px rgba(0, 255, 255, 0.3),
+        0 0 30px rgba(0, 255, 255, 0.1);
+    }
+
+    .home-button:hover::before {
+      animation: borderPulse 0.75s infinite;
+    }
+
+    .home-button span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .home-button .icon {
+      margin-right: 8px;
+      font-size: 20px;
+    }
+
+    /* --- Modern Profile/Login Modal Styles --- */
+    .profile-bar {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .profile-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #00bcd4;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .profile-circle.beginner-frame {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: 3px solid #4CAF50;
+    }
+    
+    .profile-circle.special-frame {
+      background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
+      background-size: 400% 400%;
+      border: 3px solid #ffdd00;
+      animation: specialGlow 2s ease-in-out infinite alternate, 
+                gradientShift 3s ease-in-out infinite,
+                rotateFrame 8s linear infinite;
+    }
+    
+    .profile-circle.special-frame::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
+      background-size: 400% 400%;
+      border-radius: 50%;
+      z-index: -1;
+      animation: gradientShift 2s ease-in-out infinite reverse;
+      filter: blur(8px);
+    }
+    
+    .profile-circle.special-frame::after {
+      content: '✨';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 1.2em;
+      animation: sparkle 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes specialGlow {
+      from { 
+        box-shadow: 0 0 15px rgba(255, 221, 0, 0.6),
+                   0 0 30px rgba(255, 107, 107, 0.4),
+                   0 0 45px rgba(72, 219, 251, 0.3);
+      }
+      to { 
+        box-shadow: 0 0 25px rgba(255, 221, 0, 0.8),
+                   0 0 50px rgba(255, 107, 107, 0.6),
+                   0 0 75px rgba(72, 219, 251, 0.5);
+      }
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    @keyframes rotateFrame {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+    }
+
+    /* Rama cromatică MAGNIFICĂ și ULUITOARE în jurul iconiței */
+    .profile-circle::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      border-radius: 50%;
+      background: 
+        /* Scântei principale */
+        radial-gradient(circle at 15% 15%, #fff 2px, transparent 5px),
+        radial-gradient(circle at 85% 15%, #0ff 2px, transparent 5px),
+        radial-gradient(circle at 15% 85%, #f0f 2px, transparent 5px),
+        radial-gradient(circle at 85% 85%, #ff0 2px, transparent 5px),
+        /* Gradient cromatic vibrant */
+        conic-gradient(
+          from 0deg,
+          #fff, #0ff, #0f0, #ff0, #f0f, #00f, #fff
+        );
+      animation: chromaRotate 1.2s linear infinite, sparkleRotate 2s linear infinite, pulseGlow 1s ease-in-out infinite alternate;
+      z-index: -1;
+      filter: brightness(2) saturate(2.5) drop-shadow(0 0 6px #fff) drop-shadow(0 0 12px #0ff);
+      box-shadow: 0 0 12px 2px #fff, 0 0 24px 4px #0ff;
+    }
+    .profile-circle::after {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      right: -12px;
+      bottom: -12px;
+      border-radius: 50%;
+      background: 
+        /* Sclipici mari */
+        radial-gradient(circle at 30% 30%, #fff 3px, transparent 7px),
+        radial-gradient(circle at 70% 30%, #0ff 3px, transparent 7px),
+        radial-gradient(circle at 30% 70%, #f0f 3px, transparent 7px),
+        radial-gradient(circle at 70% 70%, #ff0 3px, transparent 7px),
+        /* Gradient cromatic inversat */
+        conic-gradient(
+          from 180deg,
+          #fff, #0ff, #0f0, #ff0, #f0f, #00f, #fff
+        );
+      animation: chromaRotate 1s linear infinite reverse, sparkleRotate 1.5s linear infinite reverse, pulseGlow 0.8s ease-in-out infinite alternate-reverse;
+      z-index: -2;
+      filter: brightness(2.2) saturate(3) blur(1px);
+    }
+    @keyframes chromaRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes sparkleRotate {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.1); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    @keyframes pulseGlow {
+      0% { filter: brightness(1.5) saturate(2); }
+      100% { filter: brightness(2.5) saturate(3); }
+    }
+
+    /* Elimin orice efect de fundal constant de pe lecții */
+    .lesson {
+      background: transparent !important;
+      box-shadow: none !important;
+      border: 2px solid rgba(255,255,255,0.08) !important;
+    }
+    /* Elimin orice pseudo-elemente de fundal */
+    .lesson::before, .lesson::after { display: none !important; content: none !important; }
+
+    /* Footer cu termeni și condiții */
+    .site-footer {
+      width: 100%;
+      background: rgba(10,10,10,0.95);
+      color: #aaa;
+      text-align: center;
+      font-size: 15px;
+      padding: 18px 0 10px 0;
+      margin-top: 60px;
+      border-top: 1px solid #222;
+      letter-spacing: 0.5px;
+    }
+    .site-footer a {
+      color: #0ff;
+      text-decoration: underline;
+      margin: 0 12px;
+      transition: color 0.2s;
+    }
+    .site-footer a:hover { color: #fff; }
+
+    /* --- REMOVE WELCOME MESSAGE EFFECTS --- */
+    .welcome-section {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #222;
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      margin: 2rem auto;
+      max-width: 1200px;
+      border-radius: 10px;
+      border: 1px solid #00ffff;
+      box-shadow: none;
+      animation: none;
+    }
+    .welcome-text {
+      font-family: Arial, sans-serif;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00ffff;
+      text-shadow: none;
+      margin: 0;
+      opacity: 1;
+      transform: none;
+      animation: none;
+      position: relative;
+      line-height: 1.5;
+      padding: 0 1rem;
+      background: none;
+    }
+    .welcome-text .word {
+      display: inline-block;
+      margin: 0 0.5rem;
+      animation: none;
+    }
+    .welcome-text::before,
+    .welcome-text::after {
+      display: none !important;
+      content: none !important;
+      animation: none !important;
+    }
+    .class-welcome {
+      padding: 15px;
+      margin: 15px 0;
+      text-align: center;
+      border-radius: 7px;
+      font-family: Arial, sans-serif;
+      font-size: 22px;
+      opacity: 1;
+      transform: none;
+      animation: none;
+      position: relative;
+      overflow: hidden;
+      background: #222;
+      color: #00ffff;
+      border: 1px solid #00ffff;
+      text-shadow: none;
+      box-shadow: none;
+    }
+    .class-welcome::before {
+      display: none !important;
+      content: none !important;
+      animation: none !important;
+    }
+    .class-welcome.clasa-9,
+    .class-welcome.clasa-10,
+    .class-welcome.clasa-11,
+    .class-welcome.clasa-12 {
+      background: #222;
+      color: #00ffff;
+      border: 1px solid #00ffff;
+      text-shadow: none;
+      box-shadow: none;
+    }
+
+    /* Stiluri pentru butoanele de marcare/demarcare */
+    /* Clasa 9 - Cyan */
+    .clasa-9 .lesson button {
+      background: rgba(0, 255, 255, 0.1);
+      border: 2px solid #00ffff;
+      color: #00ffff;
+    }
+
+    .clasa-9 .lesson button:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 
+        0 0 10px rgba(0, 255, 255, 0.4),
+        0 0 20px rgba(0, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .clasa-9 .lesson button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid #00ffff;
+      border-radius: 8px;
+      opacity: 0;
+      animation: pulseButton 2s infinite;
+    }
+
+    /* Clasa 10 - Magenta */
+    .clasa-10 .lesson button {
+      background: rgba(255, 0, 255, 0.1);
+      border: 2px solid #ff00ff;
+      color: #ff00ff;
+    }
+
+    .clasa-10 .lesson button:hover {
+      background: rgba(255, 0, 255, 0.2);
+      box-shadow: 
+        0 0 10px rgba(255, 0, 255, 0.4),
+        0 0 20px rgba(255, 0, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .clasa-10 .lesson button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid #ff00ff;
+      border-radius: 8px;
+      opacity: 0;
+      animation: pulseButton 2s infinite;
+    }
+
+    /* Clasa 11 - Verde */
+    .clasa-11 .lesson button {
+      background: rgba(0, 255, 0, 0.1);
+      border: 2px solid #00ff00;
+      color: #00ff00;
+    }
+
+    .clasa-11 .lesson button:hover {
+      background: rgba(0, 255, 0, 0.2);
+      box-shadow: 
+        0 0 10px rgba(0, 255, 0, 0.4),
+        0 0 20px rgba(0, 255, 0, 0.2);
+      transform: scale(1.05);
+    }
+
+    .clasa-11 .lesson button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid #00ff00;
+      border-radius: 8px;
+      opacity: 0;
+      animation: pulseButton 2s infinite;
+    }
+
+    /* Clasa 12 - Galben */
+    .clasa-12 .lesson button {
+      background: rgba(255, 221, 0, 0.1);
+      border: 2px solid #ffdd00;
+      color: #ffdd00;
+    }
+
+    .clasa-12 .lesson button:hover {
+      background: rgba(255, 221, 0, 0.2);
+      box-shadow: 
+        0 0 10px rgba(255, 221, 0, 0.4),
+        0 0 20px rgba(255, 221, 0, 0.2);
+      transform: scale(1.05);
+    }
+
+    .clasa-12 .lesson button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid #ffdd00;
+      border-radius: 8px;
+      opacity: 0;
+      animation: pulseButton 2s infinite;
+    }
+
+    /* Animații comune pentru butoane */
+    @keyframes pulseButton {
+      0% {
+        transform: scale(1);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.3;
+      }
+      100% {
+        transform: scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Stiluri pentru butoane completate */
+    .lesson button.completed {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lesson button.completed::after {
+      content: '✓';
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2em;
+      animation: checkmarkAppear 0.3s forwards;
+    }
+
+    @keyframes checkmarkAppear {
+      from {
+        opacity: 0;
+        transform: translateY(-50%) scale(0);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+      }
+    }
+
+    /* Efect de scanline pentru butoane */
+    .lesson button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      animation: scanline 2s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% {
+        left: -100%;
+      }
+      50% {
+        left: 100%;
+      }
+      100% {
+        left: -100%;
+      }
+    }
+
+    /* Efect de glitch la hover */
+    .lesson button:hover {
+      animation: buttonGlitch 0.3s infinite;
+    }
+
+    @keyframes buttonGlitch {
+      0% {
+        transform: translate(0) scale(1.05);
+      }
+      25% {
+        transform: translate(1px, -1px) scale(1.05);
+      }
+      50% {
+        transform: translate(-1px, 1px) scale(1.05);
+      }
+      75% {
+        transform: translate(1px, 1px) scale(1.05);
+      }
+      100% {
+        transform: translate(0) scale(1.05);
+      }
+    }
+
+    /* Stil pentru textul de instrucțiuni */
+    #welcome-text {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      color: #0ff;
+      text-shadow: 
+        0 0 5px #0ff,
+        0 0 10px #0ff,
+        0 0 20px #0ff;
+      position: relative;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      animation: textGlow 2s infinite;
+      background: linear-gradient(90deg, 
+        rgba(0, 255, 255, 0.1) 0%,
+        rgba(0, 255, 255, 0.2) 50%,
+        rgba(0, 255, 255, 0.1) 100%
+      );
+      border: 2px solid rgba(0, 255, 255, 0.3);
+      border-radius: 5px;
+    }
+
+    @keyframes textGlow {
+      0%, 100% {
+        text-shadow: 
+          0 0 5px #0ff,
+          0 0 10px #0ff,
+          0 0 20px #0ff;
+      }
+      50% {
+        text-shadow: 
+          0 0 10px #0ff,
+          0 0 20px #0ff,
+          0 0 30px #0ff,
+          0 0 40px #0ff;
+      }
+    }
+
+    /* Stil pentru butonul Acasă */
+    .home-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #0ff;
+      color: #0ff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(50px);
+      border-radius: 5px;
+      display: none;
+    }
+
+    .home-button.visible {
+      display: block;
+      animation: buttonAppear 0.5s forwards;
+    }
+
+    @keyframes buttonAppear {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .home-button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid #0ff;
+      border-radius: 5px;
+      animation: borderPulse 1.5s infinite;
+    }
+
+    .home-button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 255, 255, 0.2),
+        transparent
+      );
+      transform: translateX(-100%);
+      animation: buttonScan 2s linear infinite;
+    }
+
+    @keyframes borderPulse {
+      0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes buttonScan {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .home-button:hover {
+      background: rgba(0, 255, 255, 0.1);
+      transform: scale(1.05);
+      box-shadow: 
+        0 0 10px rgba(0, 255, 255, 0.5),
+        0 0 20px rgba(0, 255, 255, 0.3),
+        0 0 30px rgba(0, 255, 255, 0.1);
+    }
+
+    .home-button:hover::before {
+      animation: borderPulse 0.75s infinite;
+    }
+
+    .home-button span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .home-button .icon {
+      margin-right: 8px;
+      font-size: 20px;
+    }
+
+    /* --- Modern Profile/Login Modal Styles --- */
+    .profile-bar {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .profile-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #00bcd4;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .profile-circle.beginner-frame {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: 3px solid #4CAF50;
+    }
+    
+    .profile-circle.special-frame {
+      background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
+      background-size: 400% 400%;
+      border: 3px solid #ffdd00;
+      animation: specialGlow 2s ease-in-out infinite alternate, 
+                gradientShift 3s ease-in-out infinite,
+                rotateFrame 8s linear infinite;
+    }
+    
+    .profile-circle.special-frame::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
+      background-size: 400% 400%;
+      border-radius: 50%;
+      z-index: -1;
+      animation: gradientShift 2s ease-in-out infinite reverse;
+      filter: blur(8px);
+    }
+    
+    .profile-circle.special-frame::after {
+      content: '✨';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 1.2em;
+      animation: sparkle 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes specialGlow {
+      from { 
+        box-shadow: 0 0 15px rgba(255, 221, 0, 0.6),
+                   0 0 30px rgba(255, 107, 107, 0.4),
+                   0 0 45px rgba(72, 219, 251, 0.3);
+      }
+      to { 
+        box-shadow: 0 0 25px rgba(255, 221, 0, 0.8),
+                   0 0 50px rgba(255, 107, 107, 0.6),
+                   0 0 75px rgba(72, 219, 251, 0.5);
+      }
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    @keyframes rotateFrame {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+    }
+
+    /* Rama cromatică fulgerătoare în jurul iconiței */
+    .profile-circle::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080, #ff0000
+      );
+      animation: chromaRotate 2s linear infinite;
+      z-index: -1;
+      mask: radial-gradient(circle at center, transparent 60%, black 100%);
+      -webkit-mask: radial-gradient(circle at center, transparent 60%, black 100%);
+    }
+    
+    .profile-circle::after {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      right: -12px;
+      bottom: -12px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 180deg,
+        #00ffff, #ff00ff, #ffff00, #00ff00, #ff8000, #8000ff, #00ffff
+      );
+      animation: chromaRotate 1.5s linear infinite reverse;
+      z-index: -2;
+      mask: radial-gradient(circle at center, transparent 70%, black 100%);
+      -webkit-mask: radial-gradient(circle at center, transparent 70%, black 100%);
+    }
+    
+    /* Scântei și sclipici în jurul cercului */
+    .profile-circle::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      border-radius: 50%;
+      background: 
+        radial-gradient(circle at 20% 20%, #ff0000 2px, transparent 4px),
+        radial-gradient(circle at 80% 20%, #00ff00 2px, transparent 4px),
+        radial-gradient(circle at 20% 80%, #0000ff 2px, transparent 4px),
+        radial-gradient(circle at 80% 80%, #ffff00 2px, transparent 4px),
+        radial-gradient(circle at 50% 10%, #ff00ff 1px, transparent 3px),
+        radial-gradient(circle at 10% 50%, #00ffff 1px, transparent 3px),
+        radial-gradient(circle at 90% 50%, #ff8000 1px, transparent 3px),
+        radial-gradient(circle at 50% 90%, #8000ff 1px, transparent 3px),
+        conic-gradient(
+          from 0deg,
+          #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080, #ff0000
+        );
+      animation: chromaRotate 2s linear infinite, sparkleRotate 3s linear infinite;
+      z-index: -1;
+    }
+    
+    .profile-circle::after {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      right: -12px;
+      bottom: -12px;
+      border-radius: 50%;
+      background: 
+        radial-gradient(circle at 30% 30%, #00ffff 3px, transparent 6px),
+        radial-gradient(circle at 70% 30%, #ff00ff 3px, transparent 6px),
+        radial-gradient(circle at 30% 70%, #ffff00 3px, transparent 6px),
+        radial-gradient(circle at 70% 70%, #00ff00 3px, transparent 6px),
+        radial-gradient(circle at 15% 15%, #ff8000 2px, transparent 5px),
+        radial-gradient(circle at 85% 15%, #8000ff 2px, transparent 5px),
+        radial-gradient(circle at 15% 85%, #ff0000 2px, transparent 5px),
+        radial-gradient(circle at 85% 85%, #0000ff 2px, transparent 5px),
+        conic-gradient(
+          from 180deg,
+          #00ffff, #ff00ff, #ffff00, #00ff00, #ff8000, #8000ff, #00ffff
+        );
+      animation: chromaRotate 1.5s linear infinite reverse, sparkleRotate 2.5s linear infinite reverse;
+      z-index: -2;
+    }
+    
+    @keyframes chromaRotate {
+      0% {
+        transform: rotate(0deg);
+        filter: hue-rotate(0deg) brightness(1.2) saturate(1.5);
+      }
+      25% {
+        filter: hue-rotate(90deg) brightness(1.5) saturate(2);
+      }
+      50% {
+        filter: hue-rotate(180deg) brightness(1.8) saturate(2.5);
+      }
+      75% {
+        filter: hue-rotate(270deg) brightness(1.5) saturate(2);
+      }
+      100% {
+        transform: rotate(360deg);
+        filter: hue-rotate(360deg) brightness(1.2) saturate(1.5);
+      }
+    }
+    
+    @keyframes sparkleRotate {
+      0% {
+        transform: rotate(0deg) scale(1);
+      }
+      25% {
+        transform: rotate(90deg) scale(1.1);
+      }
+      50% {
+        transform: rotate(180deg) scale(1.2);
+      }
+      75% {
+        transform: rotate(270deg) scale(1.1);
+      }
+      100% {
+        transform: rotate(360deg) scale(1);
+      }
+    }
+    
+    .profile-circle:hover::before {
+      animation: chromaRotate 0.8s linear infinite, sparkleRotate 1.5s linear infinite;
+      filter: hue-rotate(0deg) brightness(2) saturate(3) blur(0.5px);
+    }
+    
+    .profile-circle:hover::after {
+      animation: chromaRotate 0.6s linear infinite reverse, sparkleRotate 1s linear infinite reverse;
+      filter: hue-rotate(180deg) brightness(2.5) saturate(4) blur(1px);
+    }
+    #profile-username {
+      color: #00ffff;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .profile-menu {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: #111;
+      border: 1px solid #00ffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,255,255,0.2);
+      min-width: 120px;
+      display: flex;
+      flex-direction: column;
+      z-index: 1002;
+    }
+    .profile-menu a {
+      color: #00ffff;
+      padding: 12px 18px;
+      text-decoration: none;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 16px;
+      border-bottom: 1px solid #222;
+      transition: background 0.2s;
+    }
+    .profile-menu a:last-child { border-bottom: none; }
+    .profile-menu a:hover { background: #00ffff22; }
+    .open-login-modal {
+      background: #111;
+      color: #00ffff;
+      border: 1px solid #00ffff;
+      border-radius: 24px;
+      padding: 10px 24px;
+      font-size: 16px;
+      font-family: 'Orbitron', Arial, sans-serif;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .open-login-modal:hover {
+      background: #00ffff22;
+    }
+    .login-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    .modal-content {
+      background: #111;
+      border-radius: 20px;
+      padding: 40px 32px 32px 32px;
+      box-shadow: 0 4px 32px #00ffff44;
+      min-width: 340px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .close-modal {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      font-size: 32px;
+      color: #00ffff;
+      cursor: pointer;
+    }
+    #login-form-modern input, #register-form-modern input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #00ffff;
+      background: #222;
+      color: #00ffff;
+      font-size: 16px;
+      font-family: 'Orbitron', Arial, sans-serif;
+    }
+    #login-form-modern button, #register-form-modern button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(90deg, #00ffff 60%, #00ff00 100%);
+      color: #111;
+      font-size: 18px;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: box-shadow 0.2s;
+    }
+    #login-form-modern button:hover, #register-form-modern button:hover {
+      box-shadow: 0 2px 12px #00ffff88;
+    }
+    .profile-link {
+      color: #00ffff;
+      background: #181818;
+      border: 1px solid #00ffff;
+      border-radius: 16px;
+      padding: 7px 18px;
+      font-size: 16px;
+      font-family: 'Orbitron', Arial, sans-serif;
+      text-decoration: none;
+      margin-left: 8px;
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+    }
+    .profile-link:hover {
+      background: #00ffff;
+      color: #111;
+    }
+    
+    /* Stiluri pentru butoanele principale de lecții */
+    .main-lesson-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 15px;
+      margin: 10px 0;
+      border: 2px solid;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      font-family: 'Georgia', serif;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      min-height: 80px;
+    }
+    
+    .liceu-btn {
+      border-color: #4CAF50;
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(0, 0, 0, 0.8));
+    }
+    
+    .avansati-btn {
+      border-color: #9C27B0;
+      background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(0, 0, 0, 0.8));
+    }
+    
+    .main-lesson-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+    }
+    
+    .liceu-btn:hover {
+      border-color: #4CAF50;
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(0, 0, 0, 0.8));
+    }
+    
+    .avansati-btn:hover {
+      border-color: #9C27B0;
+      box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
+      background: linear-gradient(135deg, rgba(156, 39, 176, 0.2), rgba(0, 0, 0, 0.8));
+    }
+    
+    .btn-icon {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+    
+    .btn-text {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    
+    .btn-subtitle {
+      font-size: 12px;
+      opacity: 0.8;
+      font-style: italic;
+    }
+    
+    /* Container pentru afișarea claselor */
+    .class-selection {
+      display: none;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 15px;
+      margin: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .class-selection h2 {
+      color: #00ff00;
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+    }
+    
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .class-btn {
+      padding: 15px;
+      border: 2px solid;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      font-family: 'Georgia', serif;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .class-btn.clasa-9 { border-color: #00ffff; }
+    .class-btn.clasa-10 { border-color: #ff00ff; }
+    .class-btn.clasa-11 { border-color: #00ff00; }
+    .class-btn.clasa-12 { border-color: #ffdd00; }
+    
+    .class-btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+    
+    .class-btn.clasa-9:hover { box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3); }
+    .class-btn.clasa-10:hover { box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3); }
+    .class-btn.clasa-11:hover { box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3); }
+    .class-btn.clasa-12:hover { box-shadow: 0 5px 15px rgba(255, 221, 0, 0.3); }
+    
+    .back-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(-3px);
+    }
+
+    /* --- LECȚII FĂRĂ NICIO ANIMAȚIE SAU EFECT --- */
+    .lesson, .lesson *, .lesson button, .class-welcome, .content, #lessons-container {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+      background: transparent !important;
+      filter: none !important;
+    }
+    .lesson button::before, .lesson button::after, .lesson::before, .lesson::after, .class-welcome::before, .class-welcome::after {
+      display: none !important;
+      content: none !important;
+      animation: none !important;
+    }
+    .lesson button:hover, .lesson button:active, .lesson button.completed, .lesson button.completed::after {
+      background: inherit !important;
+      color: inherit !important;
+      border-color: inherit !important;
+      box-shadow: none !important;
+      transform: none !important;
+      animation: none !important;
+    }
+    .class-welcome, .class-welcome.clasa-9, .class-welcome.clasa-10, .class-welcome.clasa-11, .class-welcome.clasa-12 {
+      background: #222 !important;
+      color: #00ffff !important;
+      border: 1px solid #00ffff !important;
+      text-shadow: none !important;
+      box-shadow: none !important;
+      animation: none !important;
+      transform: none !important;
+    }
+
+    /***** Fixare bara profil/login și meniu *****/
+    .profile-bar {
+      position: fixed !important;
+      top: 20px;
+      right: 30px;
+      z-index: 1001;
+      background: none;
+    }
+    #menu-toggle-fixed {
+      position: fixed !important;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+      padding: 14px 32px;
+      background: #222 !important;
+      color: #00bcd4 !important;
+      border: 2px solid #00bcd4 !important;
+      border-radius: 8px !important;
+      font-family: 'Orbitron', Arial, sans-serif !important;
+      font-size: 1.2em !important;
+      font-weight: bold !important;
+      letter-spacing: 1px !important;
+      box-shadow: 0 2px 8px #00bcd422 !important;
+      transition: background 0.2s, color 0.2s, border 0.2s !important;
+    }
+    #menu-toggle-fixed:hover, #menu-toggle-fixed:active {
+      background: #00bcd4 !important;
+      color: #fff !important;
+      border-color: #0097a7 !important;
+    }
+    /***** Butoane mari pentru lecții *****/
+    .main-lessons-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 80px auto 0 auto;
+      gap: 40px;
+      max-width: 600px;
+    }
+    .big-lesson-btn {
+      width: 100%;
+      max-width: 500px;
+      padding: 40px 0 32px 0;
+      border-radius: 18px;
+      border: 2px solid #00bcd4;
+      background: #fff;
+      color: #222;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 2.1em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 24px #00bcd422;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+    }
+    .big-lesson-btn .btn-icon {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+    }
+    .big-lesson-btn .btn-text {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .big-lesson-btn .btn-subtitle {
+      font-size: 0.6em;
+      opacity: 0.7;
+      font-style: italic;
+    }
+    .big-lesson-btn.liceu-btn {
+      border-color: #00bcd4;
+    }
+    .big-lesson-btn.avansati-btn {
+      border-color: #9c27b0;
+    }
+    .big-lesson-btn.liceu-btn:hover {
+      background: #e0f7fa;
+      color: #0097a7;
+      border-color: #0097a7;
+      box-shadow: 0 8px 32px #00bcd422;
+    }
+    .big-lesson-btn.avansati-btn:hover {
+      background: #f3e5f5;
+      color: #6a0080;
+      border-color: #6a0080;
+      box-shadow: 0 8px 32px #9c27b022;
+    }
+    /***** Ascundem vechiul meniu de lecții *****/
+    #menu .main-lesson-btn, #menu hr:first-of-type, #menu hr:nth-of-type(2) {
+      display: none !important;
+    }
+    /***** Responsive *****/
+    @media (max-width: 700px) {
+      .main-lessons-buttons { gap: 24px; }
+      .big-lesson-btn { font-size: 1.2em; padding: 24px 0 18px 0; }
+    }
+
+    .cyber-title {
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 2.8em;
+      color: #1976d2;
+      font-weight: 900;
+      margin: 32px 0 18px 0;
+      letter-spacing: 2px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      transition: text-shadow 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .underline-animated {
+      display: inline-block;
+      border-bottom: 3px solid #1976d2;
+      padding-bottom: 6px;
+      position: relative;
+      overflow: visible;
+    }
+    .underline-animated::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -3px;
+      height: 3px;
+      background: linear-gradient(90deg, #1976d2 60%, #00bcd4 100%);
+      border-radius: 2px;
+      opacity: 0.5;
+      animation: underlineMove 3.5s linear infinite;
+    }
+    @keyframes underlineMove {
+      0% { left: 0; right: 60%; opacity: 0.5; }
+      50% { left: 40%; right: 0; opacity: 1; }
+      100% { left: 0; right: 60%; opacity: 0.5; }
+    }
+    .cyber-title:hover {
+      text-shadow: 0 2px 16px #1976d2cc, 0 0 2px #00bcd4;
+      transition: text-shadow 0.2s cubic-bezier(.4,0,.2,1);
+    }
+    .main-lessons-buttons-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+      margin: 0 auto 36px auto;
+      width: 100%;
+      max-width: 700px;
+    }
+    .small-lesson-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 32px;
+      border-radius: 12px;
+      border: 2px solid #1976d2;
+      background: #e3f2fd;
+      color: #1976d2;
+      font-family: 'Poiret One', cursive;
+      font-size: 1.25em;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 12px #1976d222;
+      transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s, transform 0.2s;
+      position: relative;
+      animation: btnPulse 4s infinite linear;
+    }
+    .small-lesson-btn.liceu-btn {
+      border-color: #1976d2;
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+    .small-lesson-btn.avansati-btn {
+      border-color: #8e24aa;
+      background: #f3e5f5;
+      color: #8e24aa;
+    }
+    .small-lesson-btn.liceu-btn .btn-icon { color: #1976d2; }
+    .small-lesson-btn.avansati-btn .btn-icon { color: #8e24aa; }
+    .small-lesson-btn:hover, .small-lesson-btn:focus {
+      background: #1976d2;
+      color: #fff;
+      border-color: #1976d2;
+      box-shadow: 0 4px 24px #1976d2aa;
+      transform: scale(1.07) translateY(-2px);
+      text-decoration: underline;
+    }
+    .small-lesson-btn.avansati-btn:hover, .small-lesson-btn.avansati-btn:focus {
+      background: #8e24aa;
+      color: #fff;
+      border-color: #8e24aa;
+      box-shadow: 0 4px 24px #8e24aa99;
+    }
+    @keyframes btnPulse {
+      0% { box-shadow: 0 2px 12px #1976d222; }
+      50% { box-shadow: 0 6px 32px #1976d244; }
+      100% { box-shadow: 0 2px 12px #1976d222; }
+    }
+    .small-lesson-btn.avansati-btn {
+      animation: btnPulseAv 4s infinite linear;
+    }
+    @keyframes btnPulseAv {
+      0% { box-shadow: 0 2px 12px #8e24aa22; }
+      50% { box-shadow: 0 6px 32px #8e24aa44; }
+      100% { box-shadow: 0 2px 12px #8e24aa22; }
+    }
+    @media (max-width: 700px) {
+      .main-lessons-buttons-row { gap: 12px; }
+      .small-lesson-btn { font-size: 1em; padding: 10px 10px; }
+      .cyber-title { font-size: 1.5em; }
+    }
+
+    .infoworld-intro-section {
+      margin: 32px auto 32px auto;
+      padding: 32px 24px 24px 24px;
+      background: linear-gradient(120deg, #181a1f 60%, #222244 100%);
+      border-radius: 18px;
+      box-shadow: 0 4px 32px #00bcd422, 0 0 0 4px #00bcd422 inset;
+      max-width: 900px;
+      position: relative;
+      z-index: 10;
+      border: 2px solid #00bcd4;
+      animation: introFadeIn 1.2s cubic-bezier(.4,0,.2,1);
+      font-family: 'Nunito', 'Quicksand', Arial, sans-serif !important;
+    }
+    @keyframes introFadeIn {
+      from { opacity: 0; transform: translateY(40px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .infoworld-intro-text {
+      font-family: 'Quicksand', 'Nunito', Arial, sans-serif !important;
+      font-size: 1.25em;
+      color: #fff;
+      line-height: 1.7;
+      text-align: left;
+      position: relative;
+      z-index: 2;
+    }
+    .infoworld-intro-text ul.intro-list {
+      margin: 0 0 12px 0;
+      padding-left: 32px;
+      font-size: 1em;
+    }
+    .infoworld-intro-text li {
+      margin-bottom: 6px;
+      list-style: disc inside;
+    }
+    .infoworld-intro-text .intro-title {
+      font-family: 'Italiana', 'Quicksand', Arial, sans-serif !important;
+      font-size: 2.1em;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+      letter-spacing: 1.5px;
+      color: #00fff7;
+      text-shadow: 0 2px 16px #00fff7cc, 0 0 2px #00bcd4;
+      animation: colorPulse 2.5s infinite alternate;
+    }
+    @keyframes colorPulse {
+      0% { color: #00fff7; text-shadow: 0 2px 16px #00fff7cc; }
+      100% { color: #ffdd00; text-shadow: 0 2px 16px #ffdd00cc; }
+    }
+    .infoworld-intro-text .emoji-anim {
+      display: inline-block;
+      font-size: 2em;
+      margin-right: 8px;
+      animation: emojiPulseSmooth 1.2s cubic-bezier(.4,0,.2,1) infinite alternate, emojiMoveSmooth 1.8s cubic-bezier(.4,0,.2,1) infinite;
+      vertical-align: middle;
+      filter: drop-shadow(0 0 8px #00fff7cc);
+    }
+    @keyframes emojiPulseSmooth {
+      0% { transform: scale(1); filter: brightness(1.1); }
+      100% { transform: scale(1.13); filter: brightness(1.4); }
+    }
+    @keyframes emojiMoveSmooth {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
+    }
+    .infoworld-intro-text .color-anim,
+    .infoworld-intro-text .color-anim2,
+    .infoworld-intro-text .color-anim3,
+    .infoworld-intro-text .color-anim4,
+    .infoworld-intro-text .color-anim5,
+    .infoworld-intro-text .color-anim6,
+    .infoworld-intro-text .color-anim7,
+    .infoworld-intro-text .color-anim8,
+    .infoworld-intro-text .color-anim9,
+    .infoworld-intro-text .color-anim10,
+    .infoworld-intro-text .color-anim11,
+    .infoworld-intro-text .color-anim12,
+    .infoworld-intro-text .color-anim13,
+    .infoworld-intro-text .color-anim14,
+    .infoworld-intro-text .color-anim15,
+    .infoworld-intro-text .color-anim16,
+    .infoworld-intro-text .color-anim17,
+    .infoworld-intro-text .color-anim18,
+    .infoworld-intro-text .color-anim19,
+    .infoworld-intro-text .color-anim20,
+    .infoworld-intro-text .color-anim21,
+    .infoworld-intro-text .color-anim22,
+    .infoworld-intro-text .color-anim23,
+    .infoworld-intro-text .color-anim24,
+    .infoworld-intro-text .color-anim25,
+    .infoworld-intro-text .color-anim26,
+    .infoworld-intro-text .color-anim27,
+    .infoworld-intro-text .color-anim28,
+    .infoworld-intro-text .color-anim29,
+    .infoworld-intro-text .color-anim30,
+    .infoworld-intro-text .color-anim31,
+    .infoworld-intro-text .color-anim32,
+    .infoworld-intro-text .color-anim33,
+    .infoworld-intro-text .color-anim34,
+    .infoworld-intro-text .color-anim35,
+    .infoworld-intro-text .color-anim36,
+    .infoworld-intro-text .color-anim37,
+    .infoworld-intro-text .color-anim38,
+    .infoworld-intro-text .color-anim39 {
+      transition: color 0.3s, text-shadow 0.3s;
+      cursor: pointer;
+      padding: 0 2px;
+      border-radius: 4px;
+      position: relative;
+    }
+    .infoworld-intro-text .color-anim:hover {
+      color: #ff00c8;
+      text-shadow: 0 0 8px #ff00c8, 0 0 16px #ff00c8;
+    }
+    .infoworld-intro-text .color-anim2:hover { color: #00ffea; text-shadow: 0 0 8px #00ffea; }
+    .infoworld-intro-text .color-anim3:hover { color: #ffdd00; text-shadow: 0 0 8px #ffdd00; }
+    .infoworld-intro-text .color-anim4:hover { color: #00ff00; text-shadow: 0 0 8px #00ff00; }
+    .infoworld-intro-text .color-anim5:hover { color: #ff00ff; text-shadow: 0 0 8px #ff00ff; }
+    .infoworld-intro-text .color-anim6:hover { color: #00bcd4; text-shadow: 0 0 8px #00bcd4; }
+    .infoworld-intro-text .color-anim7:hover { color: #ff8000; text-shadow: 0 0 8px #ff8000; }
+    .infoworld-intro-text .color-anim8:hover { color: #00fff7; text-shadow: 0 0 8px #00fff7; }
+    .infoworld-intro-text .color-anim9:hover { color: #ff00c8; text-shadow: 0 0 8px #ff00c8; }
+    .infoworld-intro-text .color-anim10:hover { color: #00ffea; text-shadow: 0 0 8px #00ffea; }
+    .infoworld-intro-text .color-anim11:hover { color: #ffdd00; text-shadow: 0 0 8px #ffdd00; }
+    .infoworld-intro-text .color-anim12:hover { color: #00ff00; text-shadow: 0 0 8px #00ff00; }
+    .infoworld-intro-text .color-anim13:hover { color: #ff00ff; text-shadow: 0 0 8px #ff00ff; }
+    .infoworld-intro-text .color-anim14:hover { color: #00bcd4; text-shadow: 0 0 8px #00bcd4; }
+    .infoworld-intro-text .color-anim15:hover { color: #ff8000; text-shadow: 0 0 8px #ff8000; }
+    .infoworld-intro-text .color-anim16:hover { color: #00fff7; text-shadow: 0 0 8px #00fff7; }
+    .infoworld-intro-text .color-anim17:hover { color: #ff00c8; text-shadow: 0 0 8px #ff00c8; }
+    .infoworld-intro-text .color-anim18:hover { color: #00ffea; text-shadow: 0 0 8px #00ffea; }
+    .infoworld-intro-text .color-anim19:hover { color: #ffdd00; text-shadow: 0 0 8px #ffdd00; }
+    .infoworld-intro-text .color-anim20:hover { color: #00ff00; text-shadow: 0 0 8px #00ff00; }
+    .infoworld-intro-text .color-anim21:hover { color: #ff00ff; text-shadow: 0 0 8px #ff00ff; }
+    .infoworld-intro-text .color-anim22:hover { color: #00bcd4; text-shadow: 0 0 8px #00bcd4; }
+    .infoworld-intro-text .color-anim23:hover { color: #ff8000; text-shadow: 0 0 8px #ff8000; }
+    .infoworld-intro-text .color-anim24:hover { color: #00fff7; text-shadow: 0 0 8px #00fff7; }
+    .infoworld-intro-text .color-anim25:hover { color: #ff00c8; text-shadow: 0 0 8px #ff00c8; }
+    .infoworld-intro-text .color-anim26:hover { color: #00ffea; text-shadow: 0 0 8px #00ffea; }
+    .infoworld-intro-text .color-anim27:hover { color: #ffdd00; text-shadow: 0 0 8px #ffdd00; }
+    .infoworld-intro-text .color-anim28:hover { color: #00ff00; text-shadow: 0 0 8px #00ff00; }
+    .infoworld-intro-text .color-anim29:hover { color: #ff00ff; text-shadow: 0 0 8px #ff00ff; }
+    .infoworld-intro-text .color-anim30:hover { color: #00bcd4; text-shadow: 0 0 8px #00bcd4; }
+    .infoworld-intro-text .color-anim31:hover { color: #ff8000; text-shadow: 0 0 8px #ff8000; }
+    .infoworld-intro-text .color-anim32:hover { color: #00fff7; text-shadow: 0 0 8px #00fff7; }
+    .infoworld-intro-text .color-anim33:hover { color: #ff00c8; text-shadow: 0 0 8px #ff00c8; }
+    .infoworld-intro-text .color-anim34:hover { color: #00ffea; text-shadow: 0 0 8px #00ffea; }
+    .infoworld-intro-text .color-anim35:hover { color: #ffdd00; text-shadow: 0 0 8px #ffdd00; }
+    .infoworld-intro-text .color-anim36:hover { color: #00ff00; text-shadow: 0 0 8px #00ff00; }
+    .infoworld-intro-text .color-anim37:hover { color: #ff00ff; text-shadow: 0 0 8px #ff00ff; }
+    .infoworld-intro-text .color-anim38:hover { color: #00bcd4; text-shadow: 0 0 8px #00bcd4; }
+    .infoworld-intro-text .color-anim39:hover { color: #ff8000; text-shadow: 0 0 8px #ff8000; }
+    .infoworld-intro-text .underline-anim {
+      border-bottom: 2.5px solid #00fff7;
+      transition: border-color 0.3s;
+      padding-bottom: 1.5px;
+      position: relative;
+    }
+    .infoworld-intro-text .underline-anim:hover {
+      border-color: #ff00c8;
+      animation: underlineAnim 1.2s infinite alternate;
+    }
+    @keyframes underlineAnim {
+      0% { border-color: #00fff7; }
+      50% { border-color: #ff00c8; }
+      100% { border-color: #00fff7; }
+    }
+    .afla-mai-multe-btn {
+      margin-top: 24px;
+      padding: 16px 38px;
+      font-size: 1.2em;
+      font-family: 'Orbitron', Arial, sans-serif;
+      background: linear-gradient(90deg, #00fff7 60%, #ff00c8 100%);
+      color: #181a1f;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px #00fff7cc;
+      cursor: pointer;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.2s;
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      outline: none;
+      animation: aflaBtnPulse 2.5s infinite alternate;
+    }
+    .afla-mai-multe-btn:hover {
+      background: linear-gradient(90deg, #ff00c8 60%, #00fff7 100%);
+      color: #fff;
+      box-shadow: 0 4px 32px #ff00c8cc;
+      transform: scale(1.07);
+    }
+    @keyframes aflaBtnPulse {
+      0% { box-shadow: 0 2px 16px #00fff7cc; }
+      100% { box-shadow: 0 4px 32px #ff00c8cc; }
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 10% 80%, rgba(0,255,255,0.10) 0, transparent 60%),
+        radial-gradient(circle at 90% 20%, rgba(255,0,255,0.10) 0, transparent 60%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,0,0.08) 0, transparent 60%),
+        repeating-linear-gradient(45deg, rgba(0,255,255,0.04) 0 2px, transparent 2px 40px),
+        repeating-linear-gradient(-45deg, rgba(255,0,255,0.04) 0 2px, transparent 2px 40px);
+      animation: bgMoveIndex 18s linear infinite alternate, bgLinesIndex 24s linear infinite alternate;
+    }
+    @keyframes bgMoveIndex {
+      0% { background-position: 0% 0%, 100% 100%, 50% 100%, 0 0, 100% 100%; }
+      100% { background-position: 100% 100%, 0% 0%, 50% 0%, 100% 0, 0 100%; }
+    }
+    @keyframes bgLinesIndex {
+      0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: 300px 600px, 600px 300px, 0 0, 600px 0, 0 600px; }
+    }
+
+    main, .main-section, .welcome-section, .lessons-section, .intro-section, .profile-section, .animated-intro, .lesson-btns {
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      animation: fadeInMain 0.7s cubic-bezier(.23,1.02,.47,.98) forwards;
+      animation-delay: 0.1s;
+    }
+    @keyframes fadeInMain {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .logo-anim-wrap {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 18px;
+      margin-bottom: 0px;
+      position: relative;
+      z-index: 3;
+    }
+    .logo-anim {
+      width: 70px;
+      height: 70px;
+      border-radius: 18px;
+      box-shadow: none;
+      background: transparent;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+      filter: drop-shadow(0 0 16px #00fff7cc) brightness(1.15) saturate(1.2);
+      animation: logoBounce 4.5s infinite cubic-bezier(.4,0,.2,1);
+      cursor: pointer;
+    }
+    .logo-anim:hover {
+      transform: scale(1.13);
+    }
+    @keyframes logoBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.08); }
+    }
+
+
+  </style>
+</head>
+<body>
+  <div id="menu" style="display:none;">
+    <button onclick="window.location.href='blog.html'"><span class="menu-icon">📓</span> Despre noi & Blog</button>
+    <button onclick="window.location.href='assistant.html'"><span class="menu-icon">🤖</span> Asistent AI</button>
+    <button onclick="window.location.href='quiz.html'"><span class="menu-icon">📝</span> Quiz</button>
+    <button onclick="window.location.href='feedback.html'"><span class="menu-icon">💬</span> Feedback</button>
+    <button onclick="window.location.href='curiozitati.html'"><span class="menu-icon">✨</span> Curiozități</button>
+    <button onclick="window.location.href='contact.html'"><span class="menu-icon">📞</span> Contact</button>
+    <button onclick="window.location.href='manuale.html'"><span class="menu-icon">📚</span> Manuale</button>
+    <button onclick="window.location.href='bac.html'"><span class="menu-icon">⏰</span> BAC Countdown</button>
+  </div>
+
+  <div class="cursor-container">
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-glow"></div>
+  </div>
+
+  <!-- Adăugăm butonul Acasă -->
+  <button class="home-button" onclick="showMainPage()">⌂</button>
+
+  <a href="index.html" class="home-button" style="position:fixed;top:20px;right:20px;z-index:1000;display:inline-block;padding:10px 22px;background:#181a1f;color:#00ffff;border-radius:8px;border:2px solid #00ffff;text-decoration:none;font-family:'Georgia',serif;font-size:1.1em;font-weight:bold;box-shadow:none;">⌂</a>
+  <button id="menu-toggle-fixed" style="position:fixed;top:20px;left:20px;z-index:1001;padding:12px 25px;background:#181a1f;color:#ffdd00;border:2px solid #ffdd00;border-radius:6px;font-family:'Georgia',serif;font-size:18px;font-weight:bold;cursor:pointer;box-shadow:none;">≡ Meniu</button>
+
+  <header>
+    <div class="logo-anim-wrap">
+      <img src="logo.webp" alt="Logo InfoWorld" class="logo-anim" />
+    </div>
+    <h1 class="cyber-title underline-animated">InfoWorld</h1>
+  </header>
+
+
+
+  <!-- Butoane mari pentru acces la lecții - MUTATE ÎNAINTE -->
+  <div class="main-lessons-buttons-row">
+    <button class="small-lesson-btn liceu-btn" onclick="window.location.href='lectii-liceu.html'">
+      <span class="btn-icon">📘</span>
+      <span class="btn-text">Lecții LICEU</span>
+    </button>
+    <button class="small-lesson-btn avansati-btn" onclick="window.location.href='lectii-avansate.html'">
+      <span class="btn-icon">🧠</span>
+      <span class="btn-text">Lecții AVANSAȚI</span>
+    </button>
+  </div>
+
+ <!-- SECTIUNE PREZENTARE ANIMATA (NOUA VARIANTA) -->
+<section id="infoworld-intro" class="infoworld-intro-section">
+  <div class="infoworld-intro-text">
+    <span class="emoji-anim">🌐</span>
+    <h2 class="intro-title color-anim underline-anim">Bine ai venit în <span class="color-anim2">InfoWorld</span> – Universul învățării inteligente prin informatică!</h2>
+    <p>InfoWorld este mai mult decât un site de lecții – este un <b>ecosistem educațional interactiv</b> creat special pentru <b>elevii de liceu</b> și <b>pasionații de algoritmi</b>. Aici, învățarea devine o <i>aventură digitală</i> în care fiecare răspuns, fiecare quiz și fiecare lecție parcursă te aduce mai aproape de <b>nivelul următor</b>!</p>
+
+    <span class="emoji-anim">🧠</span> <b class="color-anim3">Ce oferă InfoWorld?</b>
+    <ul class="intro-list">
+      <li>✅ Lecții organizate clar, pentru clasele <b>IX–XII</b>, atât pentru <b>începători</b> cât și pentru <b>avansați</b>.</li>
+      <li>✅ Explicații detaliate, exemple comentate, analogii din viața reală și <b>cod C++</b> la fiecare lecție.</li>
+      <li>✅ Quiz-uri interactive – cu <b>feedback instant</b> și <b>puncte bonus</b>.</li>
+      <li>✅ Teste recapitulative finale după fiecare secțiune (<i>Liceu</i> / <i>Avansat</i>).</li>
+    </ul>
+
+    <span class="emoji-anim">🏆</span> <b class="color-anim4">Cum funcționează sistemul de puncte și recompense?</b>
+    <p>🧩 Fiecare răspuns corect la quiz-uri îți oferă <b>10 puncte</b>, iar aceste puncte pot fi transformate în <i>recompense reale și digitale</i>.</p>
+
+    <h4>🎁 Praguri de recompense:</h4>
+    <ul class="intro-list">
+      <li>100: Ramă de profil colorată <i>(Obținut)</i></li>
+      <li>300: Iconiță lângă nume <i>(Obținut)</i></li>
+      <li>600: Quiz bonus (grilă) <i>(Obținut)</i></li>
+      <li>800: Skip la un exercițiu greu (1/săptămână)</li>
+      <li>1000: Badge digital simplu</li>
+      <li>1500: Mini puzzle text</li>
+      <li>1800: Power-up de învățare (indiciu+explicație quiz)</li>
+      <li>2000: Acces la materiale PDF 💡</li>
+    </ul>
+    <p>🎉 La fiecare prag atins, primești și <b>surprize educaționale bonus</b>!</p>
+    <p>🤫 <i>Dacă marchezi ca parcurse 5 lecții, vei primi acces la un quiz secret.</i></p>
+
+    <span class="emoji-anim">🧑‍💻</span> <b class="color-anim5">Personalizează-ți experiența:</b>
+    <ul class="intro-list">
+      <li>🎯 Puncte & Avantaje – vezi câte ai și ce poți debloca.</li>
+      <li>🛡️ Badge-uri – titluri precum „Luptător Academic" sau „Geniu Algoritmic".</li>
+      <li>⚙️ Setări – personalizează modul tău de învățare (teme, notificări etc.).</li>
+      <li>🧾 Istoric & Progres – urmărește ce ai învățat și ce urmează.</li>
+      <li>🌈 Mod întunecat / luminos – disponibil pe unele pagini.</li>
+    </ul>
+
+    <span class="emoji-anim">📢</span> <b class="color-anim6">Comunitatea InfoWorld:</b>
+    <ul class="intro-list">
+      <li>📝 Blog educațional – elevii pot posta și comenta liber.</li>
+      <li>💌 Mesaje de încurajare și update-uri de la echipă.</li>
+      <li>📚 Manuale PDF clare și gratuite.</li>
+      <li>❓ Pagina de curiozități – citește cele 10 curiozități informatice!</li>
+      <li>💬 Lasă curiozitatea ta – poate o publicăm pe blogul nostru!</li>
+    </ul>
+
+    <span class="emoji-anim">✉️</span> <b class="color-anim7">Hai să comunicăm!</b>
+    <ul class="intro-list">
+      <li>📬 Formular de contact pentru întrebări și idei.</li>
+      <li>⭐ Pagina de feedback cu steluțe animate – spune-ne cum ți se pare!</li>
+    </ul>
+
+    <span class="emoji-anim">🚀</span> <b class="color-anim8">De ce să înveți cu InfoWorld?</b>
+    <ul class="intro-list">
+      <li>Structurat intuitiv – <b>Liceu vs Avansați</b>, clase <b>IX–XII</b>.</li>
+      <li>Lecții actualizate constant, adaptate nivelului tău.</li>
+      <li>Interactiv, motivant și competitiv – nu doar înveți, ci <b>câștigi</b>.</li>
+      <li>Poți învăța în ritmul tău, iar <b>AI-ul te ajută</b> să nu rămâi blocat.</li>
+    </ul>
+
+    <div class="intro-final">
+      <span class="emoji-anim">🎯</span> <b class="color-anim9">Ești gata să pornești?</b>
+      <ul class="intro-list">
+        <li>✔️ Alege-ți clasa și nivelul.</li>
+        <li>✔️ Parcurge lecțiile și completează quiz-urile.</li>
+        <li>✔️ Adună puncte, urcă în nivel și câștigă premii!</li>
+      </ul>
+      <p class="color-anim10 underline-anim">🎉 InfoWorld – transformăm informatica într-o experiență educațională captivantă, interactivă și premiată!</p>
+      <p class="color-anim11 underline-anim">📈 Fiecare pas contează. Fiecare quiz te aduce mai aproape de a deveni un <span class="color-anim12">Geniu Algoritmic 👑</span></p>
+      <p class="color-anim13"><i>🙏 Mulțumim că ai ales să fii parte din InfoWorld!</i></p>
+    </div>
+  </div>
+</section>
+
+  <div class="welcome-section" id="welcome-section">
+    <div class="welcome-text"></div>
+  </div>
+
+  <div class="content" id="lessons-container"></div>
+  
+  <!-- Container pentru selecția claselor -->
+  <div class="class-selection" id="class-selection">
+    <button class="back-btn" onclick="hideClassSelection()">← Înapoi la meniu</button>
+    <h2 id="selection-title">Selectează o clasă</h2>
+    <div class="class-grid" id="class-grid">
+      <!-- Butoanele pentru clase vor fi generate dinamic -->
+    </div>
+  </div>
+  
+  
+
+  <div id="chat-form" class="chat-container" style="display:none;">
+    <h3>Asistent AI</h3>
+    <div id="chat-log"></div>
+    <input type="text" id="user-input" placeholder="Întreabă ceva..." />
+    <button onclick="sendMessage()">Trimite</button>
+  </div>
+
+  <div class="profile-bar">
+    <div id="profile-circle" class="profile-circle" onclick="openProfileMenu()" style="display:none;">
+      <span id="profile-initials"></span>
+    </div>
+    <a id="profile-link" href="profil.html" class="profile-link" style="display:none; margin-left:8px;">Profil</a>
+    <div id="profile-menu" class="profile-menu" style="display:none;">
+      <a href="profil.html">Profil</a>
+      <a href="#" onclick="logout(); return false;">Deconectare</a>
+    </div>
+    <a id="open-login-modal" class="open-login-modal" href="login.html">Login</a>
+  </div>
+
+  <script>
+
+
+    // Cursor effects
+    const cursor = document.querySelector('.cursor');
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorGlow = document.querySelector('.cursor-glow');
+    const cursorContainer = document.querySelector('.cursor-container');
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+    let trailPositions = [];
+    const trailLength = 20;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      // Update cursor positions
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+      cursorDot.style.left = mouseX + 'px';
+      cursorDot.style.top = mouseY + 'px';
+      cursorGlow.style.left = mouseX + 'px';
+      cursorGlow.style.top = mouseY + 'px';
+
+      // Create trail effect
+      const trail = document.createElement('div');
+      trail.className = 'cursor-trail';
+      trail.style.left = mouseX + 'px';
+      trail.style.top = mouseY + 'px';
+      trail.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+      cursorContainer.appendChild(trail);
+
+      // Remove trail after animation
+      setTimeout(() => {
+        trail.remove();
+      }, 1000);
+    });
+
+    document.addEventListener('mousedown', () => {
+      cursor.style.transform = 'scale(0.8)';
+      cursorGlow.style.transform = 'translate(-50%, -50%) scale(0.8)';
+    });
+
+    document.addEventListener('mouseup', () => {
+      cursor.style.transform = 'scale(1)';
+      cursorGlow.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+
+    // Hover effect on clickable elements
+    document.querySelectorAll('button, input, a').forEach(element => {
+      element.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'scale(1.5)';
+        cursorGlow.style.transform = 'translate(-50%, -50%) scale(1.5)';
+      });
+
+      element.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'scale(1)';
+        cursorGlow.style.transform = 'translate(-50%, -50%) scale(1)';
+      });
+    });
+
+    const lectii = {
+      // LECȚII PENTRU LICEU - Programa școlară normală
+      'liceu-clasa-9': [
+        { 
+  title: "Introducere în informatică", 
+  definition: "Informatică este știința care studiază informația, procesarea și algoritmii.", 
+  explanation: "Capitol introductiv ce prezintă algoritmi, tipuri de date, limbaje de programare și programare în C++.", 
+  example: `#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Salut! Acesta este primul program in C++." << endl;
+    return 0;
+}` 
+},
+{ 
+  title: "Tipuri de date și variabile", 
+  definition: "Tipul de dată definește ce fel de informații poate stoca o variabilă.", 
+  explanation: "Include tipuri fundamentale ca int, float, char, bool și utilizarea variabilelor în C++.", 
+  example: `#include <iostream>
+using namespace std;
+
+int main() {
+    int varsta = 16;
+    char initiala = 'A';
+    bool esteStudent = true;
+
+    cout << "Varsta: " << varsta << endl;
+    cout << "Initiala: " << initiala << endl;
+    cout << "Este student? " << (esteStudent ? "Da" : "Nu") << endl;
+
+    return 0;
+}` 
+},
+{ 
+  title: "Operații aritmetice și logice", 
+  definition: "Operațiile aritmetice și logice sunt esențiale în programare.", 
+  explanation: "Se studiază operatori ca +, -, *, %, &&, ||, ! și folosirea lor în expresii și condiții.", 
+  example: `#include <iostream>
+using namespace std;
+
+int main() {
+    int a = 10, b = 5;
+    int suma = a + b;
+    int produs = a * b;
+    int rest = a % b;
+
+    cout << "Suma: " << suma << endl;
+    cout << "Produsul: " << produs << endl;
+    cout << "Restul: " << rest << endl;
+
+    bool rezultat = (a > b) && (b != 0);
+    cout << "Este a mai mare decat b si b este diferit de 0? " << (rezultat ? "Da" : "Nu") << endl;
+
+    return 0;
+}` 
+},
+{ 
+          title: "Instrucțiuni de control: condiționale", 
+  definition: "Instrucțiunile condiționale permit luarea deciziilor în cod.", 
+  explanation: "Se folosesc if, else și switch pentru a executa cod în funcție de condiții.", 
+  example: `#include <iostream>
+using namespace std;
+
+int main() {
+    int nota;
+    cout << "Introduceti nota (1-10): ";
+    cin >> nota;
+
+    if (nota >= 9) {
+        cout << "Excelent!" << endl;
+    } else if (nota >= 7) {
+        cout << "Bine!" << endl;
+    } else if (nota >= 5) {
+        cout << "Suficient!" << endl;
+    } else {
+        cout << "Insuficient!" << endl;
+    }
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Instrucțiuni de control: repetitive", 
+          definition: "Instrucțiunile repetitive permit executarea repetată a unui bloc de cod.", 
+          explanation: "Se studiază for, while, do-while și utilizarea lor pentru procesarea datelor.", 
+          example: `#include <iostream>
+using namespace std;
+
+int main() {
+    // For loop - afișează numerele de la 1 la 5
+    cout << "For loop:" << endl;
+    for (int i = 1; i <= 5; i++) {
+        cout << i << " ";
+    }
+    cout << endl;
+    
+    // While loop - calculează suma numerelor până la 10
+    int suma = 0, numar = 1;
+    while (numar <= 10) {
+        suma += numar;
+        numar++;
+    }
+    cout << "Suma numerelor de la 1 la 10: " << suma << endl;
+
+    return 0;
+}` 
+},
+        { 
+          title: "Vectori și tablouri", 
+          definition: "Vectorii sunt structuri de date care stochează mai multe valori de același tip.", 
+          explanation: "Se învață declararea, inițializarea și utilizarea vectorilor pentru stocarea datelor.", 
+  example: `#include <iostream>
+using namespace std;
+
+int main() {
+    int vector[5] = {1, 2, 3, 4, 5};
+    
+    cout << "Elementele vectorului:" << endl;
+    for (int i = 0; i < 5; i++) {
+        cout << "vector[" << i << "] = " << vector[i] << endl;
+    }
+    
+    // Calculăm suma elementelor
+    int suma = 0;
+    for (int i = 0; i < 5; i++) {
+        suma += vector[i];
+    }
+    cout << "Suma elementelor: " << suma << endl;
+    
+    return 0;
+}` 
+        }
+      ],
+      'liceu-clasa-10': [
+        { 
+          title: "Funcții în C++", 
+          definition: "Funcțiile sunt blocuri de cod reutilizabile care pot primi parametri și returna valori.", 
+          explanation: "Se studiază declararea, definirea și apelarea funcțiilor pentru organizarea codului.", 
+          example: `#include <iostream>
+using namespace std;
+
+// Declararea funcției
+int aduna(int a, int b);
+void afiseazaMesaj(string mesaj);
+
+int main() {
+    int rezultat = aduna(5, 3);
+    cout << "5 + 3 = " << rezultat << endl;
+    
+    afiseazaMesaj("Salut din functie!");
+    return 0;
+}
+
+// Definirea funcției aduna
+int aduna(int a, int b) {
+    return a + b;
+}
+
+// Funcție fără return
+void afiseazaMesaj(string mesaj) {
+    cout << mesaj << endl;
+}` 
+        },
+        { 
+          title: "Șiruri de caractere", 
+          definition: "Șirurile de caractere sunt secvențe de caractere terminate cu '\\0'.", 
+          explanation: "Se învață manipularea șirurilor, funcții pentru șiruri și algoritmi de căutare.", 
+          example: `#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main() {
+    char nume[50] = "Ion Popescu";
+    char prenume[20] = "Maria";
+    
+    cout << "Numele complet: " << nume << endl;
+    cout << "Lungimea numelui: " << strlen(nume) << endl;
+    
+    // Concatenarea șirurilor
+    strcat(nume, " ");
+    strcat(nume, prenume);
+    cout << "După concatenare: " << nume << endl;
+    
+    // Compararea șirurilor
+    if (strcmp(prenume, "Maria") == 0) {
+        cout << "Prenumele este Maria" << endl;
+    }
+
+    return 0;
+}` 
+},
+        { 
+          title: "Matrice și tablouri bidimensionale", 
+          definition: "Matricele sunt tablouri cu două dimensiuni organizate în rânduri și coloane.", 
+          explanation: "Se studiază declararea, inițializarea și procesarea matricelor pentru rezolvarea problemelor complexe.", 
+          example: `#include <iostream>
+using namespace std;
+
+int main() {
+    int matrice[3][3] = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+    
+    cout << "Matricea:" << endl;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            cout << matrice[i][j] << " ";
+        }
+        cout << endl;
+    }
+    
+    // Calculăm suma elementelor de pe diagonala principală
+    int sumaDiagonala = 0;
+    for (int i = 0; i < 3; i++) {
+        sumaDiagonala += matrice[i][i];
+    }
+    cout << "Suma diagonalei principale: " << sumaDiagonala << endl;
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Structuri și tipuri de date compuse", 
+          definition: "Structurile permit gruparea mai multor variabile de tipuri diferite într-un singur tip de dată.", 
+          explanation: "Se învață definirea structurilor, accesarea câmpurilor și utilizarea lor pentru organizarea datelor.", 
+  example: `#include <iostream>
+#include <string>
+using namespace std;
+
+// Definirea structurii
+struct Student {
+    string nume;
+    string prenume;
+    int varsta;
+    float media;
+};
+
+int main() {
+    Student student1;
+    student1.nume = "Popescu";
+    student1.prenume = "Ion";
+    student1.varsta = 16;
+    student1.media = 9.5;
+    
+    cout << "Student: " << student1.prenume << " " << student1.nume << endl;
+    cout << "Varsta: " << student1.varsta << endl;
+    cout << "Media: " << student1.media << endl;
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Algoritmi de sortare", 
+          definition: "Algoritmii de sortare sunt metode pentru aranjarea elementelor într-o ordine specifică.", 
+          explanation: "Se studiază algoritmi de sortare simpli ca bubble sort și selection sort.", 
+          example: `#include <iostream>
+using namespace std;
+
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                // Interschimbarea elementelor
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int vector[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = 7;
+    
+    cout << "Vectorul nesortat: ";
+    for (int i = 0; i < n; i++) {
+        cout << vector[i] << " ";
+    }
+    cout << endl;
+    
+    bubbleSort(vector, n);
+    
+    cout << "Vectorul sortat: ";
+    for (int i = 0; i < n; i++) {
+        cout << vector[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}` 
+        },
+        { 
+          title: "Algoritmi de căutare", 
+          definition: "Algoritmii de căutare sunt metode pentru găsirea unui element într-o colecție de date.", 
+          explanation: "Se studiază căutarea liniară și căutarea binară pentru găsirea eficientă a datelor.", 
+          example: `#include <iostream>
+using namespace std;
+
+// Căutare liniară
+int cautareLiniara(int arr[], int n, int x) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == x) {
+            return i; // Element găsit
+        }
+    }
+    return -1; // Element negăsit
+}
+
+// Căutare binară (vectorul trebuie să fie sortat)
+int cautareBinara(int arr[], int stanga, int dreapta, int x) {
+    if (dreapta >= stanga) {
+        int mijloc = stanga + (dreapta - stanga) / 2;
+        
+        if (arr[mijloc] == x) {
+            return mijloc;
+        }
+        
+        if (arr[mijloc] > x) {
+            return cautareBinara(arr, stanga, mijloc - 1, x);
+        }
+        
+        return cautareBinara(arr, mijloc + 1, dreapta, x);
+    }
+    
+    return -1;
+}
+
+int main() {
+    int vector[] = {2, 3, 4, 10, 40, 50, 60, 70};
+    int n = 8;
+    int x = 10;
+    
+    int pozitie = cautareLiniara(vector, n, x);
+    if (pozitie != -1) {
+        cout << "Elementul " << x << " a fost gasit la pozitia " << pozitie << endl;
+    } else {
+        cout << "Elementul " << x << " nu a fost gasit" << endl;
+    }
+    
+    return 0;
+}` 
+        }
+      ],
+      'liceu-clasa-11': [
+        { 
+          title: "Programare orientată pe obiecte", 
+          definition: "POO este un paradigm de programare bazat pe conceptul de obiecte care conțin date și cod.", 
+          explanation: "Se studiază clasele, obiectele, moștenirea, polimorfismul și încapsularea.", 
+  example: `#include <iostream>
+#include <string>
+using namespace std;
+
+class Student {
+private:
+    string nume;
+    int varsta;
+
+public:
+    // Constructor
+    Student(string n, int v) {
+        nume = n;
+        varsta = v;
+    }
+    
+    // Metode
+    void afiseazaInfo() {
+        cout << "Nume: " << nume << ", Varsta: " << varsta << endl;
+    }
+    
+    void setNume(string n) {
+        nume = n;
+    }
+    
+    string getNume() {
+        return nume;
+    }
+};
+
+int main() {
+    Student student1("Ion Popescu", 17);
+    student1.afiseazaInfo();
+    
+    student1.setNume("Maria Ionescu");
+    cout << "Nume nou: " << student1.getNume() << endl;
+
+    return 0;
+}` 
+},
+        { 
+          title: "Moștenire și polimorfism", 
+          definition: "Moștenirea permite crearea de clase noi bazate pe clase existente, iar polimorfismul permite comportamente diferite pentru obiecte de tipuri diferite.", 
+          explanation: "Se studiază moștenirea simplă și multiplă, funcții virtuale și abstractizarea.", 
+  example: `#include <iostream>
+#include <string>
+using namespace std;
+
+// Clasa de bază
+class Forma {
+protected:
+    string culoare;
+    
+public:
+    Forma(string c) : culoare(c) {}
+    
+    virtual void afiseazaInfo() {
+        cout << "Forma de culoare " << culoare << endl;
+    }
+    
+    virtual double calculeazaAria() = 0; // Funcție pură virtuală
+};
+
+// Clasa derivată
+class Cerc : public Forma {
+private:
+    double raza;
+    
+public:
+    Cerc(string c, double r) : Forma(c), raza(r) {}
+    
+    void afiseazaInfo() override {
+        cout << "Cerc de culoare " << culoare << " cu raza " << raza << endl;
+    }
+    
+    double calculeazaAria() override {
+        return 3.14159 * raza * raza;
+    }
+};
+
+int main() {
+    Cerc cerc1("rosu", 5.0);
+    cerc1.afiseazaInfo();
+    cout << "Aria cercului: " << cerc1.calculeazaAria() << endl;
+
+    return 0;
+}` 
+},
+        { 
+          title: "Templates și programare generică", 
+          definition: "Templates permit crearea de funcții și clase care pot lucra cu tipuri de date diferite.", 
+          explanation: "Se studiază template-urile pentru funcții și clase, specializarea și utilizarea lor.", 
+  example: `#include <iostream>
+using namespace std;
+
+// Template pentru funcție
+template <typename T>
+T maxim(T a, T b) {
+    return (a > b) ? a : b;
+}
+
+// Template pentru clasă
+template <typename T>
+class Vector {
+private:
+    T* elemente;
+    int dimensiune;
+    
+public:
+    Vector(int dim) {
+        dimensiune = dim;
+        elemente = new T[dimensiune];
+    }
+    
+    void setElement(int index, T valoare) {
+        if (index >= 0 && index < dimensiune) {
+            elemente[index] = valoare;
+        }
+    }
+    
+    T getElement(int index) {
+        if (index >= 0 && index < dimensiune) {
+            return elemente[index];
+        }
+        return T();
+    }
+    
+    ~Vector() {
+        delete[] elemente;
+    }
+};
+
+int main() {
+    // Utilizarea template-ului pentru funcție
+    cout << "Maxim int: " << maxim(10, 20) << endl;
+    cout << "Maxim double: " << maxim(3.14, 2.71) << endl;
+    
+    // Utilizarea template-ului pentru clasă
+    Vector<int> vectorInt(5);
+    vectorInt.setElement(0, 10);
+    vectorInt.setElement(1, 20);
+    
+    cout << "Element 0: " << vectorInt.getElement(0) << endl;
+    cout << "Element 1: " << vectorInt.getElement(1) << endl;
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Gestionarea excepțiilor", 
+          definition: "Excepțiile sunt evenimente care apar în timpul execuției programului și întrerup fluxul normal.", 
+          explanation: "Se studiază try-catch blocks, tipuri de excepții și gestionarea erorilor în programe.", 
+          example: `#include <iostream>
+#include <stdexcept>
+using namespace std;
+
+class ExceptieImpartire : public exception {
+public:
+    const char* what() const throw() {
+        return "Impartirea la zero nu este permisa!";
+    }
+};
+
+double impartire(double a, double b) {
+    if (b == 0) {
+        throw ExceptieImpartire();
+    }
+    return a / b;
+}
+
+int main() {
+    try {
+        double rezultat1 = impartire(10, 2);
+        cout << "10 / 2 = " << rezultat1 << endl;
+        
+        double rezultat2 = impartire(10, 0);
+        cout << "10 / 0 = " << rezultat2 << endl;
+    }
+    catch (ExceptieImpartire& e) {
+        cout << "Eroare: " << e.what() << endl;
+    }
+    catch (exception& e) {
+        cout << "Eroare generala: " << e.what() << endl;
+    }
+
+    return 0;
+}` 
+},
+        { 
+          title: "Algoritmi avansați de sortare", 
+          definition: "Algoritmii avansați de sortare sunt metode eficiente pentru aranjarea datelor.", 
+          explanation: "Se studiază quicksort, mergesort și analiza complexității algoritmilor.", 
+          example: `#include <iostream>
+using namespace std;
+
+void quicksort(int arr[], int stanga, int dreapta) {
+    if (stanga < dreapta) {
+        int pivot = arr[dreapta];
+        int i = stanga - 1;
+        
+        for (int j = stanga; j < dreapta; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                swap(arr[i], arr[j]);
+            }
+        }
+        
+        swap(arr[i + 1], arr[dreapta]);
+        int pi = i + 1;
+        
+        quicksort(arr, stanga, pi - 1);
+        quicksort(arr, pi + 1, dreapta);
+    }
+}
+
+void afiseazaVector(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int vector[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = 7;
+    
+    cout << "Vectorul nesortat: ";
+    afiseazaVector(vector, n);
+    
+    quicksort(vector, 0, n - 1);
+    
+    cout << "Vectorul sortat: ";
+    afiseazaVector(vector, n);
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Structuri de date avansate", 
+          definition: "Structurile de date avansate sunt organizări complexe pentru stocarea și gestionarea datelor.", 
+          explanation: "Se studiază liste înlănțuite, stive, cozi și arbori pentru rezolvarea problemelor complexe.", 
+  example: `#include <iostream>
+using namespace std;
+
+// Nod pentru listă înlănțuită
+struct Nod {
+    int data;
+    Nod* urmator;
+    
+    Nod(int val) : data(val), urmator(nullptr) {}
+};
+
+// Clasa pentru listă înlănțuită
+class ListaInlantuita {
+private:
+    Nod* cap;
+    
+public:
+    ListaInlantuita() : cap(nullptr) {}
+    
+    void adaugaLaSfarsit(int val) {
+        Nod* nouNod = new Nod(val);
+        
+        if (cap == nullptr) {
+            cap = nouNod;
+            return;
+        }
+        
+        Nod* curent = cap;
+        while (curent->urmator != nullptr) {
+            curent = curent->urmator;
+        }
+        curent->urmator = nouNod;
+    }
+    
+    void afiseaza() {
+        Nod* curent = cap;
+        while (curent != nullptr) {
+            cout << curent->data << " -> ";
+            curent = curent->urmator;
+        }
+        cout << "nullptr" << endl;
+    }
+    
+    ~ListaInlantuita() {
+        Nod* curent = cap;
+        while (curent != nullptr) {
+            Nod* urmator = curent->urmator;
+            delete curent;
+            curent = urmator;
+        }
+    }
+};
+
+int main() {
+    ListaInlantuita lista;
+    
+    lista.adaugaLaSfarsit(10);
+    lista.adaugaLaSfarsit(20);
+    lista.adaugaLaSfarsit(30);
+    
+    cout << "Lista inlantuita: ";
+    lista.afiseaza();
+    
+    return 0;
+}` 
+        }
+      ],
+      'liceu-clasa-12': [
+        { 
+          title: "Algoritmi pentru BAC - Subiectul I", 
+          definition: "Subiectul I conține probleme de algoritmizare și programare în limbajul C++.", 
+          explanation: "Se studiază tipurile de probleme frecvente: vectori, matrice, șiruri de caractere și algoritmi de căutare/sortare.", 
+          example: `#include <iostream>
+using namespace std;
+
+// Problema tipică: Să se determine câte numere pare sunt în vector
+int numaraPare(int v[], int n) {
+    int contor = 0;
+    for (int i = 0; i < n; i++) {
+        if (v[i] % 2 == 0) {
+            contor++;
+        }
+    }
+    return contor;
+}
+
+// Problema tipică: Să se determine suma elementelor de pe diagonala secundară
+int sumaDiagonalaSecundara(int a[100][100], int n) {
+    int suma = 0;
+    for (int i = 0; i < n; i++) {
+        suma += a[i][n-1-i];
+    }
+    return suma;
+}
+
+int main() {
+    int v[] = {1, 2, 3, 4, 5, 6};
+    int n = 6;
+    
+    cout << "Numere pare in vector: " << numaraPare(v, n) << endl;
+    
+    int a[3][3] = {{1,2,3}, {4,5,6}, {7,8,9}};
+    cout << "Suma diagonalei secundare: " << sumaDiagonalaSecundara(a, 3) << endl;
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Algoritmi pentru BAC - Subiectul II", 
+          definition: "Subiectul II conține probleme de programare orientată pe obiecte și gestionarea fișierelor.", 
+          explanation: "Se studiază clasele, moștenirea, fișierele text și binare pentru rezolvarea problemelor complexe.", 
+          example: `#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Student {
+private:
+    string nume;
+    int varsta;
+    float media;
+    
+public:
+    Student(string n = "", int v = 0, float m = 0.0) : nume(n), varsta(v), media(m) {}
+    
+    void citeste() {
+        cout << "Nume: "; cin >> nume;
+        cout << "Varsta: "; cin >> varsta;
+        cout << "Media: "; cin >> media;
+    }
+    
+    void afiseaza() {
+        cout << nume << " " << varsta << " " << media << endl;
+    }
+    
+    void salveazaInFisier(ofstream& fout) {
+        fout << nume << " " << varsta << " " << media << endl;
+    }
+    
+    void citesteDinFisier(ifstream& fin) {
+        fin >> nume >> varsta >> media;
+    }
+    
+    float getMedia() { return media; }
+};
+
+int main() {
+    Student s1, s2;
+    
+    cout << "Introduceti datele primului student:" << endl;
+    s1.citeste();
+    
+    // Salvăm în fișier
+    ofstream fout("studenti.txt");
+    s1.salveazaInFisier(fout);
+    fout.close();
+    
+    // Citim din fișier
+    ifstream fin("studenti.txt");
+    s2.citesteDinFisier(fin);
+    fin.close();
+    
+    cout << "Studentul citit din fisier: ";
+    s2.afiseaza();
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Algoritmi pentru BAC - Subiectul III", 
+          definition: "Subiectul III conține probleme de algoritmizare avansată și structuri de date complexe.", 
+          explanation: "Se studiază algoritmi recursivi, backtracking, programare dinamică și grafuri.", 
+          example: `#include <iostream>
+using namespace std;
+
+// Algoritm recursiv - factorial
+int factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+}
+
+// Backtracking - generarea permutărilor
+void permutari(int v[], int n, int k) {
+    if (k == n) {
+        // Afișăm permutarea
+        for (int i = 0; i < n; i++) {
+            cout << v[i] << " ";
+    }
+    cout << endl;
+        return;
+    }
+    
+    for (int i = k; i < n; i++) {
+        // Interschimbăm
+        swap(v[k], v[i]);
+        // Generăm restul permutărilor
+        permutari(v, n, k + 1);
+        // Revenim la starea inițială
+        swap(v[k], v[i]);
+    }
+}
+
+// Programare dinamică - Fibonacci
+int fibonacci(int n) {
+    if (n <= 1) return n;
+    
+    int f[n + 1];
+    f[0] = 0;
+    f[1] = 1;
+    
+    for (int i = 2; i <= n; i++) {
+        f[i] = f[i-1] + f[i-2];
+    }
+    
+    return f[n];
+}
+
+int main() {
+    cout << "Factorial(5) = " << factorial(5) << endl;
+    
+    int v[] = {1, 2, 3};
+    cout << "Permutarile lui {1,2,3}:" << endl;
+    permutari(v, 3, 0);
+    
+    cout << "Fibonacci(10) = " << fibonacci(10) << endl;
+
+    return 0;
+}` 
+},
+        { 
+          title: "Tehnici de optimizare pentru BAC", 
+          definition: "Optimizarea algoritmilor este esențială pentru obținerea punctajului maxim la BAC.", 
+          explanation: "Se studiază tehnici de optimizare, analiza complexității și strategii de rezolvare eficientă.", 
+          example: `#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+// Optimizare: Folosirea algoritmilor STL
+void algoritmiOptimizati() {
+    vector<int> v = {3, 1, 4, 1, 5, 9, 2, 6};
+    
+    // Sortare optimizată
+    sort(v.begin(), v.end());
+    
+    // Căutare binară optimizată
+    if (binary_search(v.begin(), v.end(), 5)) {
+        cout << "5 a fost gasit!" << endl;
+    }
+    
+    // Găsirea elementului maxim
+    auto maxElement = max_element(v.begin(), v.end());
+    cout << "Elementul maxim: " << *maxElement << endl;
+    
+    // Numărarea elementelor
+    int countOnes = count(v.begin(), v.end(), 1);
+    cout << "Numarul de 1-uri: " << countOnes << endl;
+}
+
+// Optimizare: Memoizare pentru Fibonacci
+int fibMemo[100] = {0};
+
+int fibonacciOptimizat(int n) {
+    if (n <= 1) return n;
+    
+    if (fibMemo[n] != 0) {
+        return fibMemo[n]; // Returnăm valoarea calculată anterior
+    }
+    
+    fibMemo[n] = fibonacciOptimizat(n-1) + fibonacciOptimizat(n-2);
+    return fibMemo[n];
+}
+
+int main() {
+    cout << "Algoritmi optimizati:" << endl;
+    algoritmiOptimizati();
+    
+    cout << "Fibonacci optimizat(40) = " << fibonacciOptimizat(40) << endl;
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Strategii de rezolvare pentru BAC", 
+          definition: "Strategiile de rezolvare sunt abordări sistematice pentru rezolvarea problemelor de BAC.", 
+          explanation: "Se studiază pașii de rezolvare, verificarea soluțiilor și gestionarea timpului în timpul examenului.", 
+  example: `#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// Strategie: Rezolvarea pas cu pas
+class StrategieRezolvare {
+public:
+    // Pas 1: Înțelegerea problemei
+    void intelegeProblema() {
+        cout << "1. Citesc cu atentie enuntul" << endl;
+        cout << "2. Identific datele de intrare" << endl;
+        cout << "3. Identific rezultatul dorit" << endl;
+        cout << "4. Identific restrictiile" << endl;
+    }
+    
+    // Pas 2: Planificarea soluției
+    void planificaSolutia() {
+        cout << "1. Alege algoritmul potrivit" << endl;
+        cout << "2. Planifica structurile de date" << endl;
+        cout << "3. Estimeaza complexitatea" << endl;
+    }
+    
+    // Pas 3: Implementarea
+    void implementeaza() {
+        cout << "1. Scriu codul pas cu pas" << endl;
+        cout << "2. Testez pe exemple simple" << endl;
+        cout << "3. Verific cazurile limită" << endl;
+    }
+    
+    // Pas 4: Verificarea
+    void verifica() {
+        cout << "1. Testez pe exemple din enunț" << endl;
+        cout << "2. Verific cazurile extreme" << endl;
+        cout << "3. Analizez complexitatea" << endl;
+    }
+};
+
+// Exemplu de problemă rezolvată cu strategie
+int gasesteElementulMajoritar(int v[], int n) {
+    // Strategie: Algoritmul lui Boyer-Moore
+    int candidat = v[0];
+    int contor = 1;
+    
+    for (int i = 1; i < n; i++) {
+        if (v[i] == candidat) {
+            contor++;
+        } else {
+            contor--;
+            if (contor == 0) {
+                candidat = v[i];
+                contor = 1;
+            }
+        }
+    }
+    
+    // Verificăm dacă candidatul este majoritar
+    contor = 0;
+    for (int i = 0; i < n; i++) {
+        if (v[i] == candidat) {
+            contor++;
+        }
+    }
+    
+    return (contor > n/2) ? candidat : -1;
+}
+
+int main() {
+    StrategieRezolvare strategie;
+    cout << "Strategia de rezolvare BAC:" << endl;
+    strategie.intelegeProblema();
+    strategie.planificaSolutia();
+    strategie.implementeaza();
+    strategie.verifica();
+    
+    int v[] = {2, 2, 1, 1, 1, 2, 2};
+    int majoritar = gasesteElementulMajoritar(v, 7);
+    cout << "Elementul majoritar: " << majoritar << endl;
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Simulări BAC - Probleme complete", 
+          definition: "Simulările BAC sunt probleme complete care imită structura și dificultatea examenului real.", 
+          explanation: "Se rezolvă probleme complete de BAC pentru a exersa toate conceptele și a obține experiență practică.", 
+          example: `#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+// Simulare BAC - Subiectul I
+// Problema: Să se determine câte numere din vector sunt palindroame
+
+bool estePalindrom(int n) {
+    int original = n;
+    int invers = 0;
+    
+    while (n > 0) {
+        invers = invers * 10 + n % 10;
+        n /= 10;
+    }
+    
+    return original == invers;
+}
+
+int numaraPalindroame(int v[], int n) {
+    int contor = 0;
+    for (int i = 0; i < n; i++) {
+        if (estePalindrom(v[i])) {
+            contor++;
+        }
+    }
+    return contor;
+}
+
+// Simulare BAC - Subiectul II
+class Palindrom {
+private:
+    int numar;
+    
+public:
+    Palindrom(int n = 0) : numar(n) {}
+    
+    bool estePalindrom() {
+        int original = numar;
+        int invers = 0;
+        
+        while (original > 0) {
+            invers = invers * 10 + original % 10;
+            original /= 10;
+        }
+        
+        return numar == invers;
+    }
+    
+    void afiseaza() {
+        cout << numar;
+        if (estePalindrom()) {
+            cout << " (palindrom)";
+        } else {
+            cout << " (nu este palindrom)";
+    }
+    cout << endl;
+    }
+};
+
+int main() {
+    // Test Subiectul I
+    int v[] = {121, 123, 555, 1234, 12321};
+    int n = 5;
+    
+    cout << "Numerele palindroame din vector: " << numaraPalindroame(v, n) << endl;
+    
+    // Test Subiectul II
+    Palindrom p1(121);
+    Palindrom p2(123);
+    
+    p1.afiseaza();
+    p2.afiseaza();
+
+    return 0;
+}` 
+}
+      ],
+      
+      // LECȚII PENTRU AVANSAȚI - Pentru aprofundare și olimpiade
+      'avansati-clasa-9': [
+        { 
+          title: "Recursivitate - început", 
+          definition: "Recursivitatea este o tehnică în care o funcție se apelează pe ea însăși.", 
+          explanation: "Se studiază conceptul de recursivitate prin exemple simple: factorial și fibonacci.", 
+          example: `#include <iostream>
+using namespace std;
+
+// Funcție recursivă pentru factorial
+int factorial(int n) {
+    if (n <= 1) {
+        return 1; // Cazul de bază
+    }
+    return n * factorial(n - 1); // Apel recursiv
+}
+
+// Funcție recursivă pentru Fibonacci
+int fibonacci(int n) {
+    if (n <= 1) {
+        return n; // Cazul de bază
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2); // Apel recursiv
+}
+
+int main() {
+    cout << "Factorial(5) = " << factorial(5) << endl;
+    cout << "Fibonacci(8) = " << fibonacci(8) << endl;
+    return 0;
+}` 
+        },
+        { 
+          title: "Funcții recursive simple", 
+          definition: "Funcțiile recursive simple sunt cele care au un singur apel recursiv.", 
+          explanation: "Se învață să scrii funcții recursive simple și să înțelegi apelurile în lanț.", 
+          example: `#include <iostream>
+using namespace std;
+
+// Suma numerelor de la 1 la n
+int sumaRecursiva(int n) {
+    if (n <= 1) {
+        return 1;
+    }
+    return n + sumaRecursiva(n - 1);
+}
+
+// Puterea unui număr
+int putereRecursiva(int baza, int exponent) {
+    if (exponent == 0) {
+        return 1;
+    }
+    return baza * putereRecursiva(baza, exponent - 1);
+}
+
+// Numărul de cifre
+int numarCifre(int n) {
+    if (n < 10) {
+        return 1;
+    }
+    return 1 + numarCifre(n / 10);
+}
+
+int main() {
+    cout << "Suma(5) = " << sumaRecursiva(5) << endl;
+    cout << "2^5 = " << putereRecursiva(2, 5) << endl;
+    cout << "Cifre in 12345: " << numarCifre(12345) << endl;
+    return 0;
+}` 
+        }
+      ],
+      'avansati-clasa-10': [
+        { 
+          title: "Backtracking - Generare permutări", 
+          definition: "Backtracking este o tehnică de căutare sistematică a tuturor soluțiilor posibile.", 
+          explanation: "Se studiază generarea permutărilor folosind backtracking și aplicarea în probleme practice.", 
+          example: `#include <iostream>
+using namespace std;
+
+void permutari(int v[], int n, int k) {
+    if (k == n) {
+        // Afișăm permutarea găsită
+        for (int i = 0; i < n; i++) {
+            cout << v[i] << " ";
+        }
+        cout << endl;
+        return;
+    }
+    
+    for (int i = k; i < n; i++) {
+        // Interschimbăm elementele
+        swap(v[k], v[i]);
+        // Generăm restul permutărilor
+        permutari(v, n, k + 1);
+        // Revenim la starea inițială (backtrack)
+        swap(v[k], v[i]);
+    }
+}
+
+int main() {
+    int v[] = {1, 2, 3};
+    cout << "Permutarile lui {1,2,3}:" << endl;
+    permutari(v, 3, 0);
+    return 0;
+}` 
+        },
+        { 
+          title: "Backtracking - Labirint", 
+          definition: "Backtracking poate fi folosit pentru a găsi o cale într-un labirint.", 
+          explanation: "Se implementează un algoritm de căutare a căii într-un labirint folosind backtracking.", 
+          example: `#include <iostream>
+using namespace std;
+
+const int N = 5;
+int labirint[N][N] = {
+    {1, 1, 1, 1, 1},
+    {0, 0, 0, 0, 1},
+    {1, 1, 1, 0, 1},
+    {1, 0, 0, 0, 0},
+    {1, 1, 1, 1, 1}
+};
+
+bool gasesteCale(int x, int y) {
+    // Verificăm dacă suntem în afara labirintului
+    if (x < 0 || x >= N || y < 0 || y >= N) {
+        return false;
+    }
+    
+    // Verificăm dacă am ajuns la destinație
+    if (x == N-1 && y == N-1) {
+        labirint[x][y] = 2; // Marcăm calea
+        return true;
+    }
+    
+    // Verificăm dacă poziția curentă este liberă
+    if (labirint[x][y] == 0) {
+        labirint[x][y] = 2; // Marcăm calea
+        
+        // Încercăm toate direcțiile
+        if (gasesteCale(x+1, y) || gasesteCale(x, y+1) || 
+            gasesteCale(x-1, y) || gasesteCale(x, y-1)) {
+            return true;
+        }
+        
+        labirint[x][y] = 0; // Backtrack
+    }
+    
+    return false;
+}
+
+int main() {
+    if (gasesteCale(0, 0)) {
+        cout << "Calea a fost gasita!" << endl;
+    } else {
+        cout << "Nu exista cale!" << endl;
+    }
+    return 0;
+}` 
+        },
+        { 
+          title: "Divide et Impera - Quicksort", 
+          definition: "Divide et Impera împarte problema în subprobleme mai mici, le rezolvă și combină rezultatele.", 
+          explanation: "Se studiază algoritmul quicksort ca exemplu de divide et impera.", 
+          example: `#include <iostream>
+using namespace std;
+
+int partition(int arr[], int stanga, int dreapta) {
+    int pivot = arr[dreapta];
+    int i = stanga - 1;
+    
+    for (int j = stanga; j < dreapta; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    
+    swap(arr[i + 1], arr[dreapta]);
+    return i + 1;
+}
+
+void quicksort(int arr[], int stanga, int dreapta) {
+    if (stanga < dreapta) {
+        // Divide: găsește pivotul
+        int pi = partition(arr, stanga, dreapta);
+        
+        // Impera: sortează subarray-urile
+        quicksort(arr, stanga, pi - 1);
+        quicksort(arr, pi + 1, dreapta);
+    }
+}
+
+int main() {
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = 7;
+    
+    cout << "Vectorul nesortat: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    quicksort(arr, 0, n - 1);
+    
+    cout << "Vectorul sortat: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}` 
+        }
+      ],
+      'avansati-clasa-11': [
+        { 
+          title: "OOP Avansat - Constructori și metode", 
+          definition: "Programarea orientată pe obiecte avansată include constructori, destructori și metode speciale.", 
+          explanation: "Se studiază constructori cu parametri, constructori de copiere, destructori și metode statice.", 
+          example: `#include <iostream>
+#include <string>
+using namespace std;
+
+class Student {
+private:
+    string nume;
+    int varsta;
+    static int numarStudenti;
+    
+public:
+    // Constructor implicit
+    Student() {
+        nume = "Anonim";
+        varsta = 0;
+        numarStudenti++;
+    }
+    
+    // Constructor cu parametri
+    Student(string n, int v) {
+        nume = n;
+        varsta = v;
+        numarStudenti++;
+    }
+    
+    // Constructor de copiere
+    Student(const Student& s) {
+        nume = s.nume;
+        varsta = s.varsta;
+        numarStudenti++;
+    }
+    
+    // Destructor
+    ~Student() {
+        numarStudenti--;
+    }
+    
+    // Metode
+    void afiseaza() {
+        cout << "Nume: " << nume << ", Varsta: " << varsta << endl;
+    }
+    
+    // Metodă statică
+    static int getNumarStudenti() {
+        return numarStudenti;
+    }
+};
+
+int Student::numarStudenti = 0;
+
+int main() {
+    Student s1("Ion", 17);
+    Student s2 = s1; // Constructor de copiere
+    
+    s1.afiseaza();
+    s2.afiseaza();
+    
+    cout << "Numar studenti: " << Student::getNumarStudenti() << endl;
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Moștenirea - Derivare și acces", 
+          definition: "Moștenirea permite crearea de clase noi bazate pe clase existente.", 
+          explanation: "Se studiază moștenirea publică și privată, accesarea membrilor și constructorii în moștenire.", 
+          example: `#include <iostream>
+#include <string>
+using namespace std;
+
+// Clasa de bază
+class Persoana {
+protected:
+    string nume;
+    int varsta;
+    
+public:
+    Persoana(string n, int v) : nume(n), varsta(v) {}
+    
+    virtual void afiseaza() {
+        cout << "Nume: " << nume << ", Varsta: " << varsta << endl;
+    }
+    
+    virtual ~Persoana() {}
+};
+
+// Clasa derivată - moștenire publică
+class Student : public Persoana {
+private:
+    string facultate;
+    
+public:
+    Student(string n, int v, string f) : Persoana(n, v), facultate(f) {}
+    
+    void afiseaza() override {
+        cout << "Student: " << nume << ", Varsta: " << varsta 
+             << ", Facultate: " << facultate << endl;
+    }
+};
+
+// Clasa derivată - moștenire privată
+class Angajat : private Persoana {
+private:
+    string companie;
+    
+public:
+    Angajat(string n, int v, string c) : Persoana(n, v), companie(c) {}
+    
+    void afiseaza() {
+        cout << "Angajat: " << nume << ", Varsta: " << varsta 
+             << ", Companie: " << companie << endl;
+    }
+};
+
+int main() {
+    Student s("Ion", 20, "Informatica");
+    Angajat a("Maria", 25, "TechCorp");
+    
+    s.afiseaza();
+    a.afiseaza();
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Polimorfism - Funcții virtuale", 
+          definition: "Polimorfismul permite comportamente diferite pentru obiecte de tipuri diferite.", 
+          explanation: "Se studiază funcții virtuale, overriding, pointeri la clase de bază și polimorfism dinamic.", 
+          example: `#include <iostream>
+#include <vector>
+using namespace std;
+
+// Clasa de bază abstractă
+class Forma {
+protected:
+    string culoare;
+    
+public:
+    Forma(string c) : culoare(c) {}
+    
+    virtual void afiseaza() {
+        cout << "Forma de culoare " << culoare << endl;
+    }
+    
+    virtual double calculeazaAria() = 0; // Funcție pură virtuală
+    virtual ~Forma() {}
+};
+
+// Clasa derivată
+class Cerc : public Forma {
+private:
+    double raza;
+    
+public:
+    Cerc(string c, double r) : Forma(c), raza(r) {}
+    
+    void afiseaza() override {
+        cout << "Cerc de culoare " << culoare << " cu raza " << raza << endl;
+    }
+    
+    double calculeazaAria() override {
+        return 3.14159 * raza * raza;
+    }
+};
+
+// Clasa derivată
+class Dreptunghi : public Forma {
+private:
+    double lungime, latime;
+    
+public:
+    Dreptunghi(string c, double l, double lat) : Forma(c), lungime(l), latime(lat) {}
+    
+    void afiseaza() override {
+        cout << "Dreptunghi de culoare " << culoare 
+             << " cu dimensiunile " << lungime << "x" << latime << endl;
+    }
+    
+    double calculeazaAria() override {
+        return lungime * latime;
+    }
+};
+
+int main() {
+    vector<Forma*> forme;
+    
+    forme.push_back(new Cerc("rosu", 5.0));
+    forme.push_back(new Dreptunghi("albastru", 4.0, 6.0));
+    
+    for (Forma* forma : forme) {
+        forma->afiseaza();
+        cout << "Aria: " << forma->calculeazaAria() << endl;
+        delete forma;
+    }
+    
+    return 0;
+}` 
+        }
+      ],
+      'avansati-clasa-12': [
+        { 
+          title: "Teoria grafurilor avansată - Kruskal", 
+          definition: "Algoritmul Kruskal găsește arborele de acoperire minimă într-un graf ponderat.", 
+          explanation: "Se studiază implementarea algoritmului Kruskal folosind structuri de date pentru uniuni.", 
+          example: `#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct Muchie {
+    int sursa, destinatie, cost;
+    
+    bool operator<(const Muchie& other) const {
+        return cost < other.cost;
+    }
+};
+
+class UnionFind {
+private:
+    vector<int> parent, rank;
+    
+public:
+    UnionFind(int n) {
+        parent.resize(n);
+        rank.resize(n, 0);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+    
+    int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+    
+    void unite(int x, int y) {
+        int px = find(x), py = find(y);
+        if (px == py) return;
+        
+        if (rank[px] < rank[py]) {
+            parent[px] = py;
+        } else if (rank[px] > rank[py]) {
+            parent[py] = px;
+        } else {
+            parent[py] = px;
+            rank[px]++;
+        }
+    }
+};
+
+vector<Muchie> kruskal(vector<Muchie>& muchii, int n) {
+    sort(muchii.begin(), muchii.end());
+    
+    UnionFind uf(n);
+    vector<Muchie> rezultat;
+    
+    for (Muchie muchie : muchii) {
+        if (uf.find(muchie.sursa) != uf.find(muchie.destinatie)) {
+            rezultat.push_back(muchie);
+            uf.unite(muchie.sursa, muchie.destinatie);
+        }
+    }
+    
+    return rezultat;
+}
+
+int main() {
+    int n = 4; // numărul de noduri
+    vector<Muchie> muchii = {
+        {0, 1, 10}, {0, 2, 6}, {0, 3, 5},
+        {1, 3, 15}, {2, 3, 4}
+    };
+    
+    vector<Muchie> arbore = kruskal(muchii, n);
+    
+    cout << "Arborele de acoperire minim:" << endl;
+    for (Muchie m : arbore) {
+        cout << m.sursa << " - " << m.destinatie << " : " << m.cost << endl;
+    }
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Programare dinamică avansată - LCS", 
+          definition: "Longest Common Subsequence (LCS) găsește cea mai lungă subsecvență comună între două șiruri.", 
+          explanation: "Se studiază implementarea algoritmului LCS folosind programare dinamică.", 
+          example: `#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+int lcs(string s1, string s2) {
+    int m = s1.length();
+    int n = s2.length();
+    
+    vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+    
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (s1[i-1] == s2[j-1]) {
+                dp[i][j] = dp[i-1][j-1] + 1;
+            } else {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
+    
+    return dp[m][n];
+}
+
+string lcsString(string s1, string s2) {
+    int m = s1.length();
+    int n = s2.length();
+    
+    vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+    
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (s1[i-1] == s2[j-1]) {
+                dp[i][j] = dp[i-1][j-1] + 1;
+            } else {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
+    
+    // Reconstruim șirul
+    string rezultat;
+    int i = m, j = n;
+    while (i > 0 && j > 0) {
+        if (s1[i-1] == s2[j-1]) {
+            rezultat = s1[i-1] + rezultat;
+            i--; j--;
+        } else if (dp[i-1][j] > dp[i][j-1]) {
+            i--;
+        } else {
+            j--;
+        }
+    }
+    
+    return rezultat;
+}
+
+int main() {
+    string s1 = "ABCDGH";
+    string s2 = "AEDFHR";
+    
+    cout << "LCS length: " << lcs(s1, s2) << endl;
+    cout << "LCS string: " << lcsString(s1, s2) << endl;
+    
+    return 0;
+}` 
+        },
+        { 
+          title: "Tehnici algoritmice - Memoizare", 
+          definition: "Memoizarea este o tehnică de optimizare care stochează rezultatele calculelor anterioare.", 
+          explanation: "Se studiază implementarea memoizării pentru optimizarea algoritmilor recursivi.", 
+          example: `#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+// Fibonacci cu memoizare
+class FibonacciMemo {
+private:
+    unordered_map<int, long long> memo;
+    
+public:
+    long long fibonacci(int n) {
+        if (n <= 1) return n;
+        
+        if (memo.find(n) != memo.end()) {
+            return memo[n];
+        }
+        
+        memo[n] = fibonacci(n-1) + fibonacci(n-2);
+        return memo[n];
+    }
+};
+
+// Factorial cu memoizare
+class FactorialMemo {
+private:
+    vector<long long> memo;
+    
+public:
+    FactorialMemo() {
+        memo.resize(100, -1);
+        memo[0] = memo[1] = 1;
+    }
+    
+    long long factorial(int n) {
+        if (n < 0) return 0;
+        if (memo[n] != -1) {
+            return memo[n];
+        }
+        
+        memo[n] = n * factorial(n-1);
+        return memo[n];
+    }
+};
+
+// Combinări cu memoizare
+class CombinariMemo {
+private:
+    vector<vector<long long>> memo;
+    
+public:
+    CombinariMemo() {
+        memo.resize(100, vector<long long>(100, -1));
+    }
+    
+    long long combinari(int n, int k) {
+        if (k == 0 || k == n) return 1;
+        if (k > n) return 0;
+        
+        if (memo[n][k] != -1) {
+            return memo[n][k];
+        }
+        
+        memo[n][k] = combinari(n-1, k-1) + combinari(n-1, k);
+        return memo[n][k];
+    }
+};
+
+int main() {
+    FibonacciMemo fib;
+    FactorialMemo fact;
+    CombinariMemo comb;
+    
+    cout << "Fibonacci(40) = " << fib.fibonacci(40) << endl;
+    cout << "Factorial(10) = " << fact.factorial(10) << endl;
+    cout << "Combinari(10, 5) = " << comb.combinari(10, 5) << endl;
+    
+    return 0;
+}` 
+        }
+      ]
+    };
+
+    let completate = [];
+    let clasaCurenta = "";
+
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      if (menu.style.display === "flex") {
+        menu.style.opacity = "0";
+        menu.style.transform = "translateY(-20px)";
+        setTimeout(() => {
+          menu.style.display = "none";
+        }, 300);
+      } else {
+        menu.style.display = "flex";
+        // Forțăm un reflow
+        menu.offsetHeight;
+        menu.style.opacity = "1";
+        menu.style.transform = "translateY(0)";
+      }
+    }
+
+    function goToClassLessons(clasa) {
+      clasaCurenta = clasa;
+      document.getElementById("menu").style.display = "none";
+      const container = document.getElementById("lessons-container");
+      
+      // Adăugăm clasa pentru tema curentă
+      container.className = clasa;
+      container.innerHTML = "";
+
+      // Ascundem textul de bun venit general
+      document.getElementById("welcome-section").style.display = "none";
+
+      // Mesaje personalizate pentru fiecare clasă
+      const welcomeMessages = {
+        'liceu-clasa-9': "📗 Hey! Bine ai venit în universul informaticii! Aici începe călătoria ta în clasa a IX-a! 🚀",
+        'liceu-clasa-10': "📘 Wow! Ai ajuns în clasa a X-a! Pregătește-te să descoperi structuri de date fascinante! 💫",
+        'liceu-clasa-11': "📙 Level Up! Bine ai venit în clasa a XI-a! Aici algoritmii prind viață! ⚡",
+        'liceu-clasa-12': "📒 Final Boss! Clasa a XII-a te așteaptă cu provocări epice! Ești pregătit? 🎮",
+        'avansati-clasa-9': "🔷 Recursivitate și funcții - Pentru cei care vor să știe mai mult! 🧠",
+        'avansati-clasa-10': "🔷 Backtracking și Divide et Impera - Algoritmi avansați! ⚡",
+        'avansati-clasa-11': "🔷 OOP avansat și polimorfism - Programare orientată pe obiecte! 🎯",
+        'avansati-clasa-12': "🔷 Algoritmi avansați și tehnici - Pentru olimpiade și facultate! 🏆"
+      };
+
+      // Adăugăm mesajul de bun venit specific clasei
+      const welcomeDiv = document.createElement('div');
+      welcomeDiv.className = `class-welcome ${clasa}`;
+      welcomeDiv.textContent = welcomeMessages[clasa];
+      container.appendChild(welcomeDiv);
+
+      // Adăugăm lecțiile
+      lectii[clasa].forEach((lec, i) => {
+        const index = clasa + "-" + i;
+        container.innerHTML += `
+          <div class="lesson">
+            <h3>${lec.title}</h3>
+            <p><strong>Definiție:</strong> ${lec.definition}</p>
+            <p><strong>Explicație:</strong> ${lec.explanation}</p>
+            <p><strong>Exemplu:</strong></p>
+            <pre>${lec.example}</pre>
+            <button onclick="markAsCompleted('${index}')">Marchează ca parcurs</button>
+          </div>`;
+      });
+
+      // Load user's completed lessons after adding the lessons to the page
+      loadUserCompletions();
+
+      // Afișăm butonul Acasă
+      const homeButton = document.querySelector('.home-button');
+      homeButton.classList.add('visible');
+    }
+
+    function markAsCompleted(index) {
+      const button = event.target;
+      
+      // Verificăm dacă utilizatorul este conectat folosind sistemul modern
+      const currentEmail = localStorage.getItem('currentUser');
+      if (!currentEmail) {
+        alert("Trebuie să fii conectat pentru a marca lecțiile!");
+        return;
+      }
+      
+      // Get or initialize user completions from localStorage
+      let userCompletions = JSON.parse(localStorage.getItem('userCompletions')) || {};
+      if (!userCompletions[currentEmail]) {
+        userCompletions[currentEmail] = [];
+      }
+
+      if (!userCompletions[currentEmail].includes(index)) {
+        userCompletions[currentEmail].push(index);
+        button.textContent = "Demarchează lecția";
+        button.classList.add('completed');
+        const bifa = button.closest('.lesson').querySelector('.bifa');
+        if (!bifa) {
+          const title = button.closest('.lesson').querySelector('h3');
+          title.innerHTML += '<span class="bifa">✔</span>';
+        }
+      } else {
+        userCompletions[currentEmail] = userCompletions[currentEmail].filter(item => item !== index);
+        button.textContent = "Marchează ca parcurs";
+        button.classList.remove('completed');
+        const bifa = button.closest('.lesson').querySelector('.bifa');
+        if (bifa) {
+          bifa.remove();
+        }
+      }
+      
+      // Save updated completions
+      localStorage.setItem('userCompletions', JSON.stringify(userCompletions));
+    }
+
+    function loadUserCompletions() {
+      const currentEmail = localStorage.getItem('currentUser');
+      if (!currentEmail) {
+        // Clear all checkmarks if not logged in
+        document.querySelectorAll('.bifa').forEach(bifa => bifa.remove());
+        document.querySelectorAll('button.completed').forEach(button => {
+          button.classList.remove('completed');
+          button.textContent = "Marchează ca parcurs";
+        });
+        return;
+      }
+
+      const userCompletions = JSON.parse(localStorage.getItem('userCompletions')) || {};
+      const completedLessons = userCompletions[currentEmail] || [];
+
+      // First clear all checkmarks
+      document.querySelectorAll('.bifa').forEach(bifa => bifa.remove());
+      document.querySelectorAll('button.completed').forEach(button => {
+        button.classList.remove('completed');
+        button.textContent = "Marchează ca parcurs";
+      });
+
+      // Then add checkmarks for user's completed lessons
+      completedLessons.forEach(index => {
+        const lessonDiv = document.querySelector(`.lesson:has(button[onclick="markAsCompleted('${index}')")`);
+        if (lessonDiv) {
+          const button = lessonDiv.querySelector('button');
+          button.textContent = "Demarchează lecția";
+          button.classList.add('completed');
+          const title = lessonDiv.querySelector('h3');
+          if (!title.querySelector('.bifa')) {
+            title.innerHTML += '<span class="bifa">✔</span>';
+          }
+        }
+      });
+    }
+
+    function logout() {
+      loadUserCompletions(); // Clear completions on logout
+    }
+
+    function switchToRegister() {
+      document.getElementById("form-title").textContent = "Înregistrare";
+      document.querySelector(".login-box button").textContent = "Creează cont";
+      document.querySelector(".login-box button").setAttribute("onclick", "submitRegister()");
+    }
+
+    function submitRegister() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      if (!email || !password) {
+        alert("Completează toate câmpurile.");
+        return;
+      }
+      let users = JSON.parse(localStorage.getItem("users") || "{}");
+      if (users[email]) {
+        alert("Contul există deja.");
+        return;
+      }
+      users[email] = password;
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Cont creat cu succes! Te poți autentifica acum.");
+      switchToLogin();
+    }
+
+    function switchToLogin() {
+      document.getElementById("form-title").textContent = "Autentificare";
+      document.querySelector(".login-box button").textContent = "Login";
+      document.querySelector(".login-box button").setAttribute("onclick", "submitLogin()");
+    }
+
+    function submitLogin() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      let users = JSON.parse(localStorage.getItem("users") || "{}");
+      if (users[email] && users[email] === password) {
+        closeLoginForm();
+        loadUserCompletions(); // Load user's completed lessons
+      } else {
+        alert("Email sau parolă incorectă!");
+      }
+    }
+
+        function openChat() {      window.location.href = "assistant.html";    }
+
+    function sendMessage() {
+  const userInput = document.getElementById("user-input").value;
+  const chatLog = document.getElementById("chat-log");
+  if (!userInput.trim()) return;
+
+  chatLog.innerHTML += `<p><strong>Tu:</strong> ${userInput}</p>`;
+
+  const qnaList = [
+    { q: "variabilă", a: "O variabilă este o zonă de memorie care stochează o valoare ce poate fi modificată în timpul execuției programului." },
+    { q: "constantă", a: "O constantă este o valoare fixă declarată astfel încât să nu poată fi modificată după inițializare." },
+    { q: "algoritm", a: "Un algoritm este o succesiune finită de pași logici ce duc la rezolvarea unei probleme." },
+    { q: "vector", a: "Un vector este o structură de date liniară ce poate stoca un număr fix de elemente de același tip." },
+    { q: "structură condițională", a: "O structură condițională permite executarea diferitelor blocuri de cod în funcție de îndeplinirea unei condiții." },
+    { q: "structură repetitivă", a: "O structură repetitivă permite executarea repetată a unui bloc de cod cât timp este adevărată o condiție." },
+    { q: "șir de caractere", a: "Un șir de caractere este o secvență de caractere terminată cu caracterul nul ('\\0' în C++)." },
+    { q: "funcție", a: "O funcție este un bloc de cod reutilizabil care primește date de intrare și poate returna o valoare." },
+    { q: "recursivitate", a: "Recursivitatea este o tehnică de programare în care o funcție se apelează pe ea însăși." },
+    { q: "pointer", a: "Un pointer este o variabilă care stochează adresa de memorie a unei alte variabile." }
+  ];
+
+  let aiResponse = "Îți voi răspunde în curând!";
+  for (const item of qnaList) {
+    if (userInput.toLowerCase().includes(item.q)) {
+      aiResponse = item.a;
+      break;
+    }
+  }
+
+  chatLog.innerHTML += `<p><strong>Asistent AI:</strong> ${aiResponse}</p>`;
+  document.getElementById("user-input").value = "";
+  chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+    function generateTest() {
+      document.getElementById("menu").style.display = "none";
+      const test = {
+        questions: [
+          { q: "Ce este o variabilă?" },
+          { q: "Ce face operatorul ==?" }
+        ]
+      };
+      const container = document.getElementById("test-container");
+      container.innerHTML = "<h3>Test generat</h3>";
+      test.questions.forEach((q, i) => {
+        container.innerHTML += `
+          <div class="question">
+            <p><strong>${i + 1}. ${q.q}</strong></p>
+            <p><em>Răspuns:</em> _________</p>
+          </div>`;
+      });
+    }
+
+
+    function generateTest() {
+  window.open("quiz.html", "_blank"); // deschide într-o filă nouă
+}
+
+    // Funcție pentru încărcarea progresului salvat
+    function loadProgress() {
+      const savedProgress = localStorage.getItem('lectiiCompletate');
+      if (savedProgress) {
+        completate = JSON.parse(savedProgress);
+      }
+    }
+
+    // Încărcăm progresul la pornirea aplicației
+    document.addEventListener('DOMContentLoaded', loadProgress);
+
+    // Adăugăm funcție pentru a reveni la pagina principală
+    function showMainPage() {
+      // Ascundem butonul Acasă
+      const homeButton = document.querySelector('.home-button');
+      homeButton.classList.remove('visible');
+
+      clasaCurenta = "";
+      document.getElementById("menu").style.display = "flex";
+      document.getElementById("lessons-container").innerHTML = "";
+      document.getElementById("welcome-section").style.display = "block";
+      document.getElementById("test-container").innerHTML = "";
+      document.getElementById("chat-form").style.display = "none";
+    }
+
+    // Modificăm onclick pentru logo/titlu pentru a reveni la pagina principală
+    document.querySelector('.cyber-title').onclick = function() {
+      showMainPage();
+    };
+
+    // Adăugăm stil pentru cursor pointer pe titlu
+    document.querySelector('.cyber-title').style.cursor = 'pointer';
+
+    // La încărcarea paginii, ne asigurăm că textul de bun venit este vizibil
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('menu').style.display = 'none';
+    });
+
+    // Funcție pentru animarea textului de bun venit
+    function initializeWelcomeText() {
+      const text = "InfoWorld";
+      const welcomeText = document.querySelector('.welcome-text');
+      const words = text.split('  '); // Split by double spaces
+      welcomeText.innerHTML = words.map((word, i) => 
+        `<span class="word" style="animation-delay: ${i * 0.1}s">${word}</span>`
+      ).join('  '); // Join with double spaces
+    }
+
+    // Apelăm funcția când se încarcă pagina
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeWelcomeText();
+      // ... restul codului existent
+    });
+
+    // JS: Profile/Login Modal logic
+    function openLoginModal() {
+      document.getElementById('login-modal').style.display = 'flex';
+      showLoginForm();
+    }
+    function closeLoginModal() {
+      document.getElementById('login-modal').style.display = 'none';
+    }
+    function showRegisterForm() {
+      document.getElementById('login-form-modern').style.display = 'none';
+      document.getElementById('register-form-modern').style.display = 'block';
+    }
+    function showLoginForm() {
+      document.getElementById('login-form-modern').style.display = 'block';
+      document.getElementById('register-form-modern').style.display = 'none';
+    }
+    function openProfileMenu() {
+      const menu = document.getElementById('profile-menu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+    function closeProfileMenu() {
+      document.getElementById('profile-menu').style.display = 'none';
+    }
+    window.onclick = function(event) {
+      if (event.target === document.getElementById('login-modal')) closeLoginModal();
+      if (!event.target.closest('.profile-bar')) closeProfileMenu();
+    }
+    function submitLoginModern() {
+      let userOrEmail = document.getElementById('login-username').value.trim().toLowerCase();
+      const password = document.getElementById('login-password').value;
+      let users = JSON.parse(localStorage.getItem('users') || '{}');
+      let foundUser = null;
+      for (const email in users) {
+        const u = users[email];
+        if ((typeof u === 'object' && (u.username === userOrEmail || email === userOrEmail)) ||
+            (typeof u === 'string' && (email === userOrEmail))) {
+          foundUser = typeof u === 'object' ? { ...u, email } : { password: u, email };
+          break;
+        }
+      }
+
+      if (foundUser && foundUser.password === password) {
+        localStorage.setItem('currentUser', foundUser.email);
+        setProfileBar(foundUser);
+        closeLoginModal();
+      } else {
+        alert('Date de autentificare incorecte!');
+      }
+    }
+    function submitRegisterModern() {
+      const numeprenume = document.getElementById('reg-numeprenume').value.trim();
+      let email = document.getElementById('reg-email').value.trim().toLowerCase();
+      const tel = document.getElementById('reg-tel').value.trim();
+      let username = document.getElementById('reg-username').value.trim().toLowerCase();
+      const datanasterii = document.getElementById('reg-datanasterii').value;
+      const password = document.getElementById('reg-password').value;
+      const cnp = document.getElementById('reg-cnp').value.trim();
+      if (!numeprenume || !email || !tel || !username || !datanasterii || !password || cnp.length !== 4) {
+        alert('Completează toate câmpurile corect!');
+        return;
+      }
+      let users = JSON.parse(localStorage.getItem('users') || '{}');
+      if (users[email]) {
+        alert('Contul există deja!');
+        return;
+      }
+      for (const e in users) {
+        if (users[e].username === username) {
+          alert('Username-ul există deja!');
+          return;
+        }
+      }
+      users[email] = { numeprenume, tel, username, datanasterii, password, cnp, puncte: 0, quizuri: [] };
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('Cont creat cu succes! Te poți autentifica acum.');
+      showLoginForm();
+    }
+    function setProfileBar(user) {
+      document.getElementById('open-login-modal').style.display = 'none';
+      document.getElementById('profile-circle').style.display = 'flex';
+      document.getElementById('profile-initials').textContent = user.username[0].toUpperCase();
+      
+      // Aplică rama selectată
+      const userProfiles = JSON.parse(localStorage.getItem('userProfiles') || '{}');
+      const userProfile = userProfiles[user.email] || {};
+      const selectedFrame = userProfile.selectedFrame || 'beginner';
+      
+      const profileCircle = document.getElementById('profile-circle');
+      profileCircle.className = 'profile-circle';
+      
+      if (selectedFrame === 'special') {
+        profileCircle.classList.add('special-frame');
+      } else {
+        profileCircle.classList.add('beginner-frame');
+      }
+      // Iconiță steluță dacă are
+      let iconSpan = document.getElementById('profile-icon-star');
+      if (!iconSpan) {
+        iconSpan = document.createElement('span');
+        iconSpan.id = 'profile-icon-star';
+        iconSpan.style.marginLeft = '6px';
+        document.getElementById('profile-initials').after(iconSpan);
+      }
+      if (userProfile.hasIcon) {
+        iconSpan.innerHTML = '<span class="star-glow">★</span>';
+      } else {
+        iconSpan.innerHTML = '';
+      }
+    }
+    // CSS pentru efect de strălucire
+    const styleStar = document.createElement('style');
+    styleStar.innerHTML = `.star-glow { color: #ffd700; font-size: 1.1em; filter: drop-shadow(0 0 6px #fff176); animation: starShine 1.2s infinite alternate; }
+    @keyframes starShine { 0% { filter: drop-shadow(0 0 6px #fff176); } 100% { filter: drop-shadow(0 0 18px #fff176); } }`;
+    document.head.appendChild(styleStar);
+    function logout() {
+      localStorage.removeItem('currentUser');
+      document.getElementById('open-login-modal').style.display = 'inline-block';
+      document.getElementById('profile-circle').style.display = 'none';
+      document.getElementById('profile-initials').style.display = 'none';
+      document.getElementById('profile-link').style.display = 'none';
+      closeProfileMenu();
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      let users = JSON.parse(localStorage.getItem('users') || '{}');
+      let currentEmail = localStorage.getItem('currentUser');
+      if (currentEmail && users[currentEmail]) {
+        setProfileBar({ ...users[currentEmail], email: currentEmail });
+      } else {
+        document.getElementById('open-login-modal').style.display = 'inline-block';
+        document.getElementById('profile-circle').style.display = 'none';
+        document.getElementById('profile-initials').style.display = 'none';
+        document.getElementById('profile-link').style.display = 'none';
+      }
+    });
+
+
+
+    // Funcții pentru noile butoane de lecții
+    function showLiceuLessons() {
+      document.getElementById('menu').style.display = 'none';
+      document.getElementById('class-selection').style.display = 'block';
+      document.getElementById('selection-title').textContent = '📘 Lecții pentru LICEU - Programa școlară normală';
+      
+      const classGrid = document.getElementById('class-grid');
+      classGrid.innerHTML = `
+        <button class="class-btn clasa-9" onclick="goToClassLessons('liceu-clasa-9')">
+          <div style="font-size: 20px; margin-bottom: 5px;">📗</div>
+          <div style="font-weight: bold;">Clasa a IX-a</div>
+          <div style="font-size: 12px; opacity: 0.8;">Introducere în informatică</div>
+        </button>
+        <button class="class-btn clasa-10" onclick="goToClassLessons('liceu-clasa-10')">
+          <div style="font-size: 20px; margin-bottom: 5px;">📘</div>
+          <div style="font-weight: bold;">Clasa a X-a</div>
+          <div style="font-size: 12px; opacity: 0.8;">Structuri și algoritmi</div>
+        </button>
+        <button class="class-btn clasa-11" onclick="goToClassLessons('liceu-clasa-11')">
+          <div style="font-size: 20px; margin-bottom: 5px;">📙</div>
+          <div style="font-weight: bold;">Clasa a XI-a</div>
+          <div style="font-size: 12px; opacity: 0.8;">Grafuri și structuri</div>
+        </button>
+        <button class="class-btn clasa-12" onclick="goToClassLessons('liceu-clasa-12')">
+          <div style="font-size: 20px; margin-bottom: 5px;">📒</div>
+          <div style="font-weight: bold;">Clasa a XII-a</div>
+          <div style="font-size: 12px; opacity: 0.8;">Pregătire BAC</div>
+        </button>
+      `;
+    }
+
+    function showAvansatiLessons() {
+      document.getElementById('menu').style.display = 'none';
+      document.getElementById('class-selection').style.display = 'block';
+      document.getElementById('selection-title').textContent = '🧠 Lecții pentru AVANSAȚI - Pentru aprofundare și olimpiade';
+      
+      const classGrid = document.getElementById('class-grid');
+      classGrid.innerHTML = `
+        <button class="class-btn clasa-9" onclick="goToClassLessons('avansati-clasa-9')">
+          <div style="font-size: 20px; margin-bottom: 5px;">🔷</div>
+          <div style="font-weight: bold;">Recomandat în clasa a IX-a</div>
+          <div style="font-size: 12px; opacity: 0.8;">Recursivitate și funcții</div>
+        </button>
+        <button class="class-btn clasa-10" onclick="goToClassLessons('avansati-clasa-10')">
+          <div style="font-size: 20px; margin-bottom: 5px;">🔷</div>
+          <div style="font-weight: bold;">Recomandat în clasa a X-a</div>
+          <div style="font-size: 12px; opacity: 0.8;">Backtracking și divide et impera</div>
+        </button>
+        <button class="class-btn clasa-11" onclick="goToClassLessons('avansati-clasa-11')">
+          <div style="font-size: 20px; margin-bottom: 5px;">🔷</div>
+          <div style="font-weight: bold;">Recomandat în clasa a XI-a</div>
+          <div style="font-size: 12px; opacity: 0.8;">OOP avansat și polimorfism</div>
+        </button>
+        <button class="class-btn clasa-12" onclick="goToClassLessons('avansati-clasa-12')">
+          <div style="font-size: 20px; margin-bottom: 5px;">🔷</div>
+          <div style="font-weight: bold;">Recomandat în clasa a XII-a</div>
+          <div style="font-size: 12px; opacity: 0.8;">Algoritmi avansați și tehnici</div>
+        </button>
+      `;
+    }
+
+    function hideClassSelection() {
+      document.getElementById('class-selection').style.display = 'none';
+      document.getElementById('menu').style.display = 'flex';
+    }
+
+    document.getElementById('menu-toggle-fixed').onclick = toggleMenu;
+  </script>
+
+  <script>
+    // Animare smooth la schimbarea paginii pe tot site-ul
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.style.opacity = 0;
+      document.body.style.transition = 'opacity 0.6s cubic-bezier(.4,0,.2,1)';
+      setTimeout(()=>{ document.body.style.opacity = 1; }, 30);
+      document.querySelectorAll('a,button').forEach(el => {
+        el.addEventListener('click', function(e) {
+          const href = el.getAttribute('href');
+          if (href && !href.startsWith('#') && !el.hasAttribute('download')) {
+            e.preventDefault();
+            document.body.style.opacity = 0;
+            setTimeout(()=>{ window.location.href = href; }, 400);
+          }
+        });
+      });
+    });
+  </script>
+
+  
+
+  <script>
+  // ... existing code ...
+  document.addEventListener('DOMContentLoaded', function() {
+    const aflaBtn = document.querySelector('.afla-mai-multe-btn');
+    const extra = document.getElementById('afla-mai-multe-extra');
+    if (aflaBtn && extra) {
+      aflaBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        extra.style.display = extra.style.display === 'block' ? 'none' : 'block';
+      });
+    }
+  });
+  // ... existing code ...
+  </script>
+</body>
+</html>
+
+<footer class="site-footer">
+  <a href="#" id="termeni-link">Termeni și condiții</a> |
+  <a href="#" id="confidentialitate-link">Politica de confidențialitate</a>
+</footer>
+
+<!-- Modal Politica de Confidențialitate -->
+<div id="modal-confidentialitate" class="modal-content-legal" style="display:none;">
+  <div class="modal-legal-box">
+    <span class="close-legal" onclick="closeLegalModal('modal-confidentialitate')">&times;</span>
+    <h2>🔐 Politica de Confidențialitate – InfoWorld</h2>
+    <p class="legal-date"><em>Ultima actualizare: 10 decembrie 2025</em></p>
+    <p class="legal-intro">La <span class="highlight">InfoWorld</span>, confidențialitatea ta este <span class="important">fundamentală</span>. Această pagină explică în detaliu ce date colectăm, cum le folosim și cum sunt protejate informațiile tale personale.</p>
+    <div class="legal-section">
+      <h3>📊 Ce tip de date colectăm?</h3>
+      <div class="data-category positive">
+        <h4>🧠 Date locale (în browser):</h4>
+        <ul>
+          <li><strong>Nume de utilizator</strong> – pentru personalizarea experienței</li>
+          <li><strong>Adresă de email</strong> – pentru autentificare și comunicare</li>
+          <li><strong>Parolă criptată</strong> – salvată doar local în browserul tău</li>
+          <li><strong>Preferințe educaționale</strong> – lecții parcurse, teme, scoruri din quiz-uri</li>
+          <li><strong>Feedback și sugestii</strong> – pentru îmbunătățirea platformei</li>
+        </ul>
+      </div>
+      <div class="data-category negative">
+        <h4>🚫 Nu colectăm niciodată:</h4>
+        <ul>
+          <li>Adrese IP sau locație geografică</li>
+          <li>Cookie-uri de urmărire sau publicitate</li>
+          <li>Date de card bancar sau informații financiare</li>
+          <li>Fotografii personale sau fișiere private</li>
+          <li>Orice alte date sensibile</li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal-section">
+      <h3>🎯 Cum folosim datele tale?</h3>
+      <div class="usage-list">
+        <div class="usage-item"><span class="usage-icon">📚</span> <span><strong>Experiență educațională personalizată</strong> – autentificare locală, marcarea lecțiilor parcurse</span></div>
+        <div class="usage-item"><span class="usage-icon">📈</span> <span><strong>Urmărirea progresului</strong> – scoruri din quiz-uri și statistici de învățare</span></div>
+        <div class="usage-item"><span class="usage-icon">💬</span> <span><strong>Feedback și îmbunătățiri</strong> – sugestii pentru optimizarea platformei</span></div>
+      </div>
+      <p class="security-note">⚠️ <strong>Important:</strong> Toate datele rămân pe dispozitivul tău și nu sunt vizibile altor utilizatori!</p>
+    </div>
+    <div class="legal-section">
+      <h3>🔒 Confidențialitatea contului</h3>
+      <div class="security-features">
+        <div class="security-item"><span class="security-icon">🔐</span> <span>Parolele sunt criptate și nu sunt trimise către servere</span></div>
+        <div class="security-item"><span class="security-icon">🏠</span> <span>Toate datele sunt stocate local în browserul tău</span></div>
+        <div class="security-item"><span class="security-icon">🔄</span> <span>Poți șterge datele oricând din localStorage</span></div>
+      </div>
+      <p class="warning">⚠️ <strong>Recomandare:</strong> Dacă folosești un calculator public, te rugăm să te deloghezi sau să ștergi datele locale după utilizare.</p>
+    </div>
+    <div class="legal-section">
+      <h3>🌐 Linkuri externe</h3>
+      <p>Site-ul poate conține linkuri către alte pagini (YouTube, GitHub, etc.). <strong>Odată ce părăsești InfoWorld</strong>, politica acestui site nu mai este valabilă pentru conținutul extern.</p>
+    </div>
+    <div class="legal-section">
+      <h3>⚖️ Drepturile tale</h3>
+      <div class="rights-list">
+        <div class="right-item"><span class="right-icon">👤</span> <span><strong>Acces la date</strong> – poți vedea toate datele tale salvate</span></div>
+        <div class="right-item"><span class="right-icon">✏️</span> <span><strong>Modificare</strong> – poți actualiza informațiile personale</span></div>
+        <div class="right-item"><span class="right-icon">🗑️</span> <span><strong>Ștergere</strong> – poți șterge complet datele din localStorage</span></div>
+        <div class="right-item"><span class="right-icon">🔄</span> <span><strong>Resetare cont</strong> – poți reseta contul la setările implicite</span></div>
+      </div>
+    </div>
+    <div class="legal-section">
+      <h3>🛡️ Securitate</h3>
+      <div class="security-highlights">
+        <p>✅ <strong>Fără servere externe</strong> – site-ul nu utilizează baze de date externe</p>
+        <p>✅ <strong>Fără transfer de date</strong> – nu există comunicare cu terți</p>
+        <p>✅ <strong>Client-side complet</strong> – totul rulează direct în browserul tău</p>
+        <p>✅ <strong>Fără tracking</strong> – nu urmărim activitatea ta online</p>
+      </div>
+    </div>
+    <div class="legal-section">
+      <h3>📝 Modificări ale politicii</h3>
+      <p>Ne rezervăm dreptul de a actualiza această politică oricând pentru a reflecta schimbările în practicile noastre. <strong>Ultima versiune va fi disponibilă permanent pe această pagină.</strong></p>
+    </div>
+    <div class="legal-section">
+      <h3>📞 Contact</h3>
+      <p>Dacă ai întrebări despre confidențialitate sau protecția datelor, ne poți contacta prin:</p>
+      <div class="contact-methods">
+        <div class="contact-item"><span class="contact-icon">📧</span> <span>Formularul de feedback de pe site</span></div>
+        <div class="contact-item"><span class="contact-icon">🐙</span> <span>GitHub: <a href="https://github.com/Zodrak36" target="_blank" class="github-link">Zodrak36</a></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Termeni și Condiții -->
+<div id="modal-termeni" class="modal-content-legal" style="display:none;">
+  <div class="modal-legal-box">
+    <span class="close-legal" onclick="closeLegalModal('modal-termeni')">&times;</span>
+    <h2>📝 Termeni și Condiții – InfoWorld</h2>
+    <p class="legal-date"><em>Ultima actualizare: 10 decembrie 2025</em></p>
+    <div class="legal-section">
+      <h3>🎯 Scopul site-ului</h3>
+      <p>InfoWorld este o platformă educațională creată pentru a oferi lecții, explicații și exemple de programare, în special în limbajul C++ și algoritmică, pentru elevi de liceu și utilizatori avansați.</p>
+    </div>
+    <div class="legal-section">
+      <h3>📚 Utilizarea conținutului</h3>
+      <ul>
+        <li>Conținutul publicat pe acest site este oferit gratuit în scop educativ.</li>
+        <li>Poți folosi, copia sau distribui materialele în scop personal sau educațional, cu condiția să menționezi sursa.</li>
+        <li>Este interzisă utilizarea conținutului în scopuri comerciale fără acordul autorului.</li>
+      </ul>
+    </div>
+    <div class="legal-section">
+      <h3>📝 Înregistrare și date personale</h3>
+      <ul>
+        <li>Înregistrarea pe site este opțională și presupune stocarea locală a datelor în browserul tău, folosind localStorage.</li>
+        <li>Nu colectăm date personale pe server, iar tot ce salvezi rămâne local în dispozitivul tău.</li>
+        <li>Nu partajăm, nu vindem și nu stocăm date sensibile în cloud.</li>
+      </ul>
+    </div>
+    <div class="legal-section">
+      <h3>⚠️ Responsabilitate</h3>
+      <p>InfoWorld nu își asumă responsabilitatea pentru erori de cod sau interpretări greșite ale materialului. Încurajăm corectarea și feedback-ul din partea utilizatorilor pentru îmbunătățirea conținutului.</p>
+    </div>
+    <div class="legal-section">
+      <h3>💡 Feedback și contribuții</h3>
+      <ul>
+        <li>Poți trimite sugestii sau feedback prin formularul dedicat.</li>
+        <li>Orice sugestie sau conținut propus poate fi integrat în site, cu recunoașterea meritului, dar fără obligații financiare.</li>
+      </ul>
+    </div>
+    <div class="legal-section">
+      <h3>© Proprietate intelectuală</h3>
+      <ul>
+        <li>Toate textele, exemplele de cod și designul sunt protejate de drepturi de autor.</li>
+        <li>În cazul folosirii conținutului extern (ex: citate, imagini, resurse externe), se specifică sursa originală.</li>
+      </ul>
+    </div>
+    <div class="legal-section">
+      <h3>📝 Modificări ale termenilor</h3>
+      <p>Ne rezervăm dreptul de a modifica acești termeni oricând, fără notificare prealabilă. Schimbările vor fi vizibile pe această pagină.</p>
+    </div>
+    <div class="legal-section">
+      <h3>📞 Contact</h3>
+      <p>Pentru întrebări, propuneri sau probleme tehnice, ne poți contacta prin formularul de feedback sau direct pe <a href="https://github.com/Zodrak36" target="_blank" class="github-link">GitHub</a>.</p>
+    </div>
+  </div>
+</div>
+<!-- Stiluri pentru modale legal -->
+<style>
+.modal-content-legal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+}
+.modal-legal-box {
+  background: #181a1f;
+  color: #e0e0e0;
+  border-radius: 18px;
+  max-width: 600px;
+  width: 95vw;
+  max-height: 90vh;
+  padding: 36px 28px 28px 28px;
+  box-shadow: 0 8px 40px #00ffff55;
+  position: relative;
+  overflow-y: auto;
+  font-family: 'Georgia', 'Arial', sans-serif;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+.legal-section { margin-bottom: 1.5em; padding-left: 0.5em; border-left: 3px solid #00ffff33; }
+.legal-section h3 { color: #00ffff; margin-top: 0; margin-bottom: 0.4em; font-size: 1.1em; font-family: 'Orbitron', Arial, sans-serif; }
+.legal-section ul, .legal-section ol { margin: 0.5em 0 0.5em 1.2em; padding: 0; }
+.legal-section li { margin-bottom: 0.3em; }
+.legal-intro { color: #fff; font-style: italic; margin-bottom: 1.2em; }
+.legal-date { color: #ff0; font-size: 0.98em; margin-bottom: 0.5em; }
+.highlight { color: #00ffff; font-weight: bold; }
+.important { color: #ffdd00; font-weight: bold; }
+.data-category.positive h4 { color: #00ff99; margin-bottom: 0.2em; }
+.data-category.negative h4 { color: #ff3366; margin-bottom: 0.2em; }
+.data-category ul { margin-left: 1.2em; }
+.usage-list, .security-features, .rights-list, .contact-methods { display: flex; flex-direction: column; gap: 0.3em; margin-left: 0.5em; }
+.usage-item, .security-item, .right-item, .contact-item { display: flex; align-items: center; gap: 0.5em; }
+.usage-icon, .security-icon, .right-icon, .contact-icon { font-size: 1.2em; }
+.security-note, .warning { color: #ff3366; font-size: 0.98em; margin-top: 0.5em; }
+.security-highlights p { margin: 0.2em 0 0.2em 1.2em; color: #00ff99; }
+.github-link { color: #00ffff; text-decoration: underline; }
+@media (max-width: 700px) {
+  .modal-legal-box { padding: 18px 6vw 18px 6vw; font-size: 0.98rem; }
+  .modal-legal-box h2 { font-size: 1.1em; }
+}
+</style>
+
+<script>
+function openLegalModal(id) {
+  document.getElementById(id).style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeLegalModal(id) {
+  document.getElementById(id).style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.getElementById('termeni-link').onclick = function(e) {
+  e.preventDefault();
+  openLegalModal('modal-termeni');
+};
+document.getElementById('confidentialitate-link').onclick = function(e) {
+  e.preventDefault();
+  openLegalModal('modal-confidentialitate');
+};
+window.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeLegalModal('modal-termeni');
+    closeLegalModal('modal-confidentialitate');
+  }
+});
+</script>
+
+</code_block_to_apply_changes_from>
+
+
